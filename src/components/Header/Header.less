@@ -4,11 +4,6 @@ header {
   flex-direction: column;
   align-items: center;
 
-  .horizontal {
-    display: flex;
-    flex-direction: row;
-  }
-
   a {
     position: relative;
     padding: 1px;
@@ -40,13 +35,14 @@ header {
 
     a.star-link {
       &:hover {
-        padding-right: 35px; /* roughly size of :after? */
+        padding-right: 45px; /* distance that title text needs to move to accommodate :after */
       }
       &:after {
         content: '★';
         position: absolute;
+        font-size: 2.3rem;
         top: -0.04em;
-        right: -0.5em;
+        right: -0.6em; /* determines position from which star will "roll out" */
         /* editing position of star after title */
         @media (min-width: 22rem) and (max-width: 37.5em) {
           top: 1.33em;
@@ -60,23 +56,19 @@ header {
       }
     }
   }
-
-  p {
-    font-size: 0.875rem;
-    max-width: 25rem;
-    text-align: right;
-    margin: 0;
-  }
 }
 
 #navbar {
-  padding-left: 1rem;
+  display: flex;
+  padding-left: 0;
   margin: 0;
   vertical-align: top;
+  margin-bottom: 8px;
 
   li {
     text-align: left;
     list-style-type: none;
+    margin: 0px 20px;
   }
 
   a.star-link {
@@ -89,26 +81,14 @@ header {
       right: -0.375em;
     }
     &:hover:after {
-      right: -0.875em;
+      right: -1em;
     }
   }
 }
 
 /* resize header */
 @media (max-width: 37.5em) {
-  header {
-    .horizontal {
-      flex-direction: column;
-    }
-
-    p {
-      text-align: center;
-    }
-  }
-
   #navbar {
-    padding-left: 0;
-
     li {
       display: inline-block;
       margin: 1em;
