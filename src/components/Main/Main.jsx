@@ -6,7 +6,6 @@ import {
   InputEditor,
   NavContent,
   DetailContent,
-  RenderContent,
   TLNotesContent,
 } from '../TabComponents';
 import convertText from 'Utils/convertText';
@@ -16,7 +15,6 @@ const TABS = {
   TEXT: 'Text',
   NAV: 'Story Nav',
   DETAILS: 'Details',
-  RENDERS: 'Renders',
   TL_NOTES: 'TL Notes',
 };
 const tabTitles = Object.values(TABS);
@@ -49,9 +47,6 @@ const Input = () => {
       </TabContent>
       <TabContent {...{ value: TABS.DETAILS, clicked }}>
         <DetailContent />
-      </TabContent>
-      <TabContent {...{ value: TABS.RENDERS, clicked }}>
-        <RenderContent />
       </TabContent>
       <TabContent {...{ value: TABS.TL_NOTES, clicked }}>
         <TLNotesContent />
