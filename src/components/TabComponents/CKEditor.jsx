@@ -31,30 +31,20 @@ export function InputEditor() {
   // Autosave documentation:
   // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/saving-data.html#autosave-feature
   const inputEditorConfig = {
-    plugins: [
-      Essentials,
-      Paragraph,
-      Bold,
-      Italic,
-      Link,
-      PasteFromOffice,
-      Autosave,
-    ],
+    plugins: [Essentials, Paragraph, Bold, Italic, Link, PasteFromOffice, Autosave],
     toolbar: ['bold', 'italic', 'link', '|', 'undo', 'redo'],
     autosave: {
       save: updateNames,
     },
   };
 
-  const inputEditorData = `<p>If this is your first time using the formatter, please check the <a href='/#/howto'>Text Guidelines</a> to make
-        sure your text is ready.</p>
-      <p>---EXAMPLE DIALOGUE---</p>
-      <p>The header image.png</p>
-      <p><strong>Person A:</strong> This is a line said by Person A! Their line starts with their name followed by a colon.</p>
-      <p><strong>Person B:</strong> This is a line said by another person!</p>
-      <p>Heading: Location: Hallway (will format to "Location: Hallway")</p>
-      <p>A screenshot of the game.jpeg</p>
-      <p><strong>Person A:</strong> Another line from Person A.</p>`;
+  const inputEditorData = `
+<p>Natsume: HoweVER. Within a game where everything is proGRAMMED, everything works with much simpler loGIC.</p>
+<p>In this world where everything obeys my every comMAND, I will reign as god and control everyTHING. I'll make sure they can live in peace and joy within this miniature <hold>garDEN—</hold></p>
+<p>And I will give everyone an equal opportunity to experience their own happily ever afTER.</p>
+<p><spell>—Welcome to paradise, my <hold>idols♪</hold></spell></p>
+<p>Tsumugi: Um, but, no matter how you look at it, I'm pretty sure this world is a dystopia, right?</p>
+`;
 
   useEffect(() => {
     // Grab the HTML element using ref.current.editor
@@ -63,7 +53,7 @@ export function InputEditor() {
       writer.setAttribute(
         'spellcheck',
         'false',
-        inputRef.current.editor.editing.view.document.getRoot()
+        inputRef.current.editor.editing.view.document.getRoot(),
       );
     });
   }, []);
@@ -98,7 +88,7 @@ export function TLNotesEditor() {
       writer.setAttribute(
         'spellcheck',
         'false',
-        tlNotesRef.current.editor.editing.view.document.getRoot()
+        tlNotesRef.current.editor.editing.view.document.getRoot(),
       );
     });
   }, []);

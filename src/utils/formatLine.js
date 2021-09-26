@@ -1,5 +1,6 @@
 import { NAME_LINKS } from '../constants';
 import formatStyling from './formatStyling';
+import { chain, inRange } from 'lodash';
 
 /*
 How formatter converts text (a rough summary)
@@ -39,71 +40,95 @@ Evaluate <p>.textContent and then decide from there
  * @param {object} renders
  */
 
-export default function formatLine(TEMPLATES, renders) {
-  let currentName = ''; // needed for case where dialogue has name on every line
+export default function formatLine(TEMPLATES) {
+  // Handle both dialogue formats where name is on every line
+  // or only on first line
+  let currentName = '';
   return (p) => {
-    const line = p.textContent.replace(/&nbsp;/g, ' ').trim(); // ignore text styling while evaluating lines
-    if (line === '') return line; // ignore empty lines
-    // -----FILTER OUT FILE NAMES-----
-    if (isFileName(line)) {
-      currentName = ''; // since its new section
-      return TEMPLATES.cgRender.replace('FILENAME', line.trim());
+    const line = p.textContent.replace(/&nbsp;/g, ' ').trim();
+
+    if (!line) {
+      return '';
     }
-    // -----PROCESS HEADINGS OR DIALOGUE LINES-----
-    p.innerHTML = formatTlMarker(p.innerHTML);
-    const firstWord = line.split(' ')[0];
-    // -----FILTER OUT DIALOGUE LINES WITH NO LABEL-----
-    if (!firstWord.includes(':')) {
-      return `${formatStyling(p).innerHTML}\n\n`;
-    }
-    // -----PROCESS LINES WHERE FIRST WORD HAS A ':'-----
-    const label = firstWord.replace(':', '');
-    // -----FILTER OUT HEADING LINES-----
-    if (label.toUpperCase() === 'HEADING') {
-      currentName = ''; // since its new section
-      return TEMPLATES.heading.replace(
-        'HEADING',
-        line.slice(line.indexOf(':') + 1).trim()
-      );
-    }
-    // -----FINALLY PROCESS DIALOGUE LINES WITH LABELS-----
-    if (NAME_LINKS[label.toUpperCase()] !== undefined) {
-      // if valid character is speaking
-      let dialogue = '';
-      if (label !== currentName) {
-        // if new character is speaking
-        currentName = label;
-        const renderCode = TEMPLATES.dialogueRender;
-        // create id to access chara's render file in Renders tab
-        const charName = `${
-          label[0].toUpperCase() + label.slice(1, label.length)
-        }`;
-        dialogue += renderCode.replace('FILENAME', renders[charName].trim());
+
+    // // -----FILTER OUT FILE NAMES-----
+    // if (isFileName(line)) {
+    //   currentName = ''; // since its new section
+    //   return TEMPLATES.cgRender.replace('FILENAME', line.trim());
+    // }
+    // // -----PROCESS HEADINGS OR DIALOGUE LINES-----
+    // p.innerHTML = formatTlMarker(p.innerHTML);
+    // const firstWord = line.split(' ')[0];
+    // // -----FILTER OUT DIALOGUE LINES WITH NO LABEL-----
+    // if (!firstWord.includes(':')) {
+    //   return `${formatStyling(p).innerHTML}\n\n`;
+    // }
+
+    if (isNameLine(line)) {
+      const [name, dialogue] = splitLineIntoNameAndDialogue(line);
+      if (currentName === name) {
+        return TEMPLATES.dialogue(dialogue);
       }
-      // evaluate text inside first node of <p> tag
-      // might be an element (has styling) or a text node (no styling)
-      // so use textContent instead of innerHTML or innerText
-      let contents = p.childNodes[0].textContent;
-      // remove firstWord (has colon) in case of <strong>Arashi:</strong> line
-      // and also label incase of <strong>Arashi</strong>: line
-      // ERROR: this means colon doesn't get removed if it's not styled....
-      // TODO: find a better way to deal with styling on label
-      contents = contents.replace(firstWord, '');
-      contents = contents.replace(label, '');
-      if (contents.trim().length === 0) {
-        p.childNodes[0].remove();
-      } else {
-        // if first ChildNode was just the label then remove node
-        // set ChildNode HTML
-        p.childNodes[0].textContent = contents;
+
+      let result = '';
+      if (currentName) {
+        result += TEMPLATES.endBubble();
       }
-      const newLine = formatStyling(p);
-      dialogue += `${newLine.innerHTML.trim()}\n\n`;
-      return dialogue;
+      currentName = name;
+      result += TEMPLATES.startBubble(name);
+      result += TEMPLATES.dialogue(dialogue);
+      return result;
     }
+
+    if (!!currentName) {
+      return TEMPLATES.dialogue(line);
+    }
+
     return '';
   };
 }
+
+/**
+ * Example lines:
+ *
+ * Midori: some dialogue
+ *
+ * Midori, hidden: some dialogue
+ */
+const isNameLine = (line) => {
+  if (
+    chain(line)
+      .split(':')
+      .map((part) => part.trim())
+      .compact()
+      .value().length < 2
+  ) {
+    return false;
+  }
+  const label = line.split(':')[0];
+  return inRange(
+    chain(label)
+      .split(',')
+      .map((part) => part.trim())
+      .compact()
+      .value().length,
+    1,
+    3,
+  );
+};
+
+const splitLineIntoNameAndDialogue = (line) => {
+  // Use rest operator in case dialogue also contains colons
+  const [name, ...dialogue] = line.split(':');
+  return [
+    chain(name)
+      .split(',')
+      .map((part) => part.trim())
+      .join(' ')
+      .value(),
+    dialogue.join(':').trim(),
+  ];
+};
 
 /**
  * Check if a dialogue line is actually an image file name
@@ -137,10 +162,7 @@ function formatTlMarker(line) {
     if (title.length > 0) {
       const markers = line.match(/\[\d+\]/g);
       markers.forEach((marker) => {
-        const num = marker.substring(
-          marker.indexOf('[') + 1,
-          marker.indexOf(']')
-        );
+        const num = marker.substring(marker.indexOf('[') + 1, marker.indexOf(']'));
         const tlCode = `<span id='${title}Ref${num}'>[[#${title}Note${num}|<sup>[${num}]</sup>]]</span>`;
         line = line.replace(marker, tlCode);
       });
