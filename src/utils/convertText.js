@@ -30,7 +30,7 @@ export default function convertText({
   //   details[DETAILS_KEYS.TRANSLATORS]
   // );
   // updateLocalStorage(DETAILS_KEYS.EDITORS, details[DETAILS_KEYS.EDITORS]);
-  // updateLocalStorage('nav', nav);
+  updateLocalStorage('nav', nav);
 
   const input = inputDom.querySelectorAll('p');
   let output = '';
@@ -59,6 +59,7 @@ export default function convertText({
   // if (tlMarkerCount > 0) output += formatTlNotes(tlNotesData, tlMarkerCount);
   // output += TEMPLATES.translators;
   // output += TEMPLATES.editors;
+  output += formatNavBar(nav);
   // output += formatCategories(
   //   details[DETAILS_KEYS.AUTHOR],
   //   Object.keys(renders),
@@ -257,28 +258,15 @@ export function formatCategories(author, names, whatGame) {
   return categories;
 }
 
-function formatNavBarBase(nav) {
-  let output = `{{StoryNavBar
-|name = ${nav[NAV_KEYS.NAME]}
-`;
-  if (nav[NAV_KEYS.PREV]) {
-    output += `|prev = ${nav[NAV_KEYS.PREV]}\n`;
+function formatNavBar(nav) {
+  let output = '<div toc>\n';
+  if (nav[NAV_KEYS.PREV_URL]) {
+    output += `{% btn ${nav[NAV_KEYS.PREV_URL]},, arrow-left, ${nav[NAV_KEYS.PREV_TITLE]} %}\n`;
   }
-  if (nav[NAV_KEYS.NEXT]) {
-    output += `|next = ${nav[NAV_KEYS.NEXT]}\n`;
+  output += `{% btn ${nav[NAV_KEYS.INDEX]},, star, Index %}\n`;
+  if (nav[NAV_KEYS.NEXT_URL]) {
+    output += `{% btn ${nav[NAV_KEYS.NEXT_URL]},, arrow-right, ${nav[NAV_KEYS.NEXT_TITLE]} %}\n`;
   }
-  return output;
-}
-
-export function formatTopNavBar(nav) {
-  let output = formatNavBarBase(nav);
-  output += '}}\n';
-  return output;
-}
-
-export function formatBottomNavBar(nav) {
-  let output = formatNavBarBase(nav);
-  output += `|chapter list = {{:${nav[NAV_KEYS.NAME]}/Chapters}}\n`;
-  output += '}}\n';
+  output += '</div>\n';
   return output;
 }

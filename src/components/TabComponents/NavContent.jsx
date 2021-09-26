@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { NAV_KEYS } from 'Constants';
-import { formatTopNavBar, formatBottomNavBar } from 'Utils/convertText';
 import { StateContext } from '../Main/StateContext';
 
 function NavContent() {
@@ -10,62 +9,75 @@ function NavContent() {
     const {
       target: { id, value },
     } = e;
-    setNav({ ...nav, [id]: value });
+    setNav({ ...nav, [id]: value.trim() });
   };
 
   return (
     <>
       <p>
-        For examples on how to fill out the values in this tab, please refer to
-        the{' '}
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href="https://ensemble-stars.fandom.com/wiki/Template:StoryNavBar"
-        >
-          StoryNavBar template page
-        </a>{' '}
-        on the wiki.
+        Links for the navigation at the end of each chapter page. "Title" refers to the text that
+        appears when hovering over each navigation button.
       </p>
       <div className="row">
-        <label className="row__spacer" htmlFor={NAV_KEYS.NAME}>
-          Story Name
+        <label className="row__spacer" htmlFor={NAV_KEYS.INDEX}>
+          Index URL
         </label>
         <input
           type="text"
-          id={NAV_KEYS.NAME}
-          value={nav[NAV_KEYS.NAME]}
+          id={NAV_KEYS.INDEX}
+          value={nav[NAV_KEYS.INDEX]}
           onChange={handleChange}
+          placeholder="Ex. /dead_end_land"
         />
       </div>
       <div className="row">
-        <label className="row__spacer" htmlFor={NAV_KEYS.PREV}>
-          Prev
+        <label className="row__spacer" htmlFor={NAV_KEYS.PREV_URL}>
+          Prev URL
         </label>
         <input
           type="text"
-          id={NAV_KEYS.PREV}
-          value={nav[NAV_KEYS.PREV]}
+          id={NAV_KEYS.PREV_URL}
+          value={nav[NAV_KEYS.PREV_URL]}
           onChange={handleChange}
+          placeholder="Ex. /dead_end_land/6"
         />
       </div>
       <div className="row">
-        <label className="row__spacer" htmlFor={NAV_KEYS.NEXT}>
-          Next
+        <label className="row__spacer" htmlFor={NAV_KEYS.PREV_TITLE}>
+          Prev Title
         </label>
         <input
           type="text"
-          id={NAV_KEYS.NEXT}
-          value={nav[NAV_KEYS.NEXT]}
+          id={NAV_KEYS.PREV_TITLE}
+          value={nav[NAV_KEYS.PREV_TITLE]}
           onChange={handleChange}
+          placeholder="Ex. Previous Chapter: Dead End Street (6)"
         />
       </div>
-      <p className="p--margin-bottom-none">Top nav bar code preview</p>
-      <blockquote className="preview">{`${formatTopNavBar(nav)}`}</blockquote>
-      <p className="p--margin-bottom-none">Bottom nav bar code preview</p>
-      <blockquote className="preview">{`${formatBottomNavBar(
-        nav
-      )}`}</blockquote>
+      <div className="row">
+        <label className="row__spacer" htmlFor={NAV_KEYS.NEXT_URL}>
+          Next URL
+        </label>
+        <input
+          type="text"
+          id={NAV_KEYS.NEXT_URL}
+          value={nav[NAV_KEYS.NEXT_URL]}
+          onChange={handleChange}
+          placeholder="Ex. /dead_end_land/8"
+        />
+      </div>
+      <div className="row">
+        <label className="row__spacer" htmlFor={NAV_KEYS.NEXT_TITLE}>
+          Next Title
+        </label>
+        <input
+          type="text"
+          id={NAV_KEYS.NEXT_TITLE}
+          value={nav[NAV_KEYS.NEXT_TITLE]}
+          onChange={handleChange}
+          placeholder="Ex. Next Chapter: Epilogue (1)"
+        />
+      </div>
     </>
   );
 }
