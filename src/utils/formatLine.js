@@ -76,7 +76,7 @@ export default function formatLine(TEMPLATES) {
       }
       currentName = name;
       result += TEMPLATES.startBubble(name);
-      result += TEMPLATES.dialogue(dialogue);
+      result += TEMPLATES.dialogue(dialogue, true);
       return result;
     }
 
@@ -162,7 +162,10 @@ function formatTlMarker(line) {
     if (title.length > 0) {
       const markers = line.match(/\[\d+\]/g);
       markers.forEach((marker) => {
-        const num = marker.substring(marker.indexOf('[') + 1, marker.indexOf(']'));
+        const num = marker.substring(
+          marker.indexOf('[') + 1,
+          marker.indexOf(']'),
+        );
         const tlCode = `<span id='${title}Ref${num}'>[[#${title}Note${num}|<sup>[${num}]</sup>]]</span>`;
         line = line.replace(marker, tlCode);
       });

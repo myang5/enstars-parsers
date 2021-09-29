@@ -1,4 +1,10 @@
-import { COLORS_KEYS, DETAILS_KEYS, GAME_OPTIONS, NAME_LINKS, NAV_KEYS } from '../constants/';
+import {
+  COLORS_KEYS,
+  DETAILS_KEYS,
+  GAME_OPTIONS,
+  NAME_LINKS,
+  NAV_KEYS,
+} from '../constants/';
 import extractBr from './extractBr';
 import convertEditorDataToDom from './convertEditorDataToDom';
 import formatLine, { isFileName } from './formatLine';
@@ -101,12 +107,18 @@ function normalizeDetails(details) {
 }
 
 // Helpers for getTemplates
-const externalLinkTemplate = (link, text, color) => `{{Link|${link}|${text}|${color}}}`;
+const externalLinkTemplate = (link, text, color) =>
+  `{{Link|${link}|${text}|${color}}}`;
 
 const internalLinkTemplate = (userName, name, color) =>
   `{{inLink|User:${userName}|${name}|${color}}}`;
 
-const getPersonsTemplate = ({ persons, personsTypeDetailKey, textCol, bottomCol }) => {
+const getPersonsTemplate = ({
+  persons,
+  personsTypeDetailKey,
+  textCol,
+  bottomCol,
+}) => {
   const resultText = persons.reduce((result, person) => {
     const { [DETAILS_KEYS.NAME]: name, [DETAILS_KEYS.LINK]: link } = person;
     if (!name && !link) return result;
@@ -122,7 +134,10 @@ const getPersonsTemplate = ({ persons, personsTypeDetailKey, textCol, bottomCol 
     return result;
   }, '');
   if (resultText.length === 0) return resultText;
-  const label = personsTypeDetailKey === DETAILS_KEYS.TRANSLATORS ? 'Translation' : 'Proofreading';
+  const label =
+    personsTypeDetailKey === DETAILS_KEYS.TRANSLATORS
+      ? 'Translation'
+      : 'Proofreading';
   return `|-
 ! colspan="2" style="text-align:center;background-color:${bottomCol};color:${textCol};" |'''${label}: ${resultText} '''
 `;
@@ -149,7 +164,8 @@ const getTemplates = () => {
 
   templates.startBubble = (value) => `{% bubble ${value} %}\n`;
   templates.endBubble = () => `{% endbubble %}\n\n`;
-  templates.dialogue = (value) => `  ${value}\n\n`;
+  templates.dialogue = (value, isFirstLine) =>
+    `${!isFirstLine ? '\n' : ''}  ${value}\n`;
 
   return templates;
 };
@@ -204,7 +220,9 @@ function formatTlNotes(tlNotesData, count) {
       // -----IF TL NOTES ARE IN <li>-----
       if (dom.body.firstChild.tagName.toUpperCase() === 'OL') {
         let listItems = Array.from(dom.querySelectorAll('li'));
-        listItems = listItems.map((item) => item.textContent.replace(/&nbsp;/g, ' ').trim());
+        listItems = listItems.map((item) =>
+          item.textContent.replace(/&nbsp;/g, ' ').trim(),
+        );
         notes = listItems.filter((item) => item.trim().length > 0); // filter out empty lines
       }
       // -----IF TL NOTES ARE IN <p>-----
@@ -261,11 +279,15 @@ export function formatCategories(author, names, whatGame) {
 function formatNavBar(nav) {
   let output = '<div toc>\n';
   if (nav[NAV_KEYS.PREV_URL]) {
-    output += `{% btn ${nav[NAV_KEYS.PREV_URL]},, arrow-left, ${nav[NAV_KEYS.PREV_TITLE]} %}\n`;
+    output += `{% btn ${nav[NAV_KEYS.PREV_URL]},, arrow-left, ${
+      nav[NAV_KEYS.PREV_TITLE]
+    } %}\n`;
   }
   output += `{% btn ${nav[NAV_KEYS.INDEX]},, star, Index %}\n`;
   if (nav[NAV_KEYS.NEXT_URL]) {
-    output += `{% btn ${nav[NAV_KEYS.NEXT_URL]},, arrow-right, ${nav[NAV_KEYS.NEXT_TITLE]} %}\n`;
+    output += `{% btn ${nav[NAV_KEYS.NEXT_URL]},, arrow-right, ${
+      nav[NAV_KEYS.NEXT_TITLE]
+    } %}\n`;
   }
   output += '</div>\n';
   return output;
