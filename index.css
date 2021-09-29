@@ -3,6 +3,8 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  row-gap: 8px;
+  margin-bottom: 8px;
 }
 header a {
   position: relative;
@@ -27,7 +29,6 @@ header a.star-link:hover:after {
 header h1 {
   font-size: 2.5rem;
   margin: 0;
-  margin-bottom: 8px;
 }
 header h1 a.star-link:hover {
   padding-right: 45px;
@@ -60,12 +61,12 @@ header h1 a.star-link:hover:after {
   padding-left: 0;
   margin: 0;
   vertical-align: top;
-  margin-bottom: 8px;
+  column-gap: 40px;
 }
 #navbar li {
   text-align: left;
   list-style-type: none;
-  margin: 0px 20px;
+  margin: 0;
 }
 #navbar a.star-link {
   font-size: 1rem;
@@ -80,20 +81,14 @@ header h1 a.star-link:hover:after {
   right: -1em;
 }
 /* resize header */
-@media (max-width: 37.5em) {
+@media (max-width: 500px) {
+  #navbar {
+    flex-direction: column;
+  }
   #navbar li {
     display: inline-block;
-    margin: 1em;
+    margin: 4px;
     text-align: center;
-  }
-}
-@media (max-width: 20em) {
-  #navbar {
-    margin-top: 0.5rem;
-  }
-  #navbar li {
-    display: list-item;
-    margin: auto;
   }
 }
 
@@ -188,17 +183,6 @@ button,
   padding-right: 0.7rem;
   width: 4.5rem;
   flex: 0 0 4.5rem;
-}
-.tab-content .row input,
-.tab-content .row select {
-  padding: 4px;
-  box-sizing: border-box;
-  min-width: 0;
-  flex: 1 1 auto;
-}
-.tab-content .row input.jscolor,
-.tab-content .row input[type='radio'] {
-  flex: initial;
 }
 .tab-content--text .ck.ck-editor__editable_inline {
   border: none;
@@ -356,6 +340,203 @@ button,
   }
 }
 
+.tab-content--details .btn--add-person {
+  background-color: #fff;border-radius: 5px;border: 1px solid;color: #15c6e0;box-sizing: border-box;
+}
+.tab-content {
+  width: 100%;
+  height: 31.25rem;
+  box-sizing: border-box;
+  border: 1px solid #15c6e0;
+  background-color: #fff;
+  display: none;
+}
+.tab-content.tab-content--active {
+  display: flex;
+}
+.tab-content:not(.tab-content--text) {
+  padding: 20px;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.tab-content h3:nth-of-type(1) {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.tab-content > p {
+  margin-top: 0;
+}
+.tab-content .row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 300px;
+  margin-bottom: 1rem;
+}
+.tab-content .row.row--label-only {
+  align-items: flex-end;
+  margin-bottom: 0;
+  text-align: left;
+  margin-left: 2px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+.tab-content .row .row__spacer {
+  display: inline-block;
+  text-align: right;
+  padding-right: 0.7rem;
+  width: 4.5rem;
+  flex: 0 0 4.5rem;
+}
+.tab-content--text .ck.ck-editor__editable_inline {
+  border: none;
+  height: inherit;
+  width: inherit;
+}
+.tab-content--story-nav .preview {
+  white-space: pre-wrap;
+}
+.tab-content--story-nav .p--margin-bottom-none {
+  margin-bottom: 0;
+}
+.tab-content--details .row__half-width {
+  width: 50%;
+}
+.tab-content--details .row__half-width ~ .row__half-width {
+  margin-left: 5px;
+}
+.tab-content--details .row--person {
+  margin-bottom: 5px;
+}
+.tab-content--details .btn--add-person {
+  background-color: transparent;
+  border: none;
+  font-size: 0.8rem;
+}
+.tab-content--details .btn--add-person:focus,
+.tab-content--details .btn--add-person:hover {
+  font-weight: bold;
+}
+.tab-content--details .label--radio {
+  margin-top: 3px;
+}
+.tab-content--details .jscolor {
+  width: 6em;
+  border: 0.5px #adadad;
+  border-style: solid;
+}
+.tab-content--tl-notes .row--tl-editor {
+  flex: 0 1 100%;
+  display: flex;
+  align-items: flex-start;
+}
+.tab-content--tl-notes .ck.ck-editor__editable_inline {
+  border: 1px solid var(--ck-color-base-border);
+  height: 100%;
+  width: 100%;
+  max-height: initial;
+  overflow-y: auto;
+  -webkit-appearance: textfield;
+}
+.tab-content--tl-notes .ck.ck.ck-editor__editable_inline:not(.ck-editor__nested-editable).ck-focused {
+  border: 1px solid var(--ck-color-base-border);
+}
+
+button,
+.primary-button,
+.secondary-button,
+.main-page.jay-formatter .actions #convert-button,
+.main-page.jay-formatter .actions #copy-button {
+  cursor: pointer;
+  outline: none;
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+}
+.primary-button,
+.main-page.jay-formatter .actions #convert-button {
+  background-color: #15c6e0;
+  border-radius: 5px;
+  border: 1px solid;
+  color: #fff;
+  box-sizing: border-box;
+}
+.secondary-button,
+.main-page.jay-formatter .actions #copy-button {
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid;
+  color: #15c6e0;
+  box-sizing: border-box;
+}
+.main-page.jay-formatter {
+  max-width: 100rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.main-page.jay-formatter .input,
+.main-page.jay-formatter .output {
+  width: 45%;
+  min-width: 409px;
+  max-width: 31.25rem;
+  margin: 0 16px;
+  margin-top: 26.5px;
+}
+.main-page.jay-formatter .output {
+  height: 31.25rem;
+  box-sizing: border-box;
+  border: 1px solid #15c6e0;
+  resize: none;
+}
+.main-page.jay-formatter .output:focus {
+  outline: none;
+}
+.main-page.jay-formatter .actions {
+  display: flex;
+  flex-direction: column;
+  margin: 26.5px 0 0 0;
+}
+.main-page.jay-formatter .actions button,
+.main-page.jay-formatter .actions .error {
+  width: 140px;
+  margin: 0 0 1rem 0;
+}
+.main-page.jay-formatter .actions button {
+  font-size: 1rem;
+  padding: 0.7rem;
+}
+.main-page.jay-formatter .actions button:active {
+  transform: scale(0.9);
+}
+@media (max-width: 1022px) {
+  /*half-screen window*/
+  .main-page.jay-formatter {
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-page.jay-formatter .input,
+  .main-page.jay-formatter .output {
+    margin-top: 2rem;
+    width: 90%;
+    max-width: 49rem;
+    margin: 1rem;
+  }
+  .main-page.jay-formatter .actions {
+    width: 90%;
+    flex-wrap: wrap;
+    margin: 0.5rem 0 0 0;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .main-page.jay-formatter .actions button {
+    margin: 0 0.5rem;
+  }
+}
+
 /*---------------------------------ALL PAGES----------------------------------*/
 body {
   margin: 0;
@@ -401,6 +582,17 @@ blockquote {
 }
 li {
   margin: 0.25em 0;
+}
+input,
+select {
+  padding: 4px;
+  box-sizing: border-box;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+input.jscolor,
+input[type='radio'] {
+  flex: initial;
 }
 .ck.ck-editor__editable_inline {
   outline: none;
