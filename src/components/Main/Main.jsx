@@ -14,8 +14,8 @@ import './Main.less';
 const TABS = {
   TEXT: 'Text',
   NAV: 'Story Nav',
-  DETAILS: 'Details',
-  TL_NOTES: 'TL Notes',
+  // DETAILS: 'Details',
+  // TL_NOTES: 'TL Notes',
 };
 const tabTitles = Object.values(TABS);
 
@@ -45,12 +45,12 @@ const Input = () => {
       <TabContent {...{ value: TABS.NAV, clicked }}>
         <NavContent />
       </TabContent>
-      <TabContent {...{ value: TABS.DETAILS, clicked }}>
+      {/* <TabContent {...{ value: TABS.DETAILS, clicked }}>
         <DetailContent />
       </TabContent>
       <TabContent {...{ value: TABS.TL_NOTES, clicked }}>
         <TLNotesContent />
-      </TabContent>
+      </TabContent> */}
     </div>
   );
 };
@@ -78,7 +78,7 @@ const Buttons = ({ outputRef }) => {
     setError('');
     const output = convertText({
       inputData: inputRef.current.editor.getData(),
-      tlNotesData: tlNotesRef.current.editor.getData(),
+      // tlNotesData: tlNotesRef.current.editor.getData(),
       nav,
       renders,
       details,

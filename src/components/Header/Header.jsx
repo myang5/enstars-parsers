@@ -11,21 +11,12 @@ export default function Header() {
         </Link>
       </h1>
       <ul id="navbar">
-        <li>
+        {/* <li>
           <Link className="star-link" to="/howto">
             HOW TO USE
           </Link>
-        </li>
-        <li>
-          <a
-            className="star-link"
-            target="_blank"
-            rel="noreferrer"
-            href="https://github.com/myang5/enstars-parsers/issues"
-          >
-            KNOWN ISSUES
-          </a>
-        </li>
+        </li> */}
+
         <li>
           <a
             className="star-link"
@@ -34,6 +25,16 @@ export default function Header() {
             href="https://twitter.com/gayandasleep"
           >
             CONTACT
+          </a>
+        </li>
+        <li>
+          <a
+            className="star-link"
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/myang5/enstars-parsers/issues"
+          >
+            REPORT ISSUE
           </a>
         </li>
         <li>
