@@ -12,97 +12,85 @@
 
 @breakpoint: @text-area-min-width * 2 + @text-area-margin * 4 + @actions-width;
 
-.main-page {
+.main-page.jay-formatter {
   max-width: 100rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-}
 
-.input,
-.output {
-  width: 45%;
-  min-width: @text-area-min-width;
-  max-width: @text-area-height;
-  margin: 0 @text-area-margin;
-}
-
-.output {
-  height: @text-area-height;
-  margin-top: @tab-menu-height;
-  box-sizing: border-box;
-  border: 1px solid @light-blue;
-  resize: none;
-  &:focus {
-    outline: none;
-  }
-}
-
-.actions {
-  display: flex;
-  flex-direction: column;
-  margin: @tab-menu-height 0 0 0;
-
-  button,
-  .error {
-    width: @actions-width;
-    margin: 0 0 1rem 0;
+  .input,
+  .output {
+    width: 45%;
+    min-width: @text-area-min-width;
+    max-width: @text-area-height;
+    margin: 0 @text-area-margin;
+    margin-top: @tab-menu-height;
   }
 
-  button {
-    font-size: 1rem;
-    padding: 0.7rem;
-
-    &:active {
-      transform: scale(0.9);
+  .output {
+    height: @text-area-height;
+    box-sizing: border-box;
+    border: 1px solid @light-blue;
+    resize: none;
+    &:focus {
+      outline: none;
     }
   }
 
-  #convert-button {
-    &:extend(.primary-button);
-  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    margin: @tab-menu-height 0 0 0;
 
-  #copy-button {
-    &:extend(.secondary-button);
-  }
+    button,
+    .error {
+      width: @actions-width;
+      margin: 0 0 1rem 0;
+    }
 
-  .error {
-    color: red;
-    text-align: center;
+    button {
+      font-size: 1rem;
+      padding: 0.7rem;
+
+      &:active {
+        transform: scale(0.9);
+      }
+    }
+
+    #convert-button {
+      &:extend(.primary-button);
+    }
+
+    #copy-button {
+      &:extend(.secondary-button);
+    }
   }
 }
 
 @media (max-width: @breakpoint) {
   /*half-screen window*/
-  .main-page {
+  .main-page.jay-formatter {
     flex-direction: column;
     align-items: center;
-  }
 
-  .input,
-  .output {
-    margin-top: 2rem;
-    width: 90%;
-    max-width: 49rem;
-    margin: 1rem;
-  }
-
-  .actions {
-    width: 90%;
-    flex-wrap: wrap;
-    margin: 0.5rem 0 0 0;
-    flex-direction: row;
-    justify-content: center;
-
-    button {
-      margin: 0 0.5rem;
+    .input,
+    .output {
+      margin-top: 2rem;
+      width: 90%;
+      max-width: 49rem;
+      margin: 1rem;
     }
 
-    .error {
-      width: 80%;
-      flex: 1 0 auto;
-      margin-top: 0.5rem;
-      margin-bottom: 0;
+    .actions {
+      width: 90%;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 0 0;
+      flex-direction: row;
+      justify-content: center;
+
+      button {
+        margin: 0 0.5rem;
+      }
     }
   }
 }

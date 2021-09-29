@@ -9,7 +9,7 @@ export default function Main() {
 
   return (
     <StateProvider>
-      <div className="main-page">
+      <div className="main-page jay-formatter">
         <Input />
         <Buttons {...{ outputRef }} />
         <textarea className="output" ref={outputRef} spellCheck={false} />
