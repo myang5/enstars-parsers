@@ -9,14 +9,14 @@ function NavContent() {
     const {
       target: { id, value },
     } = e;
-    setNav({ ...nav, [id]: value.trim() });
+    setNav({ ...nav, [id]: value });
   };
 
   return (
     <>
       <p>
-        Links for the navigation at the end of each chapter page. "Title" refers to the text that
-        appears when hovering over each navigation button.
+        Links for the navigation at the end of each chapter page. "Title" refers
+        to the text that appears when hovering over each navigation button.
       </p>
       <div className="row">
         <label className="row__spacer" htmlFor={NAV_KEYS.INDEX}>

@@ -174,7 +174,7 @@ const getTemplates = () => {
 **Content Warning:** ${value}
 {% endnote %}\n\n`;
   templates.noteNarration = ({ label, value }) => `{% note narration %}
-${label ? `**${label}:**` : ''} ${value}
+${label ? `**${label}:** ` : ''}${value}
 {% endnote %}\n\n`;
 
   templates.image = (value) => `{% img ${value} %}\n\n`;

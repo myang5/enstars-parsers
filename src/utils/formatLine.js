@@ -101,12 +101,14 @@ const getValueFromLine = (line) => {
 
 const isNarrationLine = (line) => line.toUpperCase().startsWith('NARRATION:');
 const getValuesFromNarrationLine = (line) => {
+  console.log(line);
   // Narration: Time: A few days later: arbitrary other colon
   const valueWithLabel = line.match(/^\w*:( ?\w*?):(.*)/);
   if (valueWithLabel) {
     return { label: valueWithLabel[1].trim(), value: valueWithLabel[2].trim() };
   }
   // Narration: A few days later: arbitrary other colon
+  console.log(getValueFromLine(line));
   return { value: getValueFromLine(line) };
 };
 
