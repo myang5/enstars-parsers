@@ -51,23 +51,21 @@ export default function formatLine(TEMPLATES) {
       return '';
     }
 
+    if (isImageLine(line)) {
+      return TEMPLATES.image(getValueFromLine(line));
+    }
+
     if (isLocationLine(line)) {
-      return TEMPLATES.noteLocation(getNoteValueFromLine(line));
+      return TEMPLATES.noteLocation(getValueFromLine(line));
     }
 
     if (isCwLine(line)) {
-      return TEMPLATES.noteCw(getNoteValueFromLine(line));
+      return TEMPLATES.noteCw(getValueFromLine(line));
     }
 
     if (isNarrationLine(line)) {
       return TEMPLATES.noteNarration(getValuesFromNarrationLine(line));
     }
-
-    // // -----FILTER OUT FILE NAMES-----
-    // if (isFileName(line)) {
-    //   currentName = ''; // since its new section
-    //   return TEMPLATES.cgRender.replace('FILENAME', line.trim());
-    // }
 
     if (isNameLine(line)) {
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
@@ -95,7 +93,8 @@ export default function formatLine(TEMPLATES) {
 
 const isLocationLine = (line) => line.toUpperCase().startsWith('LOCATION:');
 const isCwLine = (line) => line.toUpperCase().startsWith('CW:');
-const getNoteValueFromLine = (line) => {
+const isImageLine = (line) => line.toUpperCase().startsWith('IMAGE:');
+const getValueFromLine = (line) => {
   const result = line.match(/^\w*:(.*)/);
   return result[1].trim();
 };
@@ -108,8 +107,7 @@ const getValuesFromNarrationLine = (line) => {
     return { label: valueWithLabel[1].trim(), value: valueWithLabel[2].trim() };
   }
   // Narration: A few days later: arbitrary other colon
-  const value = line.match(/^\w*:(.*)/);
-  return { value: value[1].trim() };
+  return { value: getValueFromLine(line) };
 };
 
 /**
@@ -153,22 +151,6 @@ const splitLineIntoNameAndDialogue = (line) => {
     dialogue.join(':').trim(),
   ];
 };
-
-/**
- * Check if a dialogue line is actually an image file name
- * @param {string} line
- * @return {boolean}
- */
-
-export function isFileName(line) {
-  const extensions = ['.png', '.gif', '.jpg', '.jpeg', '.ico', '.pdf', '.svg'];
-  for (let i = 0; i < extensions.length; i++) {
-    if (line.toLowerCase().endsWith(extensions[i])) {
-      return true;
-    }
-  }
-  return false;
-}
 
 /**
  * Formats TL note markers into clickable wiki code citation references

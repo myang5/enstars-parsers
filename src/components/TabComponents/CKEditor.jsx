@@ -51,6 +51,7 @@ export function InputEditor() {
 <p>CW: Death threats</p>
 <p>Narration: Time: Several minutes later</p>
 <p>Narration: Several minutes later</p>
+<p>Image: /img/es/eventstory/meteorimpact/firsthalfch2.jpg</p>
 <p>Natsume, hidden: HoweVER. Within a game where everything is proGRAMMED, everything works with much simpler loGIC.</p>
 <p>In this world where everything obeys my every comMAND, I will reign as god and control everyTHING. I'll make sure they can live in peace and joy within this miniature <hold>garDEN—</hold></p>
 <p>And I will give everyone an equal opportunity to experience their own happily ever afTER.</p>

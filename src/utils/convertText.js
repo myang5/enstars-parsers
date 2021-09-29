@@ -177,6 +177,8 @@ const getTemplates = () => {
 ${label ? `**${label}:**` : ''} ${value}
 {% endnote %}\n\n`;
 
+  templates.image = (value) => `{% img ${value} %}\n\n`;
+
   return templates;
 };
 
