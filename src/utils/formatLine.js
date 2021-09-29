@@ -101,14 +101,12 @@ const getValueFromLine = (line) => {
 
 const isNarrationLine = (line) => line.toUpperCase().startsWith('NARRATION:');
 const getValuesFromNarrationLine = (line) => {
-  console.log(line);
   // Narration: Time: A few days later: arbitrary other colon
   const valueWithLabel = line.match(/^\w*:( ?\w*?):(.*)/);
   if (valueWithLabel) {
     return { label: valueWithLabel[1].trim(), value: valueWithLabel[2].trim() };
   }
   // Narration: A few days later: arbitrary other colon
-  console.log(getValueFromLine(line));
   return { value: getValueFromLine(line) };
 };
 
@@ -153,34 +151,3 @@ const splitLineIntoNameAndDialogue = (line) => {
     dialogue.join(':').trim(),
   ];
 };
-
-/**
- * Formats TL note markers into clickable wiki code citation references
- * [1] --> <span id='${title}RefNUM'>[[#${title}NoteNUM|<sup>[NUM]</sup>]]</span>
- * The complicated id format is required for the citations to work with the
- * story page's tabview, since each tab may have multiple citations with the same number
- * @param {string} line
- * @return {string} The line with any TL markers formatted
- */
-
-function formatTlMarker(line) {
-  if (line.search(/\[\d+\]/) > 0) {
-    // Look for TL Markers
-    const title = document.querySelector('#title').value;
-    if (title.length > 0) {
-      const markers = line.match(/\[\d+\]/g);
-      markers.forEach((marker) => {
-        const num = marker.substring(
-          marker.indexOf('[') + 1,
-          marker.indexOf(']'),
-        );
-        const tlCode = `<span id='${title}Ref${num}'>[[#${title}Note${num}|<sup>[${num}]</sup>]]</span>`;
-        line = line.replace(marker, tlCode);
-      });
-    } else {
-      document.querySelector('.error').innerHTML =
-        'WARNING: The formatter detected TL notes in the dialogue but no chapter title in the TL Notes tab. TL notes were not formatted.';
-    }
-  }
-  return line;
-}

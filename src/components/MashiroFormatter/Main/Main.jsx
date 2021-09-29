@@ -1,21 +1,12 @@
-import React, { useState, useContext, useRef } from 'react';
-import { StateProvider, StateContext } from './StateContext';
-import {
-  TabMenu,
-  TabContent,
-  InputEditor,
-  NavContent,
-  DetailContent,
-  TLNotesContent,
-} from '../TabComponents';
+import React, { useState, useRef } from 'react';
+import { StateProvider, useStateContext } from './StateContext';
+import { TabMenu, TabContent, InputEditor, NavContent } from '../TabComponents';
 import convertText from 'Utils/convertText';
 import './Main.less';
 
 const TABS = {
   TEXT: 'Text',
   NAV: 'Story Nav',
-  // DETAILS: 'Details',
-  // TL_NOTES: 'TL Notes',
 };
 const tabTitles = Object.values(TABS);
 
@@ -45,12 +36,6 @@ const Input = () => {
       <TabContent {...{ value: TABS.NAV, clicked }}>
         <NavContent />
       </TabContent>
-      {/* <TabContent {...{ value: TABS.DETAILS, clicked }}>
-        <DetailContent />
-      </TabContent>
-      <TabContent {...{ value: TABS.TL_NOTES, clicked }}>
-        <TLNotesContent />
-      </TabContent> */}
     </div>
   );
 };
@@ -61,10 +46,8 @@ const COPY_BUTTON_TEXT = {
 };
 
 const Buttons = ({ outputRef }) => {
-  const { nav, details, setDetails, colors, renders, inputRef, tlNotesRef } =
-    useContext(StateContext);
+  const { nav, inputRef } = useStateContext();
   const [copyButton, setCopyButton] = useState(COPY_BUTTON_TEXT.COPY);
-  const [error, setError] = useState('');
 
   // copies text to clipboard
   const copyToClip = () => {
@@ -75,15 +58,9 @@ const Buttons = ({ outputRef }) => {
 
   const convertOnClick = () => {
     setCopyButton(COPY_BUTTON_TEXT.COPY);
-    setError('');
     const output = convertText({
       inputData: inputRef.current.editor.getData(),
-      // tlNotesData: tlNotesRef.current.editor.getData(),
       nav,
-      renders,
-      details,
-      onChangeDetails: setDetails,
-      colors,
     });
     outputRef.current.value = output;
   };
@@ -96,7 +73,6 @@ const Buttons = ({ outputRef }) => {
       <button type="button" onClick={copyToClip} id="copy-button">
         {copyButton}
       </button>
-      <p className="error">{error}</p>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 
 import CKEditor from '@ckeditor/ckeditor5-react';
 import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
@@ -7,43 +7,20 @@ import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import Link from '@ckeditor/ckeditor5-link/src/link';
-import List from '@ckeditor/ckeditor5-list/src/list';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import Autosave from '@ckeditor/ckeditor5-autosave/src/autosave';
 
-import { StateContext } from '../Main/StateContext';
-import getNamesInDialogue from 'Utils/getNamesInDialogue';
+import { useStateContext } from '../Main/StateContext';
 
 export function InputEditor() {
   // get refs from EditorContext to provide to CKEditor components
   // refer to Main.js code
-  const { renderRef, setRenders, inputRef } = useContext(StateContext);
-
-  // updates the dialogue render inputs when content of InputArea changes
-  const updateNames = (editor) => {
-    const names = getNamesInDialogue(editor.getData());
-    Object.keys(names).forEach((name) => {
-      names[name] = renderRef.current[name] || '';
-    });
-    setRenders(names);
-  };
+  const { inputRef } = useStateContext();
 
   // Autosave documentation:
   // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/saving-data.html#autosave-feature
   const inputEditorConfig = {
-    plugins: [
-      Essentials,
-      Paragraph,
-      Bold,
-      Italic,
-      Link,
-      PasteFromOffice,
-      Autosave,
-    ],
+    plugins: [Essentials, Paragraph, Bold, Italic, Link, PasteFromOffice],
     toolbar: ['bold', 'italic', 'link', '|', 'undo', 'redo'],
-    autosave: {
-      save: updateNames,
-    },
   };
 
   const inputEditorData = `
@@ -85,41 +62,6 @@ export function InputEditor() {
       config={inputEditorConfig}
       data={inputEditorData}
       ref={inputRef}
-    />
-  );
-}
-
-export function TLNotesEditor() {
-  // get refs from EditorContext to provide to CKEditor components
-  // refer to Main.js code
-  const { tlNotesRef } = useContext(StateContext);
-
-  const tlNotesEditorConfig = {
-    plugins: [Bold, Italic, Link, List, PasteFromOffice, Essentials, Paragraph],
-    toolbar: ['bold', 'italic', 'link', 'numberedList', '|', 'undo', 'redo'],
-  };
-
-  const tlNotesEditorData = `<p>If this is your first time using the formatter, please check the <a href='./howto.html#tlNotesSection'>Text
-     Guidelines</a> for how to add translation notes.</p>`;
-
-  useEffect(() => {
-    // Grab the HTML element using ref.current.editor
-    // https://github.com/ckeditor/ckeditor5/issues/1185
-    tlNotesRef.current.editor.editing.view.change((writer) => {
-      writer.setAttribute(
-        'spellcheck',
-        'false',
-        tlNotesRef.current.editor.editing.view.document.getRoot(),
-      );
-    });
-  }, []);
-
-  return (
-    <CKEditor
-      editor={BalloonEditor}
-      config={tlNotesEditorConfig}
-      data={tlNotesEditorData}
-      ref={tlNotesRef}
     />
   );
 }

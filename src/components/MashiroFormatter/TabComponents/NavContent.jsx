@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NAV_KEYS } from 'Constants';
-import { StateContext } from '../Main/StateContext';
+import { useStateContext } from '../Main/StateContext';
 
 function NavContent() {
-  const { nav, setNav } = useContext(StateContext);
+  const { nav, setNav } = useStateContext();
 
   const handleChange = (e) => {
     const {
