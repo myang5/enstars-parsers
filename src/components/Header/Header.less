@@ -3,6 +3,8 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  row-gap: 8px;
+  margin-bottom: 8px;
 
   a {
     position: relative;
@@ -31,7 +33,6 @@ header {
   h1 {
     font-size: 2.5rem;
     margin: 0;
-    margin-bottom: 8px;
 
     a.star-link {
       &:hover {
@@ -63,12 +64,12 @@ header {
   padding-left: 0;
   margin: 0;
   vertical-align: top;
-  margin-bottom: 8px;
+  column-gap: 40px;
 
   li {
     text-align: left;
     list-style-type: none;
-    margin: 0px 20px;
+    margin: 0;
   }
 
   a.star-link {
@@ -87,23 +88,13 @@ header {
 }
 
 /* resize header */
-@media (max-width: 37.5em) {
+@media (max-width: 500px) {
   #navbar {
+    flex-direction: column;
     li {
       display: inline-block;
-      margin: 1em;
+      margin: 4px;
       text-align: center;
-    }
-  }
-}
-
-@media (max-width: 20em) {
-  #navbar {
-    margin-top: 0.5rem;
-
-    li {
-      display: list-item;
-      margin: auto;
     }
   }
 }

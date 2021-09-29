@@ -1,9 +1,9 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
+import { Formatters } from 'Constants';
 import Header from './Header';
 import Main from './Main';
-// import HowTo from './HowTo';
 import 'Styles/styles.less';
 
 function App() {
@@ -11,12 +11,15 @@ function App() {
     <HashRouter basename="/">
       <Header />
       <Switch>
+        <Route path={`/${Formatters.MashiroFormatter}`}>
+          <Main />
+        </Route>
+        <Route path={`/${Formatters.JayFormatter}`}>
+          <Main />
+        </Route>
         <Route exact path="/">
           <Main />
         </Route>
-        {/* <Route exact path="/howto">
-          <HowTo />
-        </Route> */}
       </Switch>
     </HashRouter>
   );
