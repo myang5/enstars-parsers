@@ -167,6 +167,16 @@ const getTemplates = () => {
   templates.dialogue = (value, isFirstLine) =>
     `${!isFirstLine ? '\n' : ''}  ${value}\n`;
 
+  templates.noteLocation = (value) => `{% note location %}
+**Location:** ${value}
+{% endnote %}\n\n`;
+  templates.noteCw = (value) => `{% note cw %}
+**Content Warning:** ${value}
+{% endnote %}\n\n`;
+  templates.noteNarration = ({ label, value }) => `{% note narration %}
+${label ? `**${label}:**` : ''} ${value}
+{% endnote %}\n\n`;
+
   return templates;
 };
 

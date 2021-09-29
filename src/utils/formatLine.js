@@ -51,17 +51,22 @@ export default function formatLine(TEMPLATES) {
       return '';
     }
 
+    if (isLocationLine(line)) {
+      return TEMPLATES.noteLocation(getNoteValueFromLine(line));
+    }
+
+    if (isCwLine(line)) {
+      return TEMPLATES.noteCw(getNoteValueFromLine(line));
+    }
+
+    if (isNarrationLine(line)) {
+      return TEMPLATES.noteNarration(getValuesFromNarrationLine(line));
+    }
+
     // // -----FILTER OUT FILE NAMES-----
     // if (isFileName(line)) {
     //   currentName = ''; // since its new section
     //   return TEMPLATES.cgRender.replace('FILENAME', line.trim());
-    // }
-    // // -----PROCESS HEADINGS OR DIALOGUE LINES-----
-    // p.innerHTML = formatTlMarker(p.innerHTML);
-    // const firstWord = line.split(' ')[0];
-    // // -----FILTER OUT DIALOGUE LINES WITH NO LABEL-----
-    // if (!firstWord.includes(':')) {
-    //   return `${formatStyling(p).innerHTML}\n\n`;
     // }
 
     if (isNameLine(line)) {
@@ -87,6 +92,25 @@ export default function formatLine(TEMPLATES) {
     return '';
   };
 }
+
+const isLocationLine = (line) => line.toUpperCase().startsWith('LOCATION:');
+const isCwLine = (line) => line.toUpperCase().startsWith('CW:');
+const getNoteValueFromLine = (line) => {
+  const result = line.match(/^\w*:(.*)/);
+  return result[1].trim();
+};
+
+const isNarrationLine = (line) => line.toUpperCase().startsWith('NARRATION:');
+const getValuesFromNarrationLine = (line) => {
+  // Narration: Time: A few days later: arbitrary other colon
+  const valueWithLabel = line.match(/^\w*:( ?\w*?):(.*)/);
+  if (valueWithLabel) {
+    return { label: valueWithLabel[1].trim(), value: valueWithLabel[2].trim() };
+  }
+  // Narration: A few days later: arbitrary other colon
+  const value = line.match(/^\w*:(.*)/);
+  return { value: value[1].trim() };
+};
 
 /**
  * Example lines:

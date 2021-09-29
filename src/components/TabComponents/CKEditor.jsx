@@ -31,7 +31,15 @@ export function InputEditor() {
   // Autosave documentation:
   // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/saving-data.html#autosave-feature
   const inputEditorConfig = {
-    plugins: [Essentials, Paragraph, Bold, Italic, Link, PasteFromOffice, Autosave],
+    plugins: [
+      Essentials,
+      Paragraph,
+      Bold,
+      Italic,
+      Link,
+      PasteFromOffice,
+      Autosave,
+    ],
     toolbar: ['bold', 'italic', 'link', '|', 'undo', 'redo'],
     autosave: {
       save: updateNames,
@@ -39,7 +47,11 @@ export function InputEditor() {
   };
 
   const inputEditorData = `
-<p>Natsume: HoweVER. Within a game where everything is proGRAMMED, everything works with much simpler loGIC.</p>
+<p>Location: Pool</p>
+<p>CW: Death threats</p>
+<p>Narration: Time: Several minutes later</p>
+<p>Narration: Several minutes later</p>
+<p>Natsume, hidden: HoweVER. Within a game where everything is proGRAMMED, everything works with much simpler loGIC.</p>
 <p>In this world where everything obeys my every comMAND, I will reign as god and control everyTHING. I'll make sure they can live in peace and joy within this miniature <hold>garDEN—</hold></p>
 <p>And I will give everyone an equal opportunity to experience their own happily ever afTER.</p>
 <p><spell>—Welcome to paradise, my <hold>idols♪</hold></spell></p>
