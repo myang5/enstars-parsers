@@ -62,13 +62,21 @@ export function InputEditor() {
   useEffect(() => {
     // Grab the HTML element using ref.current.editor
     // https://github.com/ckeditor/ckeditor5/issues/1185
-    inputRef.current.editor.editing.view.change((writer) => {
-      writer.setAttribute(
-        'spellcheck',
-        'false',
-        inputRef.current.editor.editing.view.document.getRoot(),
-      );
-    });
+    try {
+      inputRef.current.editor.editing.view.change((writer) => {
+        writer.setAttribute(
+          'spellcheck',
+          'false',
+          inputRef.current.editor.editing.view.document.getRoot(),
+        );
+      });
+    } catch (e) {
+      // TODO: figure out why inputRef.current.editor.editing is being read
+      // causing a memory leak
+    }
+
+    const cleanup = () => {};
+    return cleanup;
   }, []);
 
   return (
