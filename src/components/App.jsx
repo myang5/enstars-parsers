@@ -3,7 +3,7 @@ import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import { Formatters } from 'Constants';
 import Header from './Header';
-import Main from './Main';
+import { MashiroFormatter } from './MashiroFormatter';
 import 'Styles/styles.less';
 
 function App() {
@@ -12,13 +12,11 @@ function App() {
       <Header />
       <Switch>
         <Route path={`/${Formatters.MashiroFormatter}`}>
-          <Main />
+          <MashiroFormatter />
         </Route>
-        <Route path={`/${Formatters.JayFormatter}`}>
-          <Main />
-        </Route>
+        <Route path={`/${Formatters.JayFormatter}`}>{/* <Main /> */}</Route>
         <Route exact path="/">
-          <Main />
+          <MashiroFormatter />
         </Route>
       </Switch>
     </HashRouter>
