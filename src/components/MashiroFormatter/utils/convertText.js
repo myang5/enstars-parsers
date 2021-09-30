@@ -1,6 +1,6 @@
-import { NAV_KEYS } from 'Constants';
-import extractBr from 'Utils/extractBr';
-import convertEditorDataToDom from 'Utils/convertEditorDataToDom';
+import { NAV_KEYS } from '@constants';
+import extractBr from '@utils/extractBr';
+import convertEditorDataToDom from '@utils/convertEditorDataToDom';
 import formatLine from './formatLine';
 
 /**

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { MainActions } from '../../shared/MainActions';
-import { TabContent } from '../../shared/TabContent';
+import { MainActions } from '@shared/MainActions';
+import { TabContent } from '@shared/TabContent';
 import { StateProvider, useStateContext } from './StateContext';
 import { TabMenu, InputEditor, NavContent } from '../TabComponents';
 import convertText from '../utils/convertText';

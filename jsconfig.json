@@ -2,9 +2,9 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "Styles": ["./styles/*"],
-      "Utils": ["./utils/*"],
-      "Constants": ["./constants/*"],
+      "@styles": ["./styles/*"],
+      "@utils": ["./utils/*"],
+      "@constants": ["./constants/*"],
       "@shared": ["./components/shared/*"]
     }
   },

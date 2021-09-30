@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import { Formatters, DEFAULT_FORMATTER } from 'Constants';
+import { Formatters, DEFAULT_FORMATTER } from '@constants';
 import './Header.less';
 
 const formatterLinks = Object.values(Formatters);

@@ -1,12 +1,12 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import { Formatters } from 'Constants';
+import { Formatters } from '@constants';
 import Header from './Header';
 import { MashiroFormatter } from './MashiroFormatter';
 import { JayFormatter } from './JayFormatter';
-import 'Styles/styles.less';
-import 'Styles/Main.less';
+import '@styles/styles.less';
+import '@styles/Main.less';
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NAV_KEYS } from 'Constants';
+import { NAV_KEYS } from '@constants';
 import { useStateContext } from '../Main/StateContext';
 
 function NavContent() {
