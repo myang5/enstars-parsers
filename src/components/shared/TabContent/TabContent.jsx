@@ -2,7 +2,7 @@ import React from 'react';
 import './TabContent.less';
 import classNames from 'classnames';
 
-export default function TabContent({ clicked, value, children }) {
+export const TabContent = ({ clickedValue, value, children }) => {
   return (
     // set className so that CSS controls which TabContent is visible
     <div
@@ -10,11 +10,11 @@ export default function TabContent({ clicked, value, children }) {
         'tab-content',
         `tab-content--${value.replace(' ', '-').toLowerCase()}`,
         {
-          'tab-content--active': clicked === value,
-        }
+          'tab-content--active': clickedValue === value,
+        },
       )}
     >
       {children}
     </div>
   );
-}
+};

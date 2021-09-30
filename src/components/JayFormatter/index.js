@@ -1,1 +1,1 @@
-export { default as JayFormatter } from './Main';
+export { Main as JayFormatter } from './Main';

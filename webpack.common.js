@@ -28,7 +28,7 @@ module.exports = {
       Styles: path.resolve(__dirname, 'src/styles/'),
       Utils: path.resolve(__dirname, 'src/utils/'),
       Constants: path.resolve(__dirname, 'src/constants/'),
-      Shared: path.resolve(__dirname, 'src/components/shared'),
+      '@shared': path.resolve(__dirname, 'src/components/shared/'),
       'react-dom': '@hot-loader/react-dom',
     },
   },

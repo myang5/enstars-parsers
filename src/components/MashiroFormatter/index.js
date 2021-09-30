@@ -1,1 +1,1 @@
-export { default as MashiroFormatter } from './Main';
+export { Main as MashiroFormatter } from './Main';

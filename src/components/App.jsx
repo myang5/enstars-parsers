@@ -6,6 +6,7 @@ import Header from './Header';
 import { MashiroFormatter } from './MashiroFormatter';
 import { JayFormatter } from './JayFormatter';
 import 'Styles/styles.less';
+import 'Styles/Main.less';
 
 function App() {
   return (

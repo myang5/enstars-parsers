@@ -5,7 +5,7 @@
       "Styles": ["./styles/*"],
       "Utils": ["./utils/*"],
       "Constants": ["./constants/*"],
-      "Shared": ["./components/shared/*"]
+      "@shared": ["./components/shared/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

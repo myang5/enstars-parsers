@@ -1,5 +1,5 @@
 @import 'Styles/colors.less';
-@import (reference) '../Main/Main.less';
+@import (reference) 'Styles/Main.less';
 
 @row-spacer-width: 4.7rem;
 
@@ -34,6 +34,14 @@
     width: 100%;
     min-width: 300px;
     margin-bottom: 1rem;
+  }
+
+  .row__spacer {
+    display: inline-block;
+    text-align: right;
+    padding-right: 0.7rem;
+    width: @row-spacer-width;
+    flex: 0 0 @row-spacer-width;
   }
 }
 
