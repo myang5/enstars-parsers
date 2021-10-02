@@ -157,6 +157,8 @@ const formatStyling = (p) => {
   });
   // Do bold spaces after italic because italic regex will accidentally match bold
   p.innerHTML = p.innerHTML.replace(/\*\*( ?)(.+?)( ?)\*\*/g, '$1**$2**$3');
+  p.innerHTML = p.innerHTML.replace(/\*\*(\w+?)\*\*([^ ])/g, '<b>$1</b>$2');
+  p.innerHTML = p.innerHTML.replace(/([^ ])\*\*(\w+?)\*\*/g, '$1<b>$2</b>');
 
   let line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 

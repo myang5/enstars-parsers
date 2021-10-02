@@ -82,19 +82,23 @@ And I will give everyone an equal opportunity
       expect(convertText({ inputData, nav })).toMatch(result);
     });
 
-    it('handles mid-word italicizing', () => {
+    it('handles mid-word styling', () => {
       inputData = `<p>Natsume: HoweVER. Wi<i>th</i>in a ga<i>me</i> where <i>every</i>thing is <i>proGRAMMED</i></p>`;
-      const result = `HoweVER. Wi<em>th</em>in a ga<em>me</em> where <em>every</em>thing is *proGRAMMED*`;
+      let result = `HoweVER. Wi<em>th</em>in a ga<em>me</em> where <em>every</em>thing is *proGRAMMED*`;
+      expect(convertText({ inputData, nav })).toMatch(result);
+
+      inputData = `<p>Natsume: HoweVER. Wi<strong>th</strong>in a ga<strong>me</strong> where <strong>every</strong>thing is <strong>proGRAMMED</strong></p>`;
+      result = `HoweVER. Wi<b>th</b>in a ga<b>me</b> where <b>every</b>thing is **proGRAMMED**`;
       expect(convertText({ inputData, nav })).toMatch(result);
     });
 
-    it('extracts any spaces included in the formatting', () => {
+    it('extracts any spaces included in the styling', () => {
       inputData = `<p>Natsume: HoweVER.<i> Within a</i> <i>game</i> where <strong>everything </strong>is proGRAMMED</p>`;
       const result = `HoweVER. *Within a* *game* where **everything** is proGRAMMED`;
       expect(convertText({ inputData, nav })).toMatch(result);
     });
 
-    it.skip('handles nested formatting tags', () => {
+    it.skip('handles nested styling tags', () => {
       inputData = `<p>Natsume: HoweVER. <i>Within a game where <strong>everything</strong></i> is proGRAMMED</p>`;
       const result = ``; // TODO: what would the result even be lol
       expect(convertText({ inputData, nav })).toMatch(result);
