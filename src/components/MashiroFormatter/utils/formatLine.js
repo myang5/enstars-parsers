@@ -9,36 +9,48 @@ export default function formatLine(TEMPLATES) {
   // Handle both dialogue formats where name is on every line
   // or only on first line
   let currentName = '';
-  return (p) => {
+  let interruptedName = '';
+  return (p, currentOutput) => {
     const line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
     if (!line) {
       return '';
     }
 
+    let nonDialogueResult = '';
+
     if (isImageLine(line)) {
-      return TEMPLATES.image(getValueFromLine(line));
+      nonDialogueResult += TEMPLATES.image(getValueFromLine(line));
+    } else if (isLocationLine(line)) {
+      nonDialogueResult += TEMPLATES.noteLocation(getValueFromLine(line));
+    } else if (isCwLine(line)) {
+      nonDialogueResult += TEMPLATES.noteCw(getValueFromLine(line));
+    } else if (isNarrationLine(line)) {
+      nonDialogueResult += TEMPLATES.noteNarration(
+        getValuesFromNarrationLine(line),
+      );
     }
 
-    if (isLocationLine(line)) {
-      return TEMPLATES.noteLocation(getValueFromLine(line));
-    }
-
-    if (isCwLine(line)) {
-      return TEMPLATES.noteCw(getValueFromLine(line));
-    }
-
-    if (isNarrationLine(line)) {
-      return TEMPLATES.noteNarration(getValuesFromNarrationLine(line));
+    if (nonDialogueResult) {
+      if (currentName) {
+        interruptedName = currentName;
+        currentName = '';
+        return TEMPLATES.endBubble() + nonDialogueResult;
+      }
+      return nonDialogueResult;
     }
 
     if (isNameLine(line)) {
+      interruptedName = '';
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
+
+      // Handle case where name is on every dialogue line
       if (currentName === name) {
         return TEMPLATES.dialogue(dialogue);
       }
 
       let result = '';
+      // Close bubble of other character that was speaking
       if (currentName) {
         result += TEMPLATES.endBubble();
       }
@@ -48,7 +60,18 @@ export default function formatLine(TEMPLATES) {
       return result;
     }
 
-    if (!!currentName) {
+    if (interruptedName) {
+      currentName = interruptedName;
+      interruptedName = '';
+
+      let result = '';
+      result += TEMPLATES.startBubble(currentName);
+      result += TEMPLATES.dialogue(line, true);
+      return result;
+    }
+
+    // Handle case where name is not on every dialogue line
+    if (currentName) {
       return TEMPLATES.dialogue(line);
     }
 

@@ -29,8 +29,10 @@ export function InputEditor() {
 <p>Narration: Time: Several minutes later</p>
 <p>Narration: Several minutes later</p>
 <p>Image: /img/es/eventstory/meteorimpact/firsthalfch2.jpg</p>
-<p>Natsume, hidden: HoweVER. Within a game where everything is proGRAMMED, everything works with much simpler loGIC.</p>
-<p>In this world where everything obeys my every comMAND, I will reign as god and control everyTHING. I'll make sure they can live in peace and joy within this miniature <hold>garDEN—</hold></p>
+<p>Natsume, hidden: HoweVER. Within a game where everything is proGRAMMED</p>
+<p>In this world where everything obeys my every <hold>garDEN—</hold></p>
+<p>Image: /img/es/eventstory/meteorimpact/firsthalfch2.jpg</p>
+<p>Location: Test location/p>
 <p><th>And I will give everyone an equal opportunity to experience their own happily ever afTER.</th></p>
 <p><spell>—Welcome to paradise, my <hold>idols♪</hold></spell></p>
 <p>Tsumugi: Um, but, no matter how you look at it, I'm pretty sure this world is a dystopia, right?</p>

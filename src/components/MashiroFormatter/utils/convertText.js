@@ -19,7 +19,7 @@ export default function convertText({ inputData, nav }) {
   const formatLineHelper = formatLine(TEMPLATES);
 
   for (let i = 0; i < input.length; i++) {
-    output += formatLineHelper(input[i]);
+    output += formatLineHelper(input[i], output);
   }
 
   output += TEMPLATES.endBubble();
@@ -39,7 +39,7 @@ const getTemplates = () => {
   templates.startBubble = (value) => `{% bubble ${value} %}\n`;
   templates.endBubble = () => `{% endbubble %}\n\n`;
   templates.dialogue = (value, isFirstLine) =>
-    `${!isFirstLine ? '\n' : ''}  ${value}\n`;
+    `${!isFirstLine ? '\n' : ''}${value}\n`;
 
   templates.noteLocation = (value) => `{% note location %}
 **Location:** ${value}
