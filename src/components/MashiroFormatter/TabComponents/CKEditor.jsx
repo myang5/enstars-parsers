@@ -32,7 +32,6 @@ export function InputEditor() {
 <p>Natsume: HoweVER. Wi<i>th</i>in a ga<i>me</i> where <i>every</i>thing is <i>proGRAMMED</i></p>
 <p>In this world where everything obeys my every <hold>garDEN—</hold></p>
 <p>Image: /img/es/eventstory/meteorimpact/firsthalfch2.jpg</p>
-<p>Location: Test location/p>
 <p><th>And I will give everyone an equal opportunity to experience their own happily ever afTER.</th></p>
 <p><spell>—Welcome to paradise, my <hold>idols♪</hold></spell></p>
 <p>Tsumugi: Um, but, no matter how you look at it, I'm pretty sure this world is a dystopia, right?</p>
