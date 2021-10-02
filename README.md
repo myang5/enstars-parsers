@@ -9,7 +9,7 @@
 - [ ] mashiro formatter
   - [x] Add bubble for images
   - [x] Handle mid-dialoge images and notes (need to close bubbles)
-  - [ ] Convert italics and bold formatting in dialogue
+  - [x] Convert italics and bold formatting in dialogue
     - Bubbles use Markdown
     - Italicizing like `*this*` is fine but mid word italics should be handled like `th<em>is</em>` and spaces between italic markers should be removed
     - Same for Markdown bold with `**this**`

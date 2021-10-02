@@ -29,7 +29,7 @@ export function InputEditor() {
 <p>Narration: Time: Several minutes later</p>
 <p>Narration: Several minutes later</p>
 <p>Image: /img/es/eventstory/meteorimpact/firsthalfch2.jpg</p>
-<p>Natsume, hidden: HoweVER. Within a game where everything is proGRAMMED</p>
+<p>Natsume: HoweVER. Wi<i>th</i>in a ga<i>me</i> where <i>every</i>thing is <i>proGRAMMED</i></p>
 <p>In this world where everything obeys my every <hold>garDEN—</hold></p>
 <p>Image: /img/es/eventstory/meteorimpact/firsthalfch2.jpg</p>
 <p>Location: Test location/p>

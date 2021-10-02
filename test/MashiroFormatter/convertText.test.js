@@ -74,4 +74,30 @@ And I will give everyone an equal opportunity
       expect(convertText({ inputData, nav })).toMatch(result);
     });
   });
+
+  describe('bold and italic text', () => {
+    it('handles the usual formatting', () => {
+      inputData = `<p>Natsume: HoweVER. <i>Within</i> a game where <strong>everything</strong> is proGRAMMED</p>`;
+      const result = `HoweVER. *Within* a game where **everything** is proGRAMMED`;
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+
+    it('handles mid-word italicizing', () => {
+      inputData = `<p>Natsume: HoweVER. Wi<i>th</i>in a ga<i>me</i> where <i>every</i>thing is <i>proGRAMMED</i></p>`;
+      const result = `HoweVER. Wi<em>th</em>in a ga<em>me</em> where <em>every</em>thing is *proGRAMMED*`;
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+
+    it('extracts any spaces included in the formatting', () => {
+      inputData = `<p>Natsume: HoweVER.<i> Within a</i> <i>game</i> where <strong>everything </strong>is proGRAMMED</p>`;
+      const result = `HoweVER. *Within a* *game* where **everything** is proGRAMMED`;
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+
+    it.skip('handles nested formatting tags', () => {
+      inputData = `<p>Natsume: HoweVER. <i>Within a game where <strong>everything</strong></i> is proGRAMMED</p>`;
+      const result = ``; // TODO: what would the result even be lol
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+  });
 });

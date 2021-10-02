@@ -10,8 +10,8 @@ export default function formatLine(TEMPLATES) {
   // or only on first line
   let currentName = '';
   let interruptedName = '';
-  return (p, currentOutput) => {
-    const line = p.textContent.replace(/&nbsp;/g, ' ').trim();
+  return (p) => {
+    let line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
     if (!line) {
       return '';
@@ -39,6 +39,8 @@ export default function formatLine(TEMPLATES) {
       }
       return nonDialogueResult;
     }
+
+    line = formatStyling(p);
 
     if (isNameLine(line)) {
       interruptedName = '';
@@ -138,4 +140,25 @@ const splitLineIntoNameAndDialogue = (line) => {
       .value(),
     dialogue.join(':').trim(),
   ];
+};
+
+const formatStyling = (p) => {
+  p.querySelectorAll('i').forEach((italic) => {
+    italic.replaceWith(`*${italic.textContent}*`);
+  });
+  // Make sure stray spaces are moved outside of formatted expressions
+  p.innerHTML = p.innerHTML.replace(/\*( ?)(.+?)( ?)\*/g, '$1*$2*$3');
+  // Mid-word italicizing needs to use <em> tags instead
+  p.innerHTML = p.innerHTML.replace(/\*(\w+?)\*([^ ])/g, '<em>$1</em>$2');
+  p.innerHTML = p.innerHTML.replace(/([^ ])\*(\w+?)\*/g, '$1<em>$2</em>');
+
+  p.querySelectorAll('strong').forEach((strong) => {
+    strong.replaceWith(`**${strong.textContent}**`);
+  });
+  // Do bold spaces after italic because italic regex will accidentally match bold
+  p.innerHTML = p.innerHTML.replace(/\*\*( ?)(.+?)( ?)\*\*/g, '$1**$2**$3');
+
+  let line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
+
+  return line;
 };

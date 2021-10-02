@@ -19,7 +19,7 @@ export default function convertText({ inputData, nav }) {
   const formatLineHelper = formatLine(TEMPLATES);
 
   for (let i = 0; i < input.length; i++) {
-    output += formatLineHelper(input[i], output);
+    output += formatLineHelper(input[i]);
   }
 
   output += TEMPLATES.endBubble();
@@ -28,11 +28,6 @@ export default function convertText({ inputData, nav }) {
   return output;
 }
 
-/**
- * Helper function to format the wiki code for story header and footer
- * with the user input
- * @return {Object} Object containing the wikia syntax to use as templates
- */
 const getTemplates = () => {
   const templates = {};
 
