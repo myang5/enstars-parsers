@@ -17,27 +17,6 @@ export const Main = () => (
   </StateProvider>
 );
 
-const MainContent = () => {
-  const { nav, inputRef } = useStateContext();
-  const outputRef = useRef(null);
-
-  const onConvert = () => {
-    const output = convertText({
-      inputData: inputRef.current.editor.getData(),
-      nav,
-    });
-    outputRef.current.value = output;
-  };
-
-  return (
-    <div className="main-page mashiro-formatter">
-      <Input />
-      <MainActions {...{ outputRef, onConvert }} />
-      <textarea className="output" ref={outputRef} spellCheck={false} />
-    </div>
-  );
-};
-
 const Input = () => {
   const [clickedValue, setClickedValue] = useState(TABS.TEXT);
 
