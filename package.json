@@ -8,6 +8,12 @@
     "deploy": "gh-pages -d dist",
     "ncu": "ncu \"/ckeditor/\" -u"
   },
+  "lint-staged": {
+    "*.{js,jsx,css}": [
+      "eslint -c .eslintrc.prod.js",
+      "prettier --write"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/myang5/enstars-parsers.git"
