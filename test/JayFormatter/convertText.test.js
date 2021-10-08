@@ -1,4 +1,5 @@
-import convertText from '../../src/components/JayFormatter/utils/convertText';
+import { NAV_KEYS } from '../../src/components/JayFormatter/utils';
+import { convertText } from '../../src/components/JayFormatter/utils/convertText';
 
 describe('convertText', () => {
   let inputData;
@@ -48,7 +49,59 @@ describe('convertText', () => {
     it.skip('handles mid-chapter headings', () => {});
   });
 
-  // describe('post header formatting', () => {});
+  describe('header formatting', () => {
+    const MOCK_ALL_URL = 'mock-all-url';
+    const MOCK_PREV_URL = 'mock-prev-url';
+    const MOCK_NEXT_URL = 'mock-next-url';
+
+    it('formats header when all values are provided', () => {
+      nav = {
+        [NAV_KEYS.ALL_URL]: MOCK_ALL_URL,
+        [NAV_KEYS.PREV_URL]: MOCK_PREV_URL,
+        [NAV_KEYS.NEXT_URL]: MOCK_NEXT_URL,
+      };
+
+      const result = `<p>✦✦✦✦✦</p>
+<p><a href="${MOCK_PREV_URL}">← prev</a> ✦ <a href="${MOCK_ALL_URL}">all</a> ✦ <a href="${MOCK_NEXT_URL}">next →</a></p>`;
+
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+
+    it('formats header when no previous is provided', () => {
+      nav = {
+        [NAV_KEYS.ALL_URL]: MOCK_ALL_URL,
+        [NAV_KEYS.NEXT_URL]: MOCK_NEXT_URL,
+      };
+
+      const result = `<p>✦✦✦✦✦</p>
+<p>✦ <a href="${MOCK_ALL_URL}">all</a> ✦ <a href="${MOCK_NEXT_URL}">next →</a></p>`;
+
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+
+    it('formats header when no next is provided', () => {
+      nav = {
+        [NAV_KEYS.ALL_URL]: MOCK_ALL_URL,
+        [NAV_KEYS.PREV_URL]: MOCK_PREV_URL,
+      };
+
+      const result = `<p>✦✦✦✦✦</p>
+<p><a href="${MOCK_PREV_URL}">← prev</a> ✦ <a href="${MOCK_ALL_URL}">all</a> ✦</p>`;
+
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+
+    it('formats header when no next or previous is provided', () => {
+      nav = {
+        [NAV_KEYS.ALL_URL]: MOCK_ALL_URL,
+      };
+
+      const result = `<p>✦✦✦✦✦</p>
+<p>✦ <a href="${MOCK_ALL_URL}">all</a> ✦</p>`;
+
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+  });
 
   // describe('bold and italic text', () => {});
 });

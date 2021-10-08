@@ -1,14 +1,14 @@
-import { NAV_KEYS } from '@constants';
 import extractBr from '@utils/extractBr';
 import convertEditorDataToDom from '@utils/convertEditorDataToDom';
 import formatLine from './formatLine';
+import { NAV_KEYS } from './nav_keys';
 
 /**
  * Formats text into source code for the wiki.
  * @return {string} The formatted text as a string to be placed in the output textarea
  */
 
-export default function convertText({ inputData, nav }) {
+export function convertText({ inputData, nav }) {
   const TEMPLATES = getTemplates();
   const inputDom = extractBr(convertEditorDataToDom(inputData));
   updateLocalStorage('nav', nav);

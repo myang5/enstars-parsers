@@ -3,7 +3,7 @@ import { MainActions } from '@shared/MainActions';
 import { TabContent } from '@shared/TabContent';
 import { StateProvider, useStateContext } from './StateContext';
 import { TabMenu, InputEditor, NavContent } from '../TabComponents';
-import convertText from '../utils/convertText';
+import { convertText } from '../utils';
 
 const TABS = {
   TEXT: 'Text',

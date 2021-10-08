@@ -1,14 +1,14 @@
-import { NAV_KEYS } from '@constants';
 import extractBr from '@utils/extractBr';
 import convertEditorDataToDom from '@utils/convertEditorDataToDom';
 import formatLine from './formatLine';
+import { NAV_KEYS } from './nav_keys';
 
 /**
  * Formats text into source code for the wiki.
  * @return {string} The formatted text as a string to be placed in the output textarea
  */
 
-export default function convertText({ inputData, nav }) {
+export function convertText({ inputData, nav }) {
   const TEMPLATES = getTemplates();
   const inputDom = extractBr(convertEditorDataToDom(inputData));
   updateLocalStorage('nav', nav);
@@ -22,7 +22,7 @@ export default function convertText({ inputData, nav }) {
     output += formatLineHelper(input[i]);
   }
 
-  // output += formatNavBar(nav);
+  output += formatNavBar(nav);
   return output;
 }
 
@@ -52,27 +52,23 @@ const getTemplates = () => {
  * @param {string} key
  * @param {string} value
  */
-function updateLocalStorage(key, value) {
+const updateLocalStorage = (key, value) => {
   if (value.length === 0) {
     localStorage.removeItem(key);
   } else if (JSON.stringify(value) !== localStorage.getItem(key)) {
     localStorage.setItem(key, JSON.stringify(value));
   }
-}
+};
 
-function formatNavBar(nav) {
-  let output = '<div toc>\n';
+const formatNavBar = (nav) => {
+  let output = '<p>✦✦✦✦✦</p>\n<p>';
   if (nav[NAV_KEYS.PREV_URL]) {
-    output += `{% btn ${nav[NAV_KEYS.PREV_URL]},, arrow-left, ${
-      nav[NAV_KEYS.PREV_TITLE]
-    } %}\n`;
+    output += `<a href="${nav[NAV_KEYS.PREV_URL]}">← prev</a> `;
   }
-  output += `{% btn ${nav[NAV_KEYS.INDEX]},, star, Index %}\n`;
+  output += `✦ <a href="${nav[NAV_KEYS.ALL_URL]}">all</a> ✦`;
   if (nav[NAV_KEYS.NEXT_URL]) {
-    output += `{% btn ${nav[NAV_KEYS.NEXT_URL]},, arrow-right, ${
-      nav[NAV_KEYS.NEXT_TITLE]
-    } %}\n`;
+    output += ` <a href="${nav[NAV_KEYS.NEXT_URL]}">next →</a>`;
   }
-  output += '</div>\n';
+  output += '</p>\n';
   return output;
-}
+};

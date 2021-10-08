@@ -1,4 +1,4 @@
-import convertText from '../../src/components/MashiroFormatter/utils/convertText';
+import { convertText } from '../../src/components/MashiroFormatter/utils/convertText';
 
 describe('convertText', () => {
   let inputData;
