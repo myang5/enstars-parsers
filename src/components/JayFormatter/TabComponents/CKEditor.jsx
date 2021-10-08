@@ -24,6 +24,8 @@ export function InputEditor() {
   };
 
   const inputEditorData = `
+  <p>[A few days later…]</p>
+  <p>[Location: Outside ES]</p>
   <p>Makoto: Yeesh... It's been so hot lately, I've been sweating like a pig.</p>
   <p>I wouldn't let myself sweat this much before...</p>
 `;

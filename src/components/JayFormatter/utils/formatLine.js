@@ -16,27 +16,9 @@ export default function formatLine(TEMPLATES) {
       return '';
     }
 
-    // let nonDialogueResult = '';
-
-    // if (isImageLine(line)) {
-    //   nonDialogueResult += TEMPLATES.image(getValueFromLine(line));
-    // } else if (isLocationLine(line)) {
-    //   nonDialogueResult += TEMPLATES.noteLocation(getValueFromLine(line));
-    // } else if (isCwLine(line)) {
-    //   nonDialogueResult += TEMPLATES.noteCw(getValueFromLine(line));
-    // } else if (isNarrationLine(line)) {
-    //   nonDialogueResult += TEMPLATES.noteNarration(
-    //     getValuesFromNarrationLine(line),
-    //   );
-    // }
-
-    // if (nonDialogueResult) {
-    //   if (currentName) {
-    //     currentName = '';
-    //     return TEMPLATES.endBubble() + nonDialogueResult;
-    //   }
-    //   return nonDialogueResult;
-    // }
+    if (isInfoLine(line)) {
+      return TEMPLATES.info(line);
+    }
 
     // Because end result should be in HTML as well,
     // use innerHTML to preserve styling
@@ -66,24 +48,7 @@ export default function formatLine(TEMPLATES) {
   };
 }
 
-const isLocationLine = (line) => line.toUpperCase().startsWith('LOCATION:');
-const isCwLine = (line) => line.toUpperCase().startsWith('CW:');
-const isImageLine = (line) => line.toUpperCase().startsWith('IMAGE:');
-const getValueFromLine = (line) => {
-  const result = line.match(/^\w*:(.*)/);
-  return result[1].trim();
-};
-
-const isNarrationLine = (line) => line.toUpperCase().startsWith('NARRATION:');
-const getValuesFromNarrationLine = (line) => {
-  // Narration: Time: A few days later: arbitrary other colon
-  const valueWithLabel = line.match(/^\w*:( ?\w*?):(.*)/);
-  if (valueWithLabel) {
-    return { label: valueWithLabel[1].trim(), value: valueWithLabel[2].trim() };
-  }
-  // Narration: A few days later: arbitrary other colon
-  return { value: getValueFromLine(line) };
-};
+const isInfoLine = (line) => line.startsWith('[');
 
 /**
  * Example lines:

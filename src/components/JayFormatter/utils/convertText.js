@@ -32,17 +32,7 @@ const getTemplates = () => {
   templates.dialogue = (value) => `<p>${value}</p>\n`;
   templates.boldName = (value) => `<strong>${value}:</strong> `;
 
-  //   templates.noteLocation = (value) => `{% note location %}
-  // **Location:** ${value}
-  // {% endnote %}\n\n`;
-  //   templates.noteCw = (value) => `{% note cw %}
-  // **Content Warning:** ${value}
-  // {% endnote %}\n\n`;
-  //   templates.noteNarration = ({ label, value }) => `{% note narration %}
-  // ${label ? `**${label}:** ` : ''}${value}
-  // {% endnote %}\n\n`;
-
-  //   templates.image = (value) => `{% img ${value} %}\n\n`;
+  templates.info = (value) => `<p><strong><i>${value}</i></strong></p>\n`;
 
   return templates;
 };
