@@ -1,10 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { MainActions } from '@shared/MainActions';
 import { TabContent } from '@shared/TabContent';
-import { InputEditor } from '../TabComponents';
 import { StateProvider, useStateContext } from './StateContext';
+import { TabMenu, InputEditor, NavContent } from '../TabComponents';
 import convertText from '../utils/convertText';
-import './Main.less';
+
+const TABS = {
+  TEXT: 'Text',
+  NAV: 'Story Nav',
+};
+const tabTitles = Object.values(TABS);
 
 export const Main = () => (
   <StateProvider>
@@ -13,18 +18,19 @@ export const Main = () => (
 );
 
 const MainContent = () => {
-  const { inputRef } = useStateContext();
+  const { nav, inputRef } = useStateContext();
   const outputRef = useRef(null);
 
   const onConvert = () => {
     const output = convertText({
       inputData: inputRef.current.editor.getData(),
+      nav,
     });
     outputRef.current.value = output;
   };
 
   return (
-    <div className="main-page markdown-styling-to-html">
+    <div className="main-page jay-formatter">
       <Input />
       <MainActions {...{ outputRef, onConvert }} />
       <textarea className="output" ref={outputRef} spellCheck={false} />
@@ -33,10 +39,20 @@ const MainContent = () => {
 };
 
 const Input = () => {
+  const [clickedValue, setClickedValue] = useState(TABS.TEXT);
+
   return (
     <div className="input">
-      <TabContent value={'Text'} clickedValue={'Text'}>
+      <TabMenu
+        tabs={tabTitles}
+        clicked={clickedValue}
+        onClick={setClickedValue}
+      />
+      <TabContent {...{ value: TABS.TEXT, clickedValue }}>
         <InputEditor />
+      </TabContent>
+      <TabContent {...{ value: TABS.NAV, clickedValue }}>
+        <NavContent />
       </TabContent>
     </div>
   );
