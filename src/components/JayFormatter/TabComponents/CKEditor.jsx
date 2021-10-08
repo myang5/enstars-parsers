@@ -24,17 +24,8 @@ export function InputEditor() {
   };
 
   const inputEditorData = `
-<p>Location: Pool</p>
-<p>CW: Death threats</p>
-<p>Narration: Time: Several minutes later</p>
-<p>Narration: Several minutes later</p>
-<p>Image: /img/es/eventstory/meteorimpact/firsthalfch2.jpg</p>
-<p>Natsume: HoweVER. Wi<i>th</i>in a ga<i>me</i> where <i>every</i>thing is <i>proGRAMMED</i></p>
-<p>In this world where everything obeys my every <hold>garDEN—</hold></p>
-<p>Image: /img/es/eventstory/meteorimpact/firsthalfch2.jpg</p>
-<p><th>And I will give everyone an equal opportunity to experience their own happily ever afTER.</th></p>
-<p><spell>—Welcome to paradise, my <hold>idols♪</hold></spell></p>
-<p>Tsumugi: Um, but, no matter how you look at it, I'm pretty sure this world is a dystopia, right?</p>
+  <p>Makoto: Yeesh... It's been so hot lately, I've been sweating like a pig.</p>
+  <p>I wouldn't let myself sweat this much before...</p>
 `;
 
   useEffect(() => {

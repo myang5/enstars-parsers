@@ -1,4 +1,4 @@
-import { chain, inRange } from 'lodash';
+import { chain } from 'lodash';
 
 /**
  * Helper function for convertText that formats each dialogue line.
@@ -9,7 +9,6 @@ export default function formatLine(TEMPLATES) {
   // Handle both dialogue formats where name is on every line
   // or only on first line
   let currentName = '';
-  let interruptedName = '';
   return (p) => {
     let line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
@@ -17,33 +16,33 @@ export default function formatLine(TEMPLATES) {
       return '';
     }
 
-    let nonDialogueResult = '';
+    // let nonDialogueResult = '';
 
-    if (isImageLine(line)) {
-      nonDialogueResult += TEMPLATES.image(getValueFromLine(line));
-    } else if (isLocationLine(line)) {
-      nonDialogueResult += TEMPLATES.noteLocation(getValueFromLine(line));
-    } else if (isCwLine(line)) {
-      nonDialogueResult += TEMPLATES.noteCw(getValueFromLine(line));
-    } else if (isNarrationLine(line)) {
-      nonDialogueResult += TEMPLATES.noteNarration(
-        getValuesFromNarrationLine(line),
-      );
-    }
+    // if (isImageLine(line)) {
+    //   nonDialogueResult += TEMPLATES.image(getValueFromLine(line));
+    // } else if (isLocationLine(line)) {
+    //   nonDialogueResult += TEMPLATES.noteLocation(getValueFromLine(line));
+    // } else if (isCwLine(line)) {
+    //   nonDialogueResult += TEMPLATES.noteCw(getValueFromLine(line));
+    // } else if (isNarrationLine(line)) {
+    //   nonDialogueResult += TEMPLATES.noteNarration(
+    //     getValuesFromNarrationLine(line),
+    //   );
+    // }
 
-    if (nonDialogueResult) {
-      if (currentName) {
-        interruptedName = currentName;
-        currentName = '';
-        return TEMPLATES.endBubble() + nonDialogueResult;
-      }
-      return nonDialogueResult;
-    }
+    // if (nonDialogueResult) {
+    //   if (currentName) {
+    //     currentName = '';
+    //     return TEMPLATES.endBubble() + nonDialogueResult;
+    //   }
+    //   return nonDialogueResult;
+    // }
 
-    line = formatStyling(p);
+    // Because end result should be in HTML as well,
+    // use innerHTML to preserve styling
+    line = p.innerHTML;
 
     if (isNameLine(line)) {
-      interruptedName = '';
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
 
       // Handle case where name is on every dialogue line
@@ -52,24 +51,10 @@ export default function formatLine(TEMPLATES) {
       }
 
       let result = '';
-      // Close bubble of other character that was speaking
-      if (currentName) {
-        result += TEMPLATES.endBubble();
-      }
       currentName = name;
-      result += TEMPLATES.startBubble(name);
-      result += TEMPLATES.dialogue(dialogue, true);
-      return result;
-    }
-
-    if (interruptedName) {
-      currentName = interruptedName;
-      interruptedName = '';
-
-      let result = '';
-      result += TEMPLATES.startBubble(currentName);
-      result += TEMPLATES.dialogue(line, true);
-      return result;
+      result += TEMPLATES.boldName(name);
+      result += dialogue;
+      return TEMPLATES.dialogue(result);
     }
 
     // Handle case where name is not on every dialogue line
@@ -108,59 +93,27 @@ const getValuesFromNarrationLine = (line) => {
  * Midori, hidden: some dialogue
  */
 const isNameLine = (line) => {
-  if (
+  const hasNoLabel =
     chain(line)
       .split(':')
       .map((part) => part.trim())
       .compact()
-      .value().length < 2
-  ) {
+      .value().length < 2;
+  if (hasNoLabel) {
     return false;
   }
-  const label = line.split(':')[0];
-  return inRange(
-    chain(label)
-      .split(',')
-      .map((part) => part.trim())
-      .compact()
-      .value().length,
-    1,
-    3,
-  );
+
+  const hasRandomColon =
+    chain(line).split(':').first().trim()?.split(' ').value().length > 1;
+  if (hasRandomColon) {
+    return false;
+  }
+
+  return true;
 };
 
 const splitLineIntoNameAndDialogue = (line) => {
   // Use rest operator in case dialogue also contains colons
   const [name, ...dialogue] = line.split(':');
-  return [
-    chain(name)
-      .split(',')
-      .map((part) => part.trim())
-      .join(' ')
-      .value(),
-    dialogue.join(':').trim(),
-  ];
-};
-
-const formatStyling = (p) => {
-  p.querySelectorAll('i').forEach((italic) => {
-    italic.replaceWith(`*${italic.textContent}*`);
-  });
-  // Make sure stray spaces are moved outside of formatted expressions
-  p.innerHTML = p.innerHTML.replace(/\*( ?)(.+?)( ?)\*/g, '$1*$2*$3');
-  // Mid-word italicizing needs to use <em> tags instead
-  p.innerHTML = p.innerHTML.replace(/\*(\w+?)\*([^ ])/g, '<em>$1</em>$2');
-  p.innerHTML = p.innerHTML.replace(/([^ ])\*(\w+?)\*/g, '$1<em>$2</em>');
-
-  p.querySelectorAll('strong').forEach((strong) => {
-    strong.replaceWith(`**${strong.textContent}**`);
-  });
-  // Do bold spaces after italic because italic regex will accidentally match bold
-  p.innerHTML = p.innerHTML.replace(/\*\*( ?)(.+?)( ?)\*\*/g, '$1**$2**$3');
-  p.innerHTML = p.innerHTML.replace(/\*\*(\w+?)\*\*([^ ])/g, '<b>$1</b>$2');
-  p.innerHTML = p.innerHTML.replace(/([^ ])\*\*(\w+?)\*\*/g, '$1<b>$2</b>');
-
-  let line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
-
-  return line;
+  return [name.trim(), dialogue.join(':').trim()];
 };

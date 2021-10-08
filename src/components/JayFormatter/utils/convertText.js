@@ -22,31 +22,27 @@ export default function convertText({ inputData, nav }) {
     output += formatLineHelper(input[i]);
   }
 
-  output += TEMPLATES.endBubble();
-
-  output += formatNavBar(nav);
+  // output += formatNavBar(nav);
   return output;
 }
 
 const getTemplates = () => {
   const templates = {};
 
-  templates.startBubble = (value) => `{% bubble ${value} %}\n`;
-  templates.endBubble = () => `{% endbubble %}\n\n`;
-  templates.dialogue = (value, isFirstLine) =>
-    `${!isFirstLine ? '\n' : ''}${value}\n`;
+  templates.dialogue = (value) => `<p>${value}</p>\n`;
+  templates.boldName = (value) => `<strong>${value}:</strong> `;
 
-  templates.noteLocation = (value) => `{% note location %}
-**Location:** ${value}
-{% endnote %}\n\n`;
-  templates.noteCw = (value) => `{% note cw %}
-**Content Warning:** ${value}
-{% endnote %}\n\n`;
-  templates.noteNarration = ({ label, value }) => `{% note narration %}
-${label ? `**${label}:** ` : ''}${value}
-{% endnote %}\n\n`;
+  //   templates.noteLocation = (value) => `{% note location %}
+  // **Location:** ${value}
+  // {% endnote %}\n\n`;
+  //   templates.noteCw = (value) => `{% note cw %}
+  // **Content Warning:** ${value}
+  // {% endnote %}\n\n`;
+  //   templates.noteNarration = ({ label, value }) => `{% note narration %}
+  // ${label ? `**${label}:** ` : ''}${value}
+  // {% endnote %}\n\n`;
 
-  templates.image = (value) => `{% img ${value} %}\n\n`;
+  //   templates.image = (value) => `{% img ${value} %}\n\n`;
 
   return templates;
 };
