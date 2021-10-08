@@ -1,6 +1,6 @@
 export const Formatters = {
   MashiroFormatter: 'mashiro-formatter',
-  JayFormatter: 'jay-formatter',
+  MarkdownStylingToHtml: 'markdown-styling-to-html',
 };
 
 export const DEFAULT_FORMATTER = Formatters.MashiroFormatter;
