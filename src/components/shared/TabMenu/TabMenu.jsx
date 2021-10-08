@@ -1,7 +1,7 @@
 import React from 'react';
 import './TabMenu.less';
 
-export default function TabMenu({ tabs, clicked, onClick }) {
+export const TabMenu = ({ tabs, clicked, onClick }) => {
   return (
     <div className="tab-menu">
       {tabs.map((btn) => (
@@ -16,4 +16,4 @@ export default function TabMenu({ tabs, clicked, onClick }) {
       ))}
     </div>
   );
-}
+};
