@@ -2,11 +2,17 @@ import React, { useState, useRef } from 'react';
 import { MainActions } from '@shared/MainActions';
 import { TabContent } from '@shared/TabContent';
 import { StateProvider, useStateContext } from './StateContext';
-import { TabMenu, InputEditor, NavContent } from '../TabComponents';
+import {
+  TabMenu,
+  InputEditor,
+  NavContent,
+  DetailContent,
+} from '../TabComponents';
 import { convertText } from '../utils';
 
 const TABS = {
   TEXT: 'Text',
+  DETAILS: 'Details',
   NAV: 'Story Nav',
 };
 const tabTitles = Object.values(TABS);
@@ -50,6 +56,9 @@ const Input = () => {
       />
       <TabContent {...{ value: TABS.TEXT, clickedValue }}>
         <InputEditor />
+      </TabContent>
+      <TabContent {...{ value: TABS.DETAILS, clickedValue }}>
+        <DetailContent />
       </TabContent>
       <TabContent {...{ value: TABS.NAV, clickedValue }}>
         <NavContent />
