@@ -5,6 +5,6 @@
  * @return The result of parsing the data into a DOM object
  */
 
-export default function convertEditorDataToDom(data) {
+export const convertEditorDataToDom = (data) => {
   return new DOMParser().parseFromString(data, 'text/html');
-}
+};

@@ -1,5 +1,4 @@
-import extractBr from '@utils/extractBr';
-import convertEditorDataToDom from '@utils/convertEditorDataToDom';
+import { extractBr, convertEditorDataToDom } from '@utils';
 import formatLine from './formatLine';
 
 /**

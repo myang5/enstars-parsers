@@ -1,5 +1,5 @@
-import extractBr from '@utils/extractBr';
-import convertEditorDataToDom from '@utils/convertEditorDataToDom';
+import { extractBr, convertEditorDataToDom, updateLocalStorage } from '@utils';
+import { Formatters } from '@constants';
 import formatLine from './formatLine';
 import { NAV_KEYS } from './nav_keys';
 
@@ -11,7 +11,11 @@ import { NAV_KEYS } from './nav_keys';
 export function convertText({ inputData, nav }) {
   const TEMPLATES = getTemplates();
   const inputDom = extractBr(convertEditorDataToDom(inputData));
-  updateLocalStorage('nav', nav);
+  updateLocalStorage({
+    formatter: Formatters.MashiroFormatter,
+    key: 'nav',
+    value: nav,
+  });
 
   const input = inputDom.querySelectorAll('p');
   let output = '';
@@ -50,19 +54,6 @@ ${label ? `**${label}:** ` : ''}${value}
 
   return templates;
 };
-
-/**
- * Save value in localStorage at specified key
- * @param {string} key
- * @param {string} value
- */
-function updateLocalStorage(key, value) {
-  if (value.length === 0) {
-    localStorage.removeItem(key);
-  } else if (JSON.stringify(value) !== localStorage.getItem(key)) {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
-}
 
 function formatNavBar(nav) {
   let output = '<div toc>\n';
