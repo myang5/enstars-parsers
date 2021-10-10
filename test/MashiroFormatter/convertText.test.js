@@ -98,6 +98,28 @@ And I will give everyone an equal opportunity
       expect(convertText({ inputData, nav })).toMatch(result);
     });
 
+    it('handles labels and first words in dialogue lines being bolded', () => {
+      // Colon and space are in <strong>
+      inputData = `<p><strong>Midori, sigh: </strong>Sigh… Ughhh…</p>
+<p><strong>Mmm~…</strong> What do I do now…? Sigh…</p>`;
+      const result = `{% bubble Midori sigh %}
+Sigh… Ughhh…
+
+**Mmm~…** What do I do now…? Sigh…
+{% endbubble %}`;
+      expect(convertText({ inputData, nav })).toMatch(result);
+
+      // Colon is in <strong>
+      inputData = `<p><strong>Midori, sigh:</strong> Sigh… Ughhh…</p>
+<p><strong>Mmm~…</strong> What do I do now…? Sigh…</p>`;
+      expect(convertText({ inputData, nav })).toMatch(result);
+
+      // Only name is in <strong>
+      inputData = `<p><strong>Midori, sigh</strong>: Sigh… Ughhh…</p>
+<p><strong>Mmm~…</strong> What do I do now…? Sigh…</p>`;
+      expect(convertText({ inputData, nav })).toMatch(result);
+    });
+
     it.skip('handles nested styling tags', () => {
       inputData = `<p>Natsume: HoweVER. <i>Within a game where <strong>everything</strong></i> is proGRAMMED</p>`;
       const result = ``; // TODO: what would the result even be lol

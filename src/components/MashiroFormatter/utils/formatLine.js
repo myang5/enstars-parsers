@@ -162,5 +162,17 @@ const formatStyling = (p) => {
 
   let line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
+  // If beginning text of line is bolded,
+  // need to handle name lines and dialogue lines appropriately
+  if (line.startsWith('**')) {
+    const result = line.match(/^\*\*(.*?)\*\*/);
+    const originalString = result[0];
+    const boldContent = result[1];
+    const testLine = line.replace(originalString, boldContent);
+    if (isNameLine(testLine)) {
+      return testLine;
+    }
+  }
+
   return line;
 };
