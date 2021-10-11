@@ -1,5 +1,6 @@
 import React, { createContext, useState, useRef, useContext } from 'react';
 import { Formatters } from '@constants';
+import { getEmptyStaffObj } from '../utils';
 
 const StateContext = createContext();
 
@@ -8,7 +9,19 @@ export const useStateContext = () => useContext(StateContext);
 const initialConfig = JSON.parse(localStorage.getItem(Formatters.JayFormatter));
 
 export const StateProvider = ({ children }) => {
+  const [details, setDetails] = useState(initialConfig.details || {});
+  const [jpProofreaders, setJpProofreaders] = useState(
+    initialConfig.jpProofreaders || [getEmptyStaffObj()],
+  );
+  const [engProofreaders, setEngProofreaders] = useState(
+    initialConfig.engProofreaders || [getEmptyStaffObj()],
+  );
+  const [translators, setTranslators] = useState(
+    initialConfig.translators || [getEmptyStaffObj()],
+  );
   const [nav, setNav] = useState(
+    // TODO: can clean up this logic after new config
+    // storing system is in place
     initialConfig?.nav || JSON.parse(localStorage.getItem('nav')) || {},
   );
 
@@ -18,6 +31,14 @@ export const StateProvider = ({ children }) => {
   const state = {
     nav,
     setNav,
+    details,
+    setDetails,
+    jpProofreaders,
+    setJpProofreaders,
+    engProofreaders,
+    setEngProofreaders,
+    translators,
+    setTranslators,
     inputRef,
   };
 

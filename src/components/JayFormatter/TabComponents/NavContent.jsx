@@ -15,35 +15,37 @@ function NavContent() {
   return (
     <>
       <p>Links for the navigation at the end of each post.</p>
-      <NavRow
-        navKey={NAV_KEYS.ALL_URL}
-        label="All Link"
-        nav={nav}
-        onChange={handleChange}
-      />
-      <NavRow
-        navKey={NAV_KEYS.PREV_URL}
-        label="Prev Link"
-        nav={nav}
-        onChange={handleChange}
-      />
-      <NavRow
-        navKey={NAV_KEYS.NEXT_URL}
-        label="Next Link"
-        nav={nav}
-        onChange={handleChange}
-      />
+      <div className="tab-content__grid">
+        <Row
+          navKey={NAV_KEYS.ALL_URL}
+          label="All Link"
+          nav={nav}
+          onChange={handleChange}
+        />
+        <Row
+          navKey={NAV_KEYS.PREV_URL}
+          label="Prev Link"
+          nav={nav}
+          onChange={handleChange}
+        />
+        <Row
+          navKey={NAV_KEYS.NEXT_URL}
+          label="Next Link"
+          nav={nav}
+          onChange={handleChange}
+        />
+      </div>
     </>
   );
 }
 
-const NavRow = ({ nav, navKey, label, onChange }) => (
-  <div className="row">
+const Row = ({ nav, navKey, label, onChange }) => (
+  <>
     <label className="row__spacer" htmlFor={navKey}>
       {label}
     </label>
     <input type="text" id={navKey} value={nav[navKey]} onChange={onChange} />
-  </div>
+  </>
 );
 
 export default NavContent;
