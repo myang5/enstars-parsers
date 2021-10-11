@@ -3,7 +3,7 @@ import { Formatters } from '@constants';
 import formatLine from './formatLine';
 import { NAV_KEYS } from './nav_keys';
 import { DETAILS_KEYS } from '.';
-import { mapValues } from 'lodash';
+import { compact, mapValues } from 'lodash';
 
 /**
  * Formats text into source code for the wiki.
@@ -57,7 +57,12 @@ export function convertText({
   });
 
   const input = inputDom.querySelectorAll('p');
-  let output = '';
+  let output = formatHeader({
+    details,
+    jpProofreaders,
+    engProofreaders,
+    translators,
+  });
 
   const formatLineHelper = formatLine(TEMPLATES);
 
@@ -69,15 +74,6 @@ export function convertText({
   return output;
 }
 
-const normalizeValues = (object) => mapValues(object, (value) => value.trim());
-const normalizeStaff = (staff) =>
-  staff
-    .filter(
-      (person) =>
-        person[DETAILS_KEYS.NAME].trim() && person[DETAILS_KEYS.LINK].trim(),
-    )
-    .map((person) => normalizeValues(person));
-
 const getTemplates = () => {
   const templates = {};
 
@@ -87,6 +83,49 @@ const getTemplates = () => {
   templates.info = (value) => `<p><strong><i>${value}</i></strong></p>\n`;
 
   return templates;
+};
+
+const normalizeValues = (object) => mapValues(object, (value) => value.trim());
+const normalizeStaff = (staff) =>
+  staff
+    .filter((person) => person[DETAILS_KEYS.NAME])
+    .map((person) => normalizeValues(person));
+
+const getLink = (href, text) => `<a href="${href}">${text}</a>`;
+const joinStaff = (staff, separator) =>
+  staff
+    .map((person) =>
+      person[DETAILS_KEYS.LINK]
+        ? getLink(person[DETAILS_KEYS.LINK], person[DETAILS_KEYS.NAME])
+        : person[DETAILS_KEYS.NAME],
+    )
+    .join(separator);
+const formatHeader = ({
+  details,
+  jpProofreaders,
+  engProofreaders,
+  translators,
+}) => {
+  const jpProofreading = joinStaff(jpProofreaders, ' + ');
+  const fullJpProofreading = jpProofreading ? jpProofreading + ' (JP)' : '';
+  const engProofreading = joinStaff(engProofreaders, ' + ');
+  const fullEngProofreading = engProofreading ? engProofreading + ' (ENG)' : '';
+  const translation = joinStaff(translators, ' & ');
+
+  const proofreadingLine =
+    jpProofreading || engProofreading
+      ? `\n<p><b>Proofreading:</b> ${compact([
+          fullJpProofreading,
+          fullEngProofreading,
+        ]).join(' &amp; ')}</p>`
+      : '';
+
+  return `<p><b>Writer:</b> ${details[DETAILS_KEYS.WRITER]}</p>
+<p><b>Season:</b> ${details[DETAILS_KEYS.SEASON]}</p>
+<p><b>Characters:</b> ${details[DETAILS_KEYS.CHARACTERS]}</p>${proofreadingLine}
+<p><b>Translation:</b> ${translation}</p>
+[[MORE]]
+`;
 };
 
 const formatNavBar = (nav) => {
