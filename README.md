@@ -15,8 +15,8 @@
     - Same for Markdown bold with `**this**`
   - [ ] Get CKEditor to not erase custom HTML tags
   - [ ] Figure out why CKEditor component causes memory leaks
-  - [ ] Add How To page
-- [ ] story header formatter
 - [ ] jay formatter
   - [ ] handle removing jp lines in between eng lines
     - =REGEXMATCH(B1,"[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[ａ-ｚＡ-Ｚ０-９]+|[々〆〤]+|[、-〻]+|[！-～]")
+- [ ] story header formatter
+- [ ] oissu formatter
