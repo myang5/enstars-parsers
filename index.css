@@ -112,32 +112,25 @@ header h1 a.star-link:hover:after {
 .tab-content > p {
   margin-top: 0;
 }
-.tab-content .row {
-  position: relative;
-  display: flex;
+.tab-content .tab-content__grid {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  column-gap: 8px;
+  grid-column-gap: 8px;
+  row-gap: 1rem;
+  grid-row-gap: 1rem;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  min-width: 300px;
-  margin-bottom: 1rem;
 }
 .tab-content .row__spacer {
   display: inline-block;
   text-align: right;
   padding-right: 0.7rem;
-  width: 4.7rem;
-  flex: 0 0 4.7rem;
+  min-width: 4.7rem;
 }
 .tab-content--text .ck.ck-editor__editable_inline {
   border: none;
   height: inherit;
   width: inherit;
-}
-.tab-content--story-nav .preview {
-  white-space: pre-wrap;
-}
-.tab-content--story-nav .p--margin-bottom-none {
-  margin-bottom: 0;
 }
 
 button,
@@ -184,6 +177,44 @@ button,
 .main-page.markdown-styling-to-html .input,
 .main-page.markdown-styling-to-html .output {
   margin-top: 26.5px;
+}
+
+.jay-formatter .tab-content--details .btn--add-person {
+  background-color: #fff;border-radius: 5px;border: 1px solid;color: #15c6e0;box-sizing: border-box;
+}
+.jay-formatter .tab-content--details .staff-column-labels {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 5px;
+  grid-column-gap: 5px;
+  align-items: flex-end;
+  text-align: left;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+.jay-formatter .tab-content--details .staff-column-labels > * {
+  margin-left: 2px;
+}
+.jay-formatter .tab-content--details .staff-grid-label {
+  align-self: start;
+}
+.jay-formatter .tab-content--details .staff-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 5px;
+  grid-column-gap: 5px;
+  row-gap: 5px;
+  grid-row-gap: 5px;
+}
+.jay-formatter .tab-content--details .btn--add-person {
+  background-color: transparent;
+  border: none;
+  font-size: 0.8rem;
+  align-self: start;
+}
+.jay-formatter .tab-content--details .btn--add-person:focus,
+.jay-formatter .tab-content--details .btn--add-person:hover {
+  font-weight: bold;
 }
 
 /*---------------------------------ALL PAGES----------------------------------*/
