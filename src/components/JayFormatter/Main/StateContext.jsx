@@ -1,23 +1,25 @@
 import React, { createContext, useState, useRef, useContext } from 'react';
 import { Formatters } from '@constants';
 import { getEmptyStaffObj } from '../utils';
+import { isEmpty } from 'lodash';
 
 const StateContext = createContext();
 
 export const useStateContext = () => useContext(StateContext);
 
 const initialConfig = JSON.parse(localStorage.getItem(Formatters.JayFormatter));
+const getStaff = (value) => (isEmpty(value) ? [getEmptyStaffObj()] : value);
 
 export const StateProvider = ({ children }) => {
   const [details, setDetails] = useState(initialConfig.details || {});
   const [jpProofreaders, setJpProofreaders] = useState(
-    initialConfig.jpProofreaders || [getEmptyStaffObj()],
+    getStaff(initialConfig.jpProofreaders),
   );
   const [engProofreaders, setEngProofreaders] = useState(
-    initialConfig.engProofreaders || [getEmptyStaffObj()],
+    getStaff(initialConfig.engProofreaders),
   );
   const [translators, setTranslators] = useState(
-    initialConfig.translators || [getEmptyStaffObj()],
+    getStaff(initialConfig.translators),
   );
   const [nav, setNav] = useState(
     // TODO: can clean up this logic after new config

@@ -20,13 +20,24 @@ export const Main = () => (
 );
 
 const MainContent = () => {
-  const { nav, inputRef } = useStateContext();
+  const {
+    inputRef,
+    nav,
+    details,
+    jpProofreaders,
+    engProofreaders,
+    translators,
+  } = useStateContext();
   const outputRef = useRef(null);
 
   const onConvert = () => {
     const output = convertText({
       inputData: inputRef.current.editor.getData(),
       nav,
+      details,
+      jpProofreaders,
+      engProofreaders,
+      translators,
     });
     outputRef.current.value = output;
   };
