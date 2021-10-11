@@ -22,7 +22,7 @@ export default function formatLine(TEMPLATES) {
 
     // Because end result should be in HTML as well,
     // use innerHTML to preserve styling
-    line = p.innerHTML;
+    line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
     if (isNameLine(line)) {
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
