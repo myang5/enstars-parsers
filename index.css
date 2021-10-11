@@ -127,7 +127,7 @@ header h1 a.star-link:hover:after {
   padding-right: 0.7rem;
   min-width: 4.7rem;
 }
-.tab-content--text .ck.ck-editor__editable_inline {
+.ck.ck-editor__editable_inline {
   border: none;
   height: inherit;
   width: inherit;
@@ -182,6 +182,9 @@ button,
 .jay-formatter .tab-content--details .btn--add-person {
   background-color: #fff;border-radius: 5px;border: 1px solid;color: #15c6e0;box-sizing: border-box;
 }
+.jay-formatter .tab-content--details .align-self-start {
+  align-self: start;
+}
 .jay-formatter .tab-content--details .staff-column-labels {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -194,9 +197,6 @@ button,
 }
 .jay-formatter .tab-content--details .staff-column-labels > * {
   margin-left: 2px;
-}
-.jay-formatter .tab-content--details .staff-grid-label {
-  align-self: start;
 }
 .jay-formatter .tab-content--details .staff-grid {
   display: grid;
@@ -215,6 +215,12 @@ button,
 .jay-formatter .tab-content--details .btn--add-person:focus,
 .jay-formatter .tab-content--details .btn--add-person:hover {
   font-weight: bold;
+}
+.jay-formatter .tab-content--details .ck.ck-editor__editable_inline {
+  -moz-appearance: textfield-multiline;
+  -webkit-appearance: textarea;
+  border: 1px solid gray;
+  overflow: auto;
 }
 
 /*---------------------------------ALL PAGES----------------------------------*/
