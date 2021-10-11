@@ -48,18 +48,10 @@ export default function formatLine(TEMPLATES) {
   };
 }
 
-const isJapaneseLine = (line) =>
+export const isJapaneseLine = (line) =>
   /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line[0]);
-const isInfoLine = (line) => line.startsWith('[');
-
-/**
- * Example lines:
- *
- * Midori: some dialogue
- *
- * Midori, hidden: some dialogue
- */
-const isNameLine = (line) => {
+export const isInfoLine = (line) => line.startsWith('[');
+export const isNameLine = (line) => {
   const hasNoLabel =
     chain(line)
       .split(':')
@@ -79,7 +71,7 @@ const isNameLine = (line) => {
   return true;
 };
 
-const splitLineIntoNameAndDialogue = (line) => {
+export const splitLineIntoNameAndDialogue = (line) => {
   // Use rest operator in case dialogue also contains colons
   const [name, ...dialogue] = line.split(':');
   return [name.trim(), dialogue.join(':').trim()];

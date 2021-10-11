@@ -21,6 +21,8 @@ export default function DetailContent() {
   const {
     details,
     setDetails,
+    characters,
+    setCharacters,
     jpProofreaders,
     setJpProofreaders,
     engProofreaders,
@@ -66,8 +68,8 @@ export default function DetailContent() {
         <input
           type="text"
           id={DETAILS_KEYS.CHARACTERS}
-          value={details[DETAILS_KEYS.CHARACTERS]}
-          onChange={handleChange}
+          value={characters}
+          onChange={(e) => setCharacters(e.target.value)}
         />
       </Row>
       <StaffInputs

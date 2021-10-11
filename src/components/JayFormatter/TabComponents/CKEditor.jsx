@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
@@ -10,11 +10,12 @@ import Link from '@ckeditor/ckeditor5-link/src/link';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
 
 import { useStateContext } from '../Main/StateContext';
+import { getCharactersFromInput } from '../utils';
 
 export function InputEditor() {
   // get refs from EditorContext to provide to CKEditor components
   // refer to Main.js code
-  const { inputRef } = useStateContext();
+  const { inputRef, setCharacters } = useStateContext();
 
   // Autosave documentation:
   // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/saving-data.html#autosave-feature
@@ -33,25 +34,10 @@ export function InputEditor() {
   
 `;
 
-  useEffect(() => {
-    // Grab the HTML element using ref.current.editor
-    // https://github.com/ckeditor/ckeditor5/issues/1185
-    try {
-      inputRef.current.editor.editing.view.change((writer) => {
-        writer.setAttribute(
-          'spellcheck',
-          'false',
-          inputRef.current.editor.editing.view.document.getRoot(),
-        );
-      });
-    } catch (e) {
-      // TODO: figure out why inputRef.current.editor.editing is being read
-      // causing a memory leak
-    }
-
-    const cleanup = () => {};
-    return cleanup;
-  }, []);
+  const handleChange = (_, editor) => {
+    const characters = getCharactersFromInput(editor);
+    setCharacters(characters);
+  };
 
   return (
     <CKEditor
@@ -59,6 +45,7 @@ export function InputEditor() {
       config={inputEditorConfig}
       data={inputEditorData}
       ref={inputRef}
+      onChange={handleChange}
     />
   );
 }

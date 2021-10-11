@@ -19,7 +19,7 @@
 - [ ] jay formatter
   - [x] add blockquote input
   - [x] handle removing jp lines in between eng lines
-  - [ ] autofill Characters input using names in dialogue
+  - [x] autofill Characters input using names in dialogue
   - [ ] TL notes
 - [ ] story header formatter
 - [ ] oissu formatter

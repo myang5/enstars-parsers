@@ -15,6 +15,7 @@ export function convertText({
   blockquoteData,
   nav,
   details,
+  characters,
   jpProofreaders,
   engProofreaders,
   translators,
@@ -62,6 +63,7 @@ export function convertText({
 
   let output = formatHeader({
     details,
+    characters,
     jpProofreaders,
     engProofreaders,
     translators,
@@ -106,6 +108,7 @@ const joinStaff = (staff, separator) =>
     .join(separator);
 const formatHeader = ({
   details,
+  characters,
   jpProofreaders,
   engProofreaders,
   translators,
@@ -139,7 +142,7 @@ const formatHeader = ({
 
   return `<p><b>Writer:</b> ${details[DETAILS_KEYS.WRITER]}</p>
 <p><b>Season:</b> ${details[DETAILS_KEYS.SEASON]}</p>
-<p><b>Characters:</b> ${details[DETAILS_KEYS.CHARACTERS]}</p>${proofreadingLine}
+<p><b>Characters:</b> ${characters}</p>${proofreadingLine}
 <p><b>Translation:</b> ${translation}</p>
 <blockquote>${blockquoteOutput.trim()}</blockquote>
 [[MORE]]
