@@ -12,7 +12,7 @@ export default function formatLine(TEMPLATES) {
   return (p) => {
     let line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
-    if (!line) {
+    if (!line || isJapaneseLine(line)) {
       return '';
     }
 
@@ -48,6 +48,8 @@ export default function formatLine(TEMPLATES) {
   };
 }
 
+const isJapaneseLine = (line) =>
+  /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line[0]);
 const isInfoLine = (line) => line.startsWith('[');
 
 /**

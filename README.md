@@ -18,8 +18,7 @@
   - [ ] Figure out why CKEditor component causes memory leaks
 - [ ] jay formatter
   - [x] add blockquote input
-  - [ ] handle removing jp lines in between eng lines
-    - =REGEXMATCH(B1,"[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[ａ-ｚＡ-Ｚ０-９]+|[々〆〤]+|[、-〻]+|[！-～]")
+  - [x] handle removing jp lines in between eng lines
   - [ ] autofill Characters input using names in dialogue
   - [ ] TL notes
 - [ ] story header formatter
