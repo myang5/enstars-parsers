@@ -14,6 +14,7 @@
     - Italicizing like `*this*` is fine but mid word italics should be handled like `th<em>is</em>` and spaces between italic markers should be removed
     - Same for Markdown bold with `**this**`
   - [ ] Get CKEditor to not erase custom HTML tags
+    - https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html
   - [ ] Figure out why CKEditor component causes memory leaks
 - [ ] jay formatter
   - [ ] add blockquote input
