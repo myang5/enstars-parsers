@@ -3,6 +3,10 @@
 
 .jay-formatter {
   .tab-content--details {
+    .align-self-start {
+      align-self: start;
+    }
+
     .staff-column-labels {
       display: grid;
       grid-template-columns: 50% 50%;
@@ -16,10 +20,6 @@
       & > * {
         margin-left: 2px;
       }
-    }
-
-    .staff-grid-label {
-      align-self: start;
     }
 
     .staff-grid {
@@ -41,6 +41,13 @@
       &:hover {
         font-weight: bold;
       }
+    }
+
+    .ck.ck-editor__editable_inline {
+      -moz-appearance: textfield-multiline;
+      -webkit-appearance: textarea;
+      border: 1px solid gray;
+      overflow: auto;
     }
   }
 }

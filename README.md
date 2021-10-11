@@ -17,7 +17,7 @@
     - https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html
   - [ ] Figure out why CKEditor component causes memory leaks
 - [ ] jay formatter
-  - [ ] add blockquote input
+  - [x] add blockquote input
   - [ ] handle removing jp lines in between eng lines
     - =REGEXMATCH(B1,"[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[ａ-ｚＡ-Ｚ０-９]+|[々〆〤]+|[、-〻]+|[！-～]")
   - [ ] autofill Characters input using names in dialogue

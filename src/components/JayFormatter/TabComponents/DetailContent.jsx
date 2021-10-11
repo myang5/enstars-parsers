@@ -1,7 +1,9 @@
 import React from 'react';
 import { DETAILS_KEYS, getEmptyStaffObj } from '../utils';
 import { useStateContext } from '../Main/StateContext';
+import { BlockquoteEditor } from './CKEditor';
 import './DetailContent.less';
+import classNames from 'classnames';
 
 const AUTHORS = [
   'Akira',
@@ -86,13 +88,19 @@ export default function DetailContent() {
         label="Translation"
         onChange={setTranslators}
       />
+      <Row label="Blockquote" labelClassNames="align-self-start">
+        <BlockquoteEditor />
+      </Row>
     </div>
   );
 }
 
-const Row = ({ keyForValue, label, children }) => (
+const Row = ({ keyForValue, label, labelClassNames, children }) => (
   <>
-    <label className="row__spacer" htmlFor={keyForValue}>
+    <label
+      className={classNames('row__spacer', labelClassNames)}
+      htmlFor={keyForValue}
+    >
       {label}
     </label>
     {children}
@@ -134,7 +142,7 @@ const StaffInputs = ({
         </>
       )}
       <label
-        className="row__spacer staff-grid-label"
+        className="row__spacer align-self-start"
         id={`${labelForClassName}-label`}
       >
         {label}

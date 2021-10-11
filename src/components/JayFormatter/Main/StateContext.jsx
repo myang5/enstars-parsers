@@ -29,6 +29,7 @@ export const StateProvider = ({ children }) => {
 
   // create refs for each CKEditor to pass into EditorContext
   const inputRef = useRef(null);
+  const blockquoteRef = useRef(null);
 
   const state = {
     nav,
@@ -42,6 +43,7 @@ export const StateProvider = ({ children }) => {
     translators,
     setTranslators,
     inputRef,
+    blockquoteRef,
   };
 
   return (

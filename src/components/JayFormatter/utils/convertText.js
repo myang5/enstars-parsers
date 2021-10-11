@@ -12,15 +12,13 @@ import { compact, mapValues } from 'lodash';
 
 export function convertText({
   inputData,
+  blockquoteData,
   nav,
   details,
   jpProofreaders,
   engProofreaders,
   translators,
 }) {
-  const TEMPLATES = getTemplates();
-  const inputDom = extractBr(convertEditorDataToDom(inputData));
-
   nav = normalizeValues(nav);
   updateLocalStorage({
     formatter: Formatters.JayFormatter,
@@ -56,12 +54,18 @@ export function convertText({
     value: translators,
   });
 
+  const TEMPLATES = getTemplates();
+  const inputDom = extractBr(convertEditorDataToDom(inputData));
+  const blockquoteDom = extractBr(convertEditorDataToDom(blockquoteData));
   const input = inputDom.querySelectorAll('p');
+  const blockquote = blockquoteDom.querySelectorAll('p');
+
   let output = formatHeader({
     details,
     jpProofreaders,
     engProofreaders,
     translators,
+    blockquote,
   });
 
   const formatLineHelper = formatLine(TEMPLATES);
@@ -105,6 +109,7 @@ const formatHeader = ({
   jpProofreaders,
   engProofreaders,
   translators,
+  blockquote,
 }) => {
   const jpProofreading = joinStaff(jpProofreaders, ' + ');
   const fullJpProofreading = jpProofreading ? jpProofreading + ' (JP)' : '';
@@ -120,10 +125,23 @@ const formatHeader = ({
         ]).join(' &amp; ')}</p>`
       : '';
 
+  let blockquoteOutput = '';
+
+  const TEMPLATES = getTemplates();
+  const formatLineHelper = formatLine(TEMPLATES);
+  for (let i = 0; i < blockquote.length; i++) {
+    blockquoteOutput += formatLineHelper(blockquote[i]);
+  }
+
+  // Entire blockquote should be italicized
+  blockquoteOutput = blockquoteOutput.replace(/(<p>)/, '$1<i>');
+  blockquoteOutput = blockquoteOutput.replace(/(<\/p>)/, '</i>$1');
+
   return `<p><b>Writer:</b> ${details[DETAILS_KEYS.WRITER]}</p>
 <p><b>Season:</b> ${details[DETAILS_KEYS.SEASON]}</p>
 <p><b>Characters:</b> ${details[DETAILS_KEYS.CHARACTERS]}</p>${proofreadingLine}
 <p><b>Translation:</b> ${translation}</p>
+<blockquote>${blockquoteOutput.trim()}</blockquote>
 [[MORE]]
 `;
 };

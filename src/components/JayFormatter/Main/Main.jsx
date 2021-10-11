@@ -22,6 +22,7 @@ export const Main = () => (
 const MainContent = () => {
   const {
     inputRef,
+    blockquoteRef,
     nav,
     details,
     jpProofreaders,
@@ -33,6 +34,7 @@ const MainContent = () => {
   const onConvert = () => {
     const output = convertText({
       inputData: inputRef.current.editor.getData(),
+      blockquoteData: blockquoteRef.current.editor.getData(),
       nav,
       details,
       jpProofreaders,

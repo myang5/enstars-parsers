@@ -59,3 +59,20 @@ export function InputEditor() {
     />
   );
 }
+
+export function BlockquoteEditor() {
+  const { blockquoteRef } = useStateContext();
+
+  const inputEditorConfig = {
+    plugins: [Essentials, Paragraph, Bold, Italic, Link, PasteFromOffice],
+    toolbar: ['bold', 'italic', 'link', '|', 'undo', 'redo'],
+  };
+
+  return (
+    <CKEditor
+      editor={BalloonEditor}
+      config={inputEditorConfig}
+      ref={blockquoteRef}
+    />
+  );
+}
