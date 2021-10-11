@@ -49,7 +49,7 @@ export default function formatLine(TEMPLATES) {
 }
 
 export const isJapaneseLine = (line) =>
-  /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line[0]);
+  /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line);
 export const isInfoLine = (line) => line.startsWith('[');
 export const isNameLine = (line) => {
   const hasNoLabel =
