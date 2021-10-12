@@ -5,13 +5,12 @@ const StateContext = createContext();
 
 export const useStateContext = () => useContext(StateContext);
 
-const initialConfig = JSON.parse(
-  localStorage.getItem(Formatters.MashiroFormatter),
-);
+const initialConfig =
+  JSON.parse(localStorage.getItem(Formatters.MashiroFormatter)) || {};
 
 export const StateProvider = ({ children }) => {
   const [nav, setNav] = useState(
-    initialConfig?.nav || JSON.parse(localStorage.getItem('nav')) || {},
+    initialConfig.nav || JSON.parse(localStorage.getItem('nav')) || {},
   );
 
   // create refs for each CKEditor to pass into EditorContext

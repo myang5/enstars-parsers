@@ -7,7 +7,8 @@ const StateContext = createContext();
 
 export const useStateContext = () => useContext(StateContext);
 
-const initialConfig = JSON.parse(localStorage.getItem(Formatters.JayFormatter));
+const initialConfig =
+  JSON.parse(localStorage.getItem(Formatters.JayFormatter)) || {};
 const getStaff = (value) => (isEmpty(value) ? [getEmptyStaffObj()] : value);
 
 export const StateProvider = ({ children }) => {
