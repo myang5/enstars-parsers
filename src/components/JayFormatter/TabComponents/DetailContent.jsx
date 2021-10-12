@@ -37,63 +37,69 @@ export default function DetailContent() {
   };
 
   return (
-    <div className="tab-content__grid">
-      <Row keyForValue={DETAILS_KEYS.WRITER} label="Writer">
-        <select
-          id={DETAILS_KEYS.WRITER}
-          value={details[DETAILS_KEYS.WRITER] || AUTHORS[0]}
-          onChange={handleChange}
-        >
-          {AUTHORS.map((author) => (
-            <option key={author} value={author}>
-              {author}
-            </option>
-          ))}
-        </select>
-      </Row>
-      <Row keyForValue={DETAILS_KEYS.SEASON} label="Season">
-        <select
-          id={DETAILS_KEYS.SEASON}
-          value={details[DETAILS_KEYS.SEASON] || SEASONS[0]}
-          onChange={handleChange}
-        >
-          {SEASONS.map((season) => (
-            <option key={season} value={season}>
-              {season}
-            </option>
-          ))}
-        </select>
-      </Row>
-      <Row keyForValue={DETAILS_KEYS.CHARACTERS} label="Characters">
-        <input
-          type="text"
-          id={DETAILS_KEYS.CHARACTERS}
-          value={characters}
-          onChange={(e) => setCharacters(e.target.value)}
+    <>
+      <div className="tab-content__grid">
+        <Row keyForValue={DETAILS_KEYS.WRITER} label="Writer">
+          <select
+            id={DETAILS_KEYS.WRITER}
+            value={details[DETAILS_KEYS.WRITER] || AUTHORS[0]}
+            onChange={handleChange}
+          >
+            {AUTHORS.map((author) => (
+              <option key={author} value={author}>
+                {author}
+              </option>
+            ))}
+          </select>
+        </Row>
+        <Row keyForValue={DETAILS_KEYS.SEASON} label="Season">
+          <select
+            id={DETAILS_KEYS.SEASON}
+            value={details[DETAILS_KEYS.SEASON] || SEASONS[0]}
+            onChange={handleChange}
+          >
+            {SEASONS.map((season) => (
+              <option key={season} value={season}>
+                {season}
+              </option>
+            ))}
+          </select>
+        </Row>
+        <Row keyForValue={DETAILS_KEYS.CHARACTERS} label="Characters">
+          <input
+            type="text"
+            id={DETAILS_KEYS.CHARACTERS}
+            value={characters}
+            onChange={(e) => setCharacters(e.target.value)}
+          />
+        </Row>
+        <div className="row__spacer" style={{ marginBottom: '-12px' }} />
+        <div className="staff-column-labels" style={{ marginBottom: '-12px' }}>
+          <label id="person-name-label">Name</label>
+          <label id="person-credit-label">Link (optional)</label>
+        </div>
+        <StaffInputs
+          staff={jpProofreaders}
+          label="Proofreading (JP)"
+          labelForClassName="jp-proofreaders"
+          onChange={setJpProofreaders}
         />
-      </Row>
-      <StaffInputs
-        staff={jpProofreaders}
-        label="Proofreading (JP)"
-        labelForClassName="jp-proofreaders"
-        onChange={setJpProofreaders}
-        showColumnLabels={true}
-      />
-      <StaffInputs
-        staff={engProofreaders}
-        label="Proofreading (ENG)"
-        labelForClassName="eng-proofreaders"
-        onChange={setEngProofreaders}
-      />
-      <StaffInputs
-        staff={translators}
-        label="Translation"
-        onChange={setTranslators}
-      />
-      <Row label="Blockquote" labelClassNames="align-self-start">
-        <BlockquoteEditor />
-      </Row>
-    </div>
+        <StaffInputs
+          staff={engProofreaders}
+          label="Proofreading (ENG)"
+          labelForClassName="eng-proofreaders"
+          onChange={setEngProofreaders}
+        />
+        <StaffInputs
+          staff={translators}
+          label="Translation"
+          onChange={setTranslators}
+        />
+        <Row label="Blockquote" labelClassNames="align-self-start">
+          <BlockquoteEditor />
+        </Row>
+      </div>
+    </>
   );
 }
 
@@ -109,13 +115,7 @@ const Row = ({ keyForValue, label, labelClassNames, children }) => (
   </>
 );
 
-const StaffInputs = ({
-  staff,
-  label,
-  labelForClassName,
-  onChange,
-  showColumnLabels,
-}) => {
+const StaffInputs = ({ staff, label, labelForClassName, onChange }) => {
   const handlePersonChange = (e) => {
     const { value, id } = e.target;
     const [_, key, idx] = id.split('_');
@@ -132,17 +132,6 @@ const StaffInputs = ({
 
   return (
     <>
-      {showColumnLabels && (
-        <>
-          <div className="row__spacer" />
-          <div className="staff-column-labels">
-            <label id={`${labelForClassName}-name-label`}>Name</label>
-            <label id={`${labelForClassName}-credit-label`}>
-              Link (optional)
-            </label>
-          </div>
-        </>
-      )}
       <label
         className="row__spacer align-self-start"
         id={`${labelForClassName}-label`}
@@ -155,14 +144,14 @@ const StaffInputs = ({
             <React.Fragment key={`${labelForClassName}_${idx}`}>
               <input
                 type="text"
-                aria-labelledby={`${labelForClassName}-label ${labelForClassName}-name-label`}
+                aria-labelledby={`${labelForClassName}-label person-name-label`}
                 id={`${labelForClassName}_${DETAILS_KEYS.NAME}_${idx}`}
                 value={person[DETAILS_KEYS.NAME]}
                 onChange={handlePersonChange}
               />
               <input
                 type="text"
-                aria-labelledby={`${labelForClassName}-label ${labelForClassName}-credit-label`}
+                aria-labelledby={`${labelForClassName}-label person-credit-label`}
                 id={`${labelForClassName}_${DETAILS_KEYS.LINK}_${idx}`}
                 value={person[DETAILS_KEYS.LINK]}
                 onChange={handlePersonChange}
