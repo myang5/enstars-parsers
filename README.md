@@ -6,7 +6,7 @@
 
 ### TODO
 
-- [ ] mashiro formatter
+- mashiro formatter
   - [x] Add bubble for images
   - [x] Handle mid-dialoge images and notes (need to close bubbles)
   - [x] Convert italics and bold formatting in dialogue
@@ -16,10 +16,13 @@
   - [ ] Get CKEditor to not erase custom HTML tags
     - https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html
   - [ ] Figure out why CKEditor component causes memory leaks
-- [ ] jay formatter
+- jay formatter
   - [x] add blockquote input
   - [x] handle removing jp lines in between eng lines
   - [x] autofill Characters input using names in dialogue
   - [ ] TL notes
-- [ ] story header formatter
-- [ ] oissu formatter
+  - [ ] TL notes tooltip (mobile + desktop)
+    - touch events + click events
+    - hover
+- story header formatter
+- oissu formatter
