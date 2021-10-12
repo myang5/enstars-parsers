@@ -2,7 +2,7 @@ import React from 'react';
 import { useStateContext } from '../Main/StateContext';
 import { NAV_KEYS } from '../utils';
 
-function NavContent() {
+export function NavContent() {
   const { nav, setNav } = useStateContext();
 
   const handleChange = (e) => {
@@ -47,5 +47,3 @@ const Row = ({ nav, navKey, label, onChange }) => (
     <input type="text" id={navKey} value={nav[navKey]} onChange={onChange} />
   </>
 );
-
-export default NavContent;

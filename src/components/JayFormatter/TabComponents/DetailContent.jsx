@@ -17,7 +17,7 @@ const AUTHORS = [
 
 const SEASONS = ['Spring', 'Summer', 'Autumn', 'Winter'];
 
-export default function DetailContent() {
+export function DetailContent() {
   const {
     details,
     setDetails,
