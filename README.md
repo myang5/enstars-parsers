@@ -20,6 +20,7 @@
   - [x] add blockquote input
   - [x] handle removing jp lines in between eng lines
   - [x] autofill Characters input using names in dialogue
+  - [ ] add oissu support (wrap everything in <div class="oissu">)
   - [ ] TL notes
   - [ ] TL notes tooltip (mobile + desktop)
     - touch events + click events
