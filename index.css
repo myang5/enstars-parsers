@@ -4,7 +4,6 @@ header {
   flex-direction: column;
   align-items: center;
   row-gap: 8px;
-  margin-bottom: 8px;
 }
 header a {
   position: relative;
@@ -144,15 +143,15 @@ button,
   transition: all 0.1s;
   -webkit-transition: all 0.1s;
   -moz-transition: all 0.1s;
+  box-sizing: border-box;
 }
 .primary-button,
 .tab-menu button:hover,
 .tab-menu button.active {
   background-color: #15c6e0;
   border-radius: 5px;
-  border: 1px solid;
+  border: 1px solid #15c6e0;
   color: #fff;
-  box-sizing: border-box;
 }
 .secondary-button,
 .tab-menu button {
@@ -160,7 +159,6 @@ button,
   border-radius: 5px;
   border: 1px solid;
   color: #15c6e0;
-  box-sizing: border-box;
 }
 .tab-menu button {
   border-bottom: none;
@@ -180,14 +178,14 @@ button,
 }
 
 .jay-formatter .tab-content--details .btn--add-person {
-  background-color: #fff;border-radius: 5px;border: 1px solid;color: #15c6e0;box-sizing: border-box;
+  background-color: #fff;border-radius: 5px;border: 1px solid;color: #15c6e0;
 }
 .jay-formatter .tab-content--details .align-self-start {
   align-self: start;
 }
 .jay-formatter .tab-content--details .staff-column-labels {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   column-gap: 5px;
   grid-column-gap: 5px;
   align-items: flex-end;
@@ -200,7 +198,7 @@ button,
 }
 .jay-formatter .tab-content--details .staff-grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   column-gap: 5px;
   grid-column-gap: 5px;
   row-gap: 5px;
@@ -301,14 +299,14 @@ button,
   transition: all 0.1s;
   -webkit-transition: all 0.1s;
   -moz-transition: all 0.1s;
+  box-sizing: border-box;
 }
 .primary-button,
 .actions #convert-button {
   background-color: #15c6e0;
   border-radius: 5px;
-  border: 1px solid;
+  border: 1px solid #15c6e0;
   color: #fff;
-  box-sizing: border-box;
 }
 .secondary-button,
 .actions #copy-button {
@@ -316,13 +314,13 @@ button,
   border-radius: 5px;
   border: 1px solid;
   color: #15c6e0;
-  box-sizing: border-box;
 }
 .main-page {
   max-width: 100rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  margin-top: 32px;
 }
 .input,
 .output {
@@ -365,15 +363,14 @@ button,
   }
   .input,
   .output {
-    margin-top: 2rem;
     width: 90%;
     max-width: 49rem;
-    margin: 1rem;
+    margin-top: 0;
   }
   .actions {
     width: 90%;
     flex-wrap: wrap;
-    margin: 0.5rem 0 0 0;
+    margin: 1rem 0;
     flex-direction: row;
     justify-content: center;
   }
