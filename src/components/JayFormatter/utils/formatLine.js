@@ -5,7 +5,7 @@ import { chain } from 'lodash';
  * @param {object} TEMPLATES
  */
 
-export default function formatLine(TEMPLATES) {
+export const formatLine = (TEMPLATES) => {
   // Handle both dialogue formats where name is on every line
   // or only on first line
   let currentName = '';
@@ -46,7 +46,7 @@ export default function formatLine(TEMPLATES) {
 
     return '';
   };
-}
+};
 
 export const isJapaneseLine = (line) =>
   /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line);

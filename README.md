@@ -20,6 +20,7 @@
   - [x] add blockquote input
   - [x] handle removing jp lines in between eng lines
   - [x] autofill Characters input using names in dialogue
+  - [ ] handle markdown styling -> html styling too
   - [ ] TL notes
   - [ ] TL notes tooltip (mobile + desktop)
     - touch events + click events

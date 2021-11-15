@@ -1,14 +1,10 @@
+import { mapValues } from 'lodash';
 import { extractBr, convertEditorDataToDom, updateLocalStorage } from '@utils';
 import { Formatters } from '@constants';
-import formatLine from './formatLine';
+import { formatLine } from './formatLine';
 import { NAV_KEYS } from './nav_keys';
-import { DETAILS_KEYS } from '.';
-import { compact, mapValues } from 'lodash';
-
-/**
- * Formats text into source code for the wiki.
- * @return {string} The formatted text as a string to be placed in the output textarea
- */
+import { DETAILS_KEYS } from './details_keys';
+import { formatHeader } from './formatHeader';
 
 export function convertText({
   inputData,
@@ -55,10 +51,7 @@ export function convertText({
     value: translators,
   });
 
-  const TEMPLATES = getTemplates();
-  const inputDom = extractBr(convertEditorDataToDom(inputData));
   const blockquoteDom = extractBr(convertEditorDataToDom(blockquoteData));
-  const input = inputDom.querySelectorAll('p');
   const blockquote = blockquoteDom.querySelectorAll('p');
 
   let output = formatHeader({
@@ -70,6 +63,9 @@ export function convertText({
     blockquote,
   });
 
+  const TEMPLATES = getTemplates();
+  const inputDom = extractBr(convertEditorDataToDom(inputData));
+  const input = inputDom.querySelectorAll('p');
   const formatLineHelper = formatLine(TEMPLATES);
 
   for (let i = 0; i < input.length; i++) {
@@ -80,13 +76,14 @@ export function convertText({
   return output;
 }
 
-const getTemplates = () => {
+export const getTemplates = () => {
   const templates = {};
 
   templates.dialogue = (value) => `<p>${value}</p>\n`;
   templates.boldName = (value) => `<strong>${value}:</strong> `;
-
   templates.info = (value) => `<p><strong><i>${value}</i></strong></p>\n`;
+
+  templates.separator = () => `<p>✦✦✦✦✦</p>\n`;
 
   return templates;
 };
@@ -97,60 +94,9 @@ const normalizeStaff = (staff) =>
     .filter((person) => person[DETAILS_KEYS.NAME])
     .map((person) => normalizeValues(person));
 
-const getLink = (href, text) => `<a href="${href}">${text}</a>`;
-const joinStaff = (staff, separator) =>
-  staff
-    .map((person) =>
-      person[DETAILS_KEYS.LINK]
-        ? getLink(person[DETAILS_KEYS.LINK], person[DETAILS_KEYS.NAME])
-        : person[DETAILS_KEYS.NAME],
-    )
-    .join(separator);
-const formatHeader = ({
-  details,
-  characters,
-  jpProofreaders,
-  engProofreaders,
-  translators,
-  blockquote,
-}) => {
-  const jpProofreading = joinStaff(jpProofreaders, ' + ');
-  const fullJpProofreading = jpProofreading ? jpProofreading + ' (JP)' : '';
-  const engProofreading = joinStaff(engProofreaders, ' + ');
-  const fullEngProofreading = engProofreading ? engProofreading + ' (ENG)' : '';
-  const translation = joinStaff(translators, ' & ');
-
-  const proofreadingLine =
-    jpProofreading || engProofreading
-      ? `\n<p><b>Proofreading:</b> ${compact([
-          fullJpProofreading,
-          fullEngProofreading,
-        ]).join(' &amp; ')}</p>`
-      : '';
-
-  let blockquoteOutput = '';
-
-  const TEMPLATES = getTemplates();
-  const formatLineHelper = formatLine(TEMPLATES);
-  for (let i = 0; i < blockquote.length; i++) {
-    blockquoteOutput += formatLineHelper(blockquote[i]);
-  }
-
-  // Entire blockquote should be italicized
-  blockquoteOutput = blockquoteOutput.replace(/(<p>)/, '$1<i>');
-  blockquoteOutput = blockquoteOutput.replace(/(<\/p>)/, '</i>$1');
-
-  return `<p><b>Writer:</b> ${details[DETAILS_KEYS.WRITER]}</p>
-<p><b>Season:</b> ${details[DETAILS_KEYS.SEASON]}</p>
-<p><b>Characters:</b> ${characters}</p>${proofreadingLine}
-<p><b>Translation:</b> ${translation}</p>
-<blockquote>${blockquoteOutput.trim()}</blockquote>
-[[MORE]]
-`;
-};
-
 const formatNavBar = (nav) => {
-  let output = '<p>✦✦✦✦✦</p>\n<p>';
+  const TEMPLATES = getTemplates();
+  let output = `${TEMPLATES.separator()}<p>`;
   if (nav[NAV_KEYS.PREV_URL]) {
     output += `<a href="${nav[NAV_KEYS.PREV_URL]}">← prev</a> `;
   }
