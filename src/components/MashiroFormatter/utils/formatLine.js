@@ -41,6 +41,7 @@ export default function formatLine(TEMPLATES) {
     }
 
     line = formatStyling(p);
+    line = formatCharacterEntities(line);
 
     if (isNameLine(line)) {
       interruptedName = '';
@@ -142,6 +143,11 @@ const splitLineIntoNameAndDialogue = (line) => {
   ];
 };
 
+/**
+ *
+ * @param {*} p The paragraph element
+ * @returns Paragraph element's innerHTML with styling formatted
+ */
 const formatStyling = (p) => {
   p.querySelectorAll('i').forEach((italic) => {
     italic.replaceWith(`*${italic.textContent}*`);
@@ -160,7 +166,7 @@ const formatStyling = (p) => {
   p.innerHTML = p.innerHTML.replace(/\*\*(\w+?)\*\*([^ ])/g, '<b>$1</b>$2');
   p.innerHTML = p.innerHTML.replace(/([^ ])\*\*(\w+?)\*\*/g, '$1<b>$2</b>');
 
-  let line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
+  let line = p.innerHTML;
 
   // If beginning text of line is bolded,
   // need to handle name lines and dialogue lines appropriately
@@ -175,4 +181,11 @@ const formatStyling = (p) => {
   }
 
   return line;
+};
+
+const formatCharacterEntities = (line) => {
+  line = line.replace(/&lt;/g, '<');
+  line = line.replace(/&gt;/g, '>');
+  line = line.replace(/&nbsp;/g, ' ');
+  return line.trim();
 };
