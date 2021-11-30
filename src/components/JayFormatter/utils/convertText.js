@@ -54,6 +54,8 @@ export function convertText({
   const blockquoteDom = extractBr(convertEditorDataToDom(blockquoteData));
   const blockquote = blockquoteDom.querySelectorAll('p');
 
+  const TEMPLATES = getTemplates();
+
   let output = formatHeader({
     details,
     characters,
@@ -62,8 +64,8 @@ export function convertText({
     translators,
     blockquote,
   });
+  output += TEMPLATES.oissuOpen();
 
-  const TEMPLATES = getTemplates();
   const inputDom = extractBr(convertEditorDataToDom(inputData));
   const input = inputDom.querySelectorAll('p');
   const formatLineHelper = formatLine(TEMPLATES);
@@ -72,6 +74,7 @@ export function convertText({
     output += formatLineHelper(input[i]);
   }
 
+  output += TEMPLATES.oissuClose();
   output += formatNavBar(nav);
   return output;
 }
@@ -84,6 +87,9 @@ export const getTemplates = () => {
   templates.info = (value) => `<p><strong><i>${value}</i></strong></p>\n`;
 
   templates.separator = () => `<p>✦✦✦✦✦</p>\n`;
+
+  templates.oissuOpen = () => `<div class="oissu">\n`;
+  templates.oissuClose = () => `</div>\n`;
 
   return templates;
 };
