@@ -52,6 +52,7 @@ export const formatHeader = ({
 <p><b>Characters:</b> ${characters}</p>${proofreadingLine}
 <p><b>Translation:</b> ${translation}</p>
 <blockquote>${blockquoteOutput.trim()}</blockquote>
+<img src="${details[DETAILS_KEYS.IMAGE]}">
 [[MORE]]
 `;
 };

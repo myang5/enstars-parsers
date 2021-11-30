@@ -98,6 +98,14 @@ export function DetailContent() {
         <Row label="Blockquote" labelClassNames="align-self-start">
           <BlockquoteEditor />
         </Row>
+        <Row keyForValue={DETAILS_KEYS.IMAGE} label="Image link">
+          <input
+            type="text"
+            id={DETAILS_KEYS.IMAGE}
+            value={details[DETAILS_KEYS.IMAGE]}
+            onChange={handleChange}
+          />
+        </Row>
       </div>
     </>
   );
