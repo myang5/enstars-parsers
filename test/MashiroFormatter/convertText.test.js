@@ -177,4 +177,28 @@ Let's take a moment to think on it! <ref>[http://ultra.wikia.com/wiki/Imitation_
       }),
     ).toMatch(result);
   });
+
+  it('handles lines with duplicate name labels', () => {
+    inputData = `<p>Hiyori: a</p>
+<p>Hiyori: b</p>
+<p>Hiyori: c</p>
+<p>Hiyori: d</p>`;
+
+    let result = `{% bubble Hiyori %}
+a
+
+b
+
+c
+
+d
+{% endbubble %}`;
+
+    expect(
+      convertText({
+        inputData,
+        nav,
+      }),
+    ).toMatch(result);
+  });
 });
