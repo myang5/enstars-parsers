@@ -107,17 +107,41 @@ const getValuesFromNarrationLine = (line) => {
  * Midori: some dialogue
  *
  * Midori, hidden: some dialogue
+ *
+ * Some dialogue: with a colon
+ *
+ * Some dialogue with: a colon
+ *
+ * Currently cannot differentiate between lines with a random colon
+ * - where the colon is after the first word (Some: dialogue with a colon)
+ * - where there colon is after the first two words
+ *   and the words are separated by a comma (Some, dialogue: with: a colon)
+ * since those lines look like name labels to the parser
  */
 const isNameLine = (line) => {
-  if (
-    chain(line)
-      .split(':')
-      .map((part) => part.trim())
-      .compact()
-      .value().length < 2
-  ) {
+  const potentialLabel = line.split(':')[0].trim();
+
+  const hasNoLabel = !potentialLabel;
+  if (hasNoLabel) {
     return false;
   }
+
+  // Detect lines such as "Some dialogue: with a colon"
+  const labelWords = chain(potentialLabel)
+    .split(' ')
+    .map((part) => part.trim())
+    .compact()
+    .value();
+  // Label can have
+  // - 2 words in cases like "Midori, hidden: some dialogue"
+  // - 1 word in cases like "Midori: some dialogue"
+  const hasRandomColon =
+    labelWords.length > 2 ||
+    (labelWords.length > 1 && !labelWords[0].includes(','));
+  if (hasRandomColon) {
+    return false;
+  }
+
   const label = line.split(':')[0];
   return inRange(
     chain(label)

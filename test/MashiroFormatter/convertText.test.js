@@ -126,4 +126,55 @@ Sigh… Ughhh…
       expect(convertText({ inputData, nav })).toMatch(result);
     });
   });
+
+  it('formats dialogue line that contains colon', () => {
+    inputData = `<p>Makoto: Yeesh... It's been so hot lately, I've been sweating like a pig.</p>
+<p>I wouldn't let: myself sweat this much before...</p>`;
+
+    let result = `{% bubble Makoto %}
+Yeesh... It's been so hot lately, I've been sweating like a pig.
+
+I wouldn't let: myself sweat this much before...
+{% endbubble %}`;
+
+    expect(
+      convertText({
+        inputData,
+        nav,
+      }),
+    ).toMatch(result);
+
+    inputData = `<p>Makoto, hidden: Yeesh... It's been so hot lately, I've been sweating like a pig.</p>
+<p>I wouldn't let: myself sweat this much before...</p>`;
+
+    result = `{% bubble Makoto hidden %}
+Yeesh... It's been so hot lately, I've been sweating like a pig.
+
+I wouldn't let: myself sweat this much before...
+{% endbubble %}`;
+
+    expect(
+      convertText({
+        inputData,
+        nav,
+      }),
+    ).toMatch(result);
+
+    // IRL example where a line may contain a colon because of a link
+    inputData = `<p>Chiaki: But what if the police were also, in some way, evil?</p>
+<p>Let's take a moment to think on it! <ref>[http://ultra.wikia.com/wiki/Imitation_Ultras Imitation Ultras]</ref></p>`;
+
+    result = `{% bubble Chiaki %}
+But what if the police were also, in some way, evil?
+
+Let's take a moment to think on it! <ref>[http://ultra.wikia.com/wiki/Imitation_Ultras Imitation Ultras]</ref>
+{% endbubble %}`;
+
+    expect(
+      convertText({
+        inputData,
+        nav,
+      }),
+    ).toMatch(result);
+  });
 });
