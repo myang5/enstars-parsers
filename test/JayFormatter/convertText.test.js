@@ -91,6 +91,42 @@ describe('convertText', () => {
       ).toMatch(result);
     });
 
+    it("handles ara's formatting", () => {
+      inputData = `<p>Jun: Heya, Team Snakey~ Looks like you've been hard at it ♪ How're you guys doing?</p>
+<p>お～い『ヘビさんチーム』、お疲れ～っす♪　そっちの調子はどうですか？</p>
+<p>Tomoya:</p>
+<p>大丈夫か創、何かほんとに『お疲れ』って感じだな――グッタリしてないか？</p>
+<p>Are you okay, Hajime? Rough morning, huh? You’re not gonna keel over, are you?</p>
+<p>Nazuna:</p>
+<p>ん～。巴は何だかんだでバラエティに慣れてるから、面白くするための『意図的な失敗』以外は完璧にやり遂げてたけど</p>
+<p>Mmm. Tomoe seems used to variety shows, one way or another, so he pulled things off without a hitch; save for the times he screwed up on purpose to make things funnier.</p>
+<p>Nazuna:</p>
+<p>おれも噛まないように～って意識するのには慣れてたりするし、けっこう早めに順応できたな</p>
+<p>And I’m used to forcing myself to pay attention when I speak so that I don’t slur my words, so I managed to adapt pretty quickly too.</p>
+<p>Mitsuru:</p>
+<p>あはは。同じ『指令』でも、それぞれ対処方法が違うっぽいのが面白いぜ</p>
+<p>Ahaha. We all got the same order but it looks like we all had different strategies for dealing with it! That’s awesome!</p>`;
+
+      const result = `<p><strong>Jun:</strong> Heya, Team Snakey~ Looks like you've been hard at it ♪ How're you guys doing?</p>
+<p><strong>Tomoya:</strong> Are you okay, Hajime? Rough morning, huh? You’re not gonna keel over, are you?</p>
+<p><strong>Nazuna:</strong> Mmm. Tomoe seems used to variety shows, one way or another, so he pulled things off without a hitch; save for the times he screwed up on purpose to make things funnier.</p>
+<p>And I’m used to forcing myself to pay attention when I speak so that I don’t slur my words, so I managed to adapt pretty quickly too.</p>
+<p><strong>Mitsuru:</strong> Ahaha. We all got the same order but it looks like we all had different strategies for dealing with it! That’s awesome!</p>`;
+
+      expect(
+        convertText({
+          inputData,
+          blockquoteData,
+          nav,
+          details,
+          characters,
+          jpProofreaders,
+          engProofreaders,
+          translators,
+        }),
+      ).toMatch(result);
+    });
+
     it.skip('handles mid-chapter headings', () => {});
   });
 

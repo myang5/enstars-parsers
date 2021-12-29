@@ -2,7 +2,7 @@
   "name": "enstars-parsers",
   "version": "1.0.0",
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "dev": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "deploy": "gh-pages -d dist",

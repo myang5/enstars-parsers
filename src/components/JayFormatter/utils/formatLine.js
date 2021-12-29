@@ -9,6 +9,8 @@ export const formatLine = (TEMPLATES) => {
   // Handle both dialogue formats where name is on every line
   // or only on first line
   let currentName = '';
+  let shouldAddNameToAraDialogueLine = false;
+
   return (p) => {
     let line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
@@ -24,6 +26,25 @@ export const formatLine = (TEMPLATES) => {
     // use innerHTML to preserve styling
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
+    /**
+     * Jay sometimes works with a translator that formats lines like this:
+     *
+     * Nazuna:
+     * 何だその曰くありげな物件。だ、大丈夫なのか？
+     * That sure sounds specific?! I-Is he okay?
+     *
+     * Once a dialogue line without a name label is found after a line
+     * that was just the name label, the full "line" has been processed.
+     *
+     * After full line is processed, treat
+     */
+    if (isAraNameLine(line)) {
+      const [name] = splitLineIntoNameAndDialogue(line);
+      shouldAddNameToAraDialogueLine = currentName !== name;
+      currentName = name;
+      return '';
+    }
+
     if (isNameLine(line)) {
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
 
@@ -32,15 +53,22 @@ export const formatLine = (TEMPLATES) => {
         return TEMPLATES.dialogue(dialogue);
       }
 
-      let result = '';
       currentName = name;
-      result += TEMPLATES.boldName(name);
+
+      let result = '';
+      result += TEMPLATES.boldName(currentName);
       result += dialogue;
       return TEMPLATES.dialogue(result);
     }
 
     // Handle case where name is not on every dialogue line
     if (currentName) {
+      if (shouldAddNameToAraDialogueLine) {
+        let result = '';
+        result += TEMPLATES.boldName(currentName);
+        result += line;
+        return TEMPLATES.dialogue(result);
+      }
       return TEMPLATES.dialogue(line);
     }
 
@@ -50,7 +78,9 @@ export const formatLine = (TEMPLATES) => {
 
 export const isJapaneseLine = (line) =>
   /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line);
+
 export const isInfoLine = (line) => line.startsWith('[');
+
 export const isNameLine = (line) => {
   const hasNoLabel =
     chain(line)
@@ -70,6 +100,9 @@ export const isNameLine = (line) => {
 
   return true;
 };
+
+// Line that only contains a name label like "Nazuna:"
+const isAraNameLine = (line) => /\w+:$/.test(line.trim());
 
 export const splitLineIntoNameAndDialogue = (line) => {
   // Use rest operator in case dialogue also contains colons
