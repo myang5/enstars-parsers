@@ -119,6 +119,10 @@ const getValuesFromNarrationLine = (line) => {
  * since those lines look like name labels to the parser
  */
 const isNameLine = (line) => {
+  if (!line.includes(':')) {
+    return false;
+  }
+
   const potentialLabel = line.split(':')[0].trim();
 
   const hasNoLabel = !potentialLabel;

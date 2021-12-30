@@ -201,4 +201,22 @@ d
       }),
     ).toMatch(result);
   });
+
+  it('handles one-word lines', () => {
+    inputData = `<p>Tori: S-so you noticed. You see, I was actually testing you!</p>
+<p>Gyaah!?</p>`;
+
+    let result = `{% bubble Tori %}
+S-so you noticed. You see, I was actually testing you!
+
+Gyaah!?
+{% endbubble %}`;
+
+    expect(
+      convertText({
+        inputData,
+        nav,
+      }),
+    ).toMatch(result);
+  });
 });

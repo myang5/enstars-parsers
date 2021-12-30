@@ -82,6 +82,10 @@ export const isJapaneseLine = (line) =>
 export const isInfoLine = (line) => line.startsWith('[');
 
 export const isNameLine = (line) => {
+  if (!line.includes(':')) {
+    return false;
+  }
+
   const hasNoLabel =
     chain(line)
       .split(':')

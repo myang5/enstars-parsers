@@ -127,6 +127,27 @@ describe('convertText', () => {
       ).toMatch(result);
     });
 
+    it('handles-one word lines', () => {
+      inputData = `<p>Tori: S-so you noticed. You see, I was actually testing you!</p>
+<p>Gyaah!?</p>`;
+
+      const result = `<p><strong>Tori:</strong> S-so you noticed. You see, I was actually testing you!</p>
+<p>Gyaah!?</p>`;
+
+      expect(
+        convertText({
+          inputData,
+          blockquoteData,
+          nav,
+          details,
+          characters,
+          jpProofreaders,
+          engProofreaders,
+          translators,
+        }),
+      ).toMatch(result);
+    });
+
     it.skip('handles mid-chapter headings', () => {});
   });
 
