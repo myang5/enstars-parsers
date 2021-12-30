@@ -1,3 +1,4 @@
+import { isNameLineException } from '@utils';
 import { chain } from 'lodash';
 
 /**
@@ -38,14 +39,14 @@ export const formatLine = (TEMPLATES) => {
      *
      * After full line is processed, treat
      */
-    if (isAraNameLine(line)) {
+    if (isAraNameLine(line) && !isNameLineException(line)) {
       const [name] = splitLineIntoNameAndDialogue(line);
       shouldAddNameToAraDialogueLine = currentName !== name;
       currentName = name;
       return '';
     }
 
-    if (isNameLine(line)) {
+    if (isNameLine(line) && !isNameLineException(line)) {
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
 
       // Handle case where name is on every dialogue line

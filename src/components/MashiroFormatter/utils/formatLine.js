@@ -1,3 +1,4 @@
+import { isNameLineException } from '@utils';
 import { chain, inRange } from 'lodash';
 
 /**
@@ -43,7 +44,7 @@ export default function formatLine(TEMPLATES) {
     line = formatStyling(p);
     line = formatCharacterEntities(line);
 
-    if (isNameLine(line)) {
+    if (isNameLine(line) && !isNameLineException(line)) {
       interruptedName = '';
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
 
