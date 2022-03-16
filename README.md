@@ -6,5 +6,4 @@
 
 ### TODO
 
-- story header formatter
 - oissu formatter
