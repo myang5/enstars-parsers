@@ -1,5 +1,9 @@
-import { isNameLineException } from '@utils';
 import { chain } from 'lodash';
+import {
+  isNameLineException,
+  boldMarkdownToHTML,
+  italicMarkdownToHTML,
+} from '@utils';
 
 /**
  * Helper function for convertText that formats each dialogue line.
@@ -37,9 +41,13 @@ export const formatLines = ({ templates, input }) => {
     if (isLabelLine(line) && !isNameLineException(line)) {
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
 
+      const formattedDialogue = italicMarkdownToHTML(
+        boldMarkdownToHTML(dialogue),
+      );
+
       // Handle case where name is on every dialogue line
       if (currentName === name) {
-        storyOutput += templates.dialogue(dialogue);
+        storyOutput += templates.dialogue(formattedDialogue);
         return;
       }
 
@@ -47,7 +55,7 @@ export const formatLines = ({ templates, input }) => {
 
       let result = '';
       result += templates.boldName(currentName);
-      result += dialogue;
+      result += formattedDialogue;
       storyOutput += templates.dialogue(result);
 
       if (isCharacterNameLabel(name) && !headerQuote) {
