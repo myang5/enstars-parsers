@@ -3,6 +3,7 @@ import {
   isNameLineException,
   boldMarkdownToHTML,
   italicMarkdownToHTML,
+  isImageURLLine,
 } from '@utils';
 
 /**
@@ -28,7 +29,7 @@ export const formatLines = ({ templates, input }) => {
     // use innerHTML to preserve styling
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
-    if (isImageLine(line)) {
+    if (isImageURLLine(line)) {
       const result = templates.image(line);
       if (!headerImage) {
         headerImage = result;
@@ -79,10 +80,6 @@ export const formatLines = ({ templates, input }) => {
   }
 
   return { headerImage, headerQuote, storyOutput };
-};
-
-const isImageLine = (line) => {
-  return line.toUpperCase().startsWith('HTTP');
 };
 
 const isLabelLine = (line) => {
