@@ -3,51 +3,81 @@ import { chain } from 'lodash';
 
 /**
  * Helper function for convertText that formats each dialogue line.
- * @param {object} TEMPLATES
  */
+export const formatLines = ({ templates, input }) => {
+  let headerImage = '';
+  let headerQuote = '';
+  let storyOutput = '';
 
-export const formatLine = (TEMPLATES) => {
   // Handle both dialogue formats where name is on every line
   // or only on first line
   let currentName = '';
 
-  return (p) => {
+  const formatLine = (p) => {
     let line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
     if (!line) {
-      return '';
+      return;
     }
 
     // Because end result should be in HTML as well,
     // use innerHTML to preserve styling
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
-    if (isNameLine(line) && !isNameLineException(line)) {
+    if (isImageLine(line)) {
+      const result = templates.image(line);
+      if (!headerImage) {
+        headerImage = result;
+      } else {
+        storyOutput += result;
+      }
+      return;
+    }
+
+    if (isLabelLine(line) && !isNameLineException(line)) {
       const [name, dialogue] = splitLineIntoNameAndDialogue(line);
 
       // Handle case where name is on every dialogue line
       if (currentName === name) {
-        return TEMPLATES.dialogue(dialogue);
+        storyOutput += templates.dialogue(dialogue);
+        return;
       }
 
       currentName = name;
 
       let result = '';
-      result += TEMPLATES.boldName(currentName);
+      result += templates.boldName(currentName);
       result += dialogue;
-      return TEMPLATES.dialogue(result);
+      storyOutput += templates.dialogue(result);
+
+      if (isCharacterNameLabel(name) && !headerQuote) {
+        headerQuote = templates.dialogue(result);
+      }
+
+      return;
     }
 
     // Handle case where name is not on every dialogue line
     if (currentName) {
-      return TEMPLATES.dialogue(line);
+      storyOutput += templates.dialogue(line);
+      return;
     }
 
     return '';
   };
+
+  for (let i = 0; i < input.length; i++) {
+    formatLine(input[i]);
+  }
+
+  return { headerImage, headerQuote, storyOutput };
 };
 
-export const isNameLine = (line) => {
+const isImageLine = (line) => {
+  return line.toUpperCase().startsWith('HTTP');
+};
+
+const isLabelLine = (line) => {
   if (!line.includes(':')) {
     return false;
   }
@@ -71,8 +101,20 @@ export const isNameLine = (line) => {
   return true;
 };
 
-export const splitLineIntoNameAndDialogue = (line) => {
+const splitLineIntoNameAndDialogue = (line) => {
   // Use rest operator in case dialogue also contains colons
   const [name, ...dialogue] = line.split(':');
   return [name.trim(), dialogue.join(':').trim()];
 };
+
+const isCharacterNameLabel = (name) =>
+  [
+    'nazuna',
+    'mika',
+    'shu',
+    'hajime',
+    'tomoya',
+    'mitsuru',
+    'arashi',
+    'kuro',
+  ].includes(name.toLowerCase());

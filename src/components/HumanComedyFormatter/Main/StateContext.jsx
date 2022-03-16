@@ -9,7 +9,6 @@ const initialConfig =
   JSON.parse(localStorage.getItem(Formatters.HumanComedyFormatter)) || {};
 
 export const StateProvider = ({ children }) => {
-  const [details, setDetails] = useState(initialConfig.details || {});
   const [nav, setNav] = useState(initialConfig.nav || {});
 
   // create refs for each CKEditor to pass into EditorContext
@@ -18,8 +17,6 @@ export const StateProvider = ({ children }) => {
   const state = {
     nav,
     setNav,
-    details,
-    setDetails,
     inputRef,
   };
 

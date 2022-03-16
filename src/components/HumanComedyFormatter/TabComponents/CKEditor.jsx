@@ -24,11 +24,13 @@ export function InputEditor() {
   };
 
   const inputEditorData = `
-<p>https://imgur.com/keysmash</p>
+<p>https://static.wikia.nocookie.net/ensemble-stars/images/4/4a/%28Elegant_Fragrance%29_Arashi_Narukami_CG2.png/revision/latest?cb=20210715163222</p>
 <p>Location: Underground Live House</p>
 <p>Mika: Eek, why'd ''I'' get scolded!?</p>
+<p>Test non-label dialogue</p>
 <p>Nazuna: Calm down... Sorry, I was the one who got distracted. It's my mistake. Don't get mad at Kagehi—Mika-chin, Itsuki.</p>
 <p>Shu: ''"Itsuki"?'' How disrespectful of you to call me by my name. Do you consider yourself my equal?</p>
+<p>Shu: Test label dialogue</p>
 <p>Nazuna: O-Oh... Sorry, Oshi-san.</p>
 `;
 
