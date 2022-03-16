@@ -1,11 +1,9 @@
-import { isNameLineException } from '@utils';
+import { isNameLineException, isImageURLLine } from '@utils';
 import { chain } from 'lodash';
 
 /**
  * Helper function for convertText that formats each dialogue line.
- * @param {object} TEMPLATES
  */
-
 export const formatLine = (TEMPLATES) => {
   // Handle both dialogue formats where name is on every line
   // or only on first line
@@ -19,13 +17,18 @@ export const formatLine = (TEMPLATES) => {
       return '';
     }
 
+    // Because end result should be in HTML as well,
+    // use innerHTML to preserve styling
+    line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
+
     if (isInfoLine(line)) {
       return TEMPLATES.info(line);
     }
 
-    // Because end result should be in HTML as well,
-    // use innerHTML to preserve styling
-    line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
+    if (isImageURLLine(line)) {
+      currentName = '';
+      return TEMPLATES.image(line);
+    }
 
     /**
      * Jay sometimes works with a translator that formats lines like this:
