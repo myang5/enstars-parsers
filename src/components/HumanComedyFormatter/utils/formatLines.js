@@ -18,7 +18,7 @@ export const formatLines = ({ templates, input }) => {
   // or only on first line
   let currentName = '';
 
-  const formatLine = (p) => {
+  const formatLine = (p, i) => {
     let line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
     if (!line) {
@@ -31,7 +31,7 @@ export const formatLines = ({ templates, input }) => {
 
     if (isImageURLLine(line)) {
       const result = templates.image(line);
-      if (!headerImage) {
+      if (i === 0 && !headerImage) {
         headerImage = result;
       } else {
         storyOutput += result;
@@ -75,7 +75,7 @@ export const formatLines = ({ templates, input }) => {
   };
 
   for (let i = 0; i < input.length; i++) {
-    formatLine(input[i]);
+    formatLine(input[i], i);
   }
 
   return { headerImage, headerQuote, storyOutput };
