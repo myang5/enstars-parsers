@@ -36,6 +36,7 @@ export const formatLines = ({ templates, input }) => {
       } else {
         storyOutput += result;
       }
+      currentName = '';
       return;
     }
 
@@ -71,8 +72,6 @@ export const formatLines = ({ templates, input }) => {
       storyOutput += templates.dialogue(line);
       return;
     }
-
-    return '';
   };
 
   for (let i = 0; i < input.length; i++) {

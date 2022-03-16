@@ -41,8 +41,6 @@ const getTemplates = () => {
 
   templates.image = (value) => `<img src="${value}">\n`;
 
-  templates.separator = () => `<p>✦✦✦✦✦</p>\n`;
-
   templates.oissuOpen = () => `<div class="oissu">\n`;
   templates.oissuClose = () => `</div>\n`;
 
@@ -56,8 +54,7 @@ const formatHeader = ({ image, quote }) => {
 };
 
 const formatNavBar = (nav) => {
-  const TEMPLATES = getTemplates();
-  let output = `${TEMPLATES.separator()}<blockquote class="os-block os-exclude">`;
+  let output = `<p>✦✦✦✦✦</p>\n<blockquote class="os-block os-exclude">`;
   if (nav[NAV_KEYS.PREV_URL]) {
     output += `<a href="${nav[NAV_KEYS.PREV_URL]}">← prev</a> `;
   }
