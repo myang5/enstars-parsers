@@ -86,6 +86,8 @@ export const getTemplates = () => {
   templates.boldName = (value) => `<strong>${value}:</strong> `;
   templates.info = (value) => `<p><strong><i>${value}</i></strong></p>\n`;
 
+  templates.image = (value) => `<img src="${value}">\n`;
+
   templates.separator = () => `<p>✦✦✦✦✦</p>\n`;
 
   templates.oissuOpen = () => `<div class="oissu">\n`;
