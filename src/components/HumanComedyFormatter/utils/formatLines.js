@@ -58,10 +58,17 @@ export const formatLines = ({ templates, input }) => {
       let result = '';
       result += templates.boldName(currentName);
       result += formattedDialogue;
+
+      // Informational lines such as Location: or Heading:
+      if (isLabelLineNeedingBlockquote(line)) {
+        storyOutput += templates.blockquote(templates.dialogue(result).trim());
+        return;
+      }
+
       storyOutput += templates.dialogue(result);
 
       if (isCharacterNameLabel(name) && !headerQuote) {
-        headerQuote = templates.dialogue(result);
+        headerQuote = templates.blockquote(templates.dialogue(result).trim());
       }
 
       return;
@@ -104,6 +111,9 @@ const isLabelLine = (line) => {
 
   return true;
 };
+
+const isLabelLineNeedingBlockquote = (line) =>
+  ['location', 'heading'].includes(line.split(':')[0].trim().toLowerCase());
 
 const splitLineIntoNameAndDialogue = (line) => {
   // Use rest operator in case dialogue also contains colons

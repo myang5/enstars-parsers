@@ -28,8 +28,8 @@ export function convertText({ inputData, nav }) {
   });
   output += TEMPLATES.oissuOpen();
   output += storyOutput;
-  output += formatNavBar(nav);
   output += TEMPLATES.oissuClose();
+  output += formatNavBar(nav);
   return output;
 }
 
@@ -40,6 +40,7 @@ const getTemplates = () => {
   templates.boldName = (value) => `<strong>${value}:</strong> `;
 
   templates.image = (value) => `<img src="${value}">\n`;
+  templates.blockquote = (value) => `<blockquote>${value}</blockquote>\n`;
 
   templates.oissuOpen = () => `<div class="oissu">\n`;
   templates.oissuClose = () => `</div>\n`;
@@ -50,11 +51,11 @@ const getTemplates = () => {
 const normalizeValues = (object) => mapValues(object, (value) => value.trim());
 
 const formatHeader = ({ image, quote }) => {
-  return `<blockquote>${quote.trim()}</blockquote>\n${image}[[MORE]]\n`;
+  return `${quote}${image}[[MORE]]\n`;
 };
 
 const formatNavBar = (nav) => {
-  let output = `<blockquote class="os-block os-exclude">`;
+  let output = `<p>`;
   if (nav[NAV_KEYS.PREV_URL]) {
     output += `<a href="${nav[NAV_KEYS.PREV_URL]}">← prev</a> `;
   }
@@ -62,6 +63,6 @@ const formatNavBar = (nav) => {
   if (nav[NAV_KEYS.NEXT_URL]) {
     output += ` <a href="${nav[NAV_KEYS.NEXT_URL]}">next →</a>`;
   }
-  output += '</blockquote>\n';
+  output += '</p>\n';
   return output;
 };

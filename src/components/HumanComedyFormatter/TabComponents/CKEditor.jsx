@@ -29,6 +29,7 @@ export function InputEditor() {
 <p>Mika: Eek, why'd ''I'' get scolded!?</p>
 <p>Test non-label dialogue</p>
 <p>Nazuna: Calm down... Sorry, I was the one who got distracted. It's my mistake. Don't get mad at Kagehi—Mika-chin, Itsuki.</p>
+<p>Heading: Time: Winter</p>
 <p>Shu: ''"Itsuki"?'' How disrespectful of you to call me by my name. Do you consider yourself my equal?</p>
 <p>Shu: Test label dialogue</p>
 <p>Nazuna: O-Oh... Sorry, Oshi-san.</p>
