@@ -26,7 +26,11 @@ export function convertText({ inputData, nav }) {
     image: headerImage,
     quote: headerQuote,
   });
-  output += TEMPLATES.oissuOpen();
+  output += TEMPLATES.oissuOpen({
+    prevUrl: nav[NAV_KEYS.PREV_URL],
+    nextUrl: nav[NAV_KEYS.NEXT_URL],
+    allUrl: nav[NAV_KEYS.ALL_URL],
+  });
   output += storyOutput;
   output += TEMPLATES.oissuClose();
   output += formatNavBar(nav);
@@ -42,7 +46,11 @@ const getTemplates = () => {
   templates.image = (value) => `<img src="${value}">\n`;
   templates.blockquote = (value) => `<blockquote>${value}</blockquote>\n`;
 
-  templates.oissuOpen = () => `<div class="oissu">\n`;
+  templates.oissuOpen = ({ prevUrl, nextUrl, allUrl }) => `<div class="oissu"
+data-oissu-display="yns"
+data-oissu-prev="${prevUrl} prev"
+data-oissu-next="${nextUrl} next"
+data-oissu-directory="${allUrl}">\n`;
   templates.oissuClose = () => `</div>\n`;
 
   return templates;
