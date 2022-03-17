@@ -54,11 +54,11 @@ const formatHeader = ({ image, quote }) => {
 };
 
 const formatNavBar = (nav) => {
-  let output = `<p>✦✦✦✦✦</p>\n<blockquote class="os-block os-exclude">`;
+  let output = `<blockquote class="os-block os-exclude">`;
   if (nav[NAV_KEYS.PREV_URL]) {
     output += `<a href="${nav[NAV_KEYS.PREV_URL]}">← prev</a> `;
   }
-  output += `✦ <a href="${nav[NAV_KEYS.ALL_URL]}">all</a> ✦`;
+  output += `❖ <a href="${nav[NAV_KEYS.ALL_URL]}">all</a> ❖`;
   if (nav[NAV_KEYS.NEXT_URL]) {
     output += ` <a href="${nav[NAV_KEYS.NEXT_URL]}">next →</a>`;
   }
