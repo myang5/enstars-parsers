@@ -83,7 +83,12 @@ export const formatLine = (TEMPLATES) => {
 export const isJapaneseLine = (line) =>
   /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line);
 
-export const isInfoLine = (line) => line.startsWith('[');
+export const isInfoLine = (line) => {
+  const infoLabels = ['TIME', 'LOCATION'];
+  return infoLabels.includes(
+    chain(line.toUpperCase()).split(':').first().value(),
+  );
+};
 
 export const isNameLine = (line) => {
   if (!line.includes(':')) {

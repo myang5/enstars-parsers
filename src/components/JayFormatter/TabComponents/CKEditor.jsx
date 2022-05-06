@@ -25,8 +25,8 @@ export function InputEditor() {
   };
 
   const inputEditorData = `
-  <p>[A few days later…]</p>
-  <p>[Location: Outside ES]</p>
+  <p>Time: A few days later…</p>
+  <p>Location: Outside ES</p>
   <p>Jun: Hmm... At this rate, I should be able to make it to the venue with time to spare.</p>
   <p>えぇっと？　この時間なら現場に余裕で間に合いそうっすね</p>
   <p>Jun: (Right, I'm working with Ibara today. It’s been a while since we had last had a job together as just the two of us, since I usually work either with everyone in Eden or just as Eve.)  </p>
