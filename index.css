@@ -221,6 +221,44 @@ button,
   overflow: auto;
 }
 
+.oissu-formatter .tab-content--details .btn--add-person {
+  background-color: #fff;border-radius: 5px;border: 1px solid;color: #15c6e0;
+}
+.oissu-formatter .tab-content--details .align-self-start {
+  align-self: start;
+}
+.oissu-formatter .tab-content--details .staff-column-labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5px;
+  grid-column-gap: 5px;
+  align-items: flex-end;
+  text-align: left;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+.oissu-formatter .tab-content--details .staff-column-labels > * {
+  margin-left: 2px;
+}
+.oissu-formatter .tab-content--details .staff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5px;
+  grid-column-gap: 5px;
+  row-gap: 5px;
+  grid-row-gap: 5px;
+}
+.oissu-formatter .tab-content--details .btn--add-person {
+  background-color: transparent;
+  border: none;
+  font-size: 0.8rem;
+  align-self: start;
+}
+.oissu-formatter .tab-content--details .btn--add-person:focus,
+.oissu-formatter .tab-content--details .btn--add-person:hover {
+  font-weight: bold;
+}
+
 /*---------------------------------ALL PAGES----------------------------------*/
 body {
   margin: 0;
