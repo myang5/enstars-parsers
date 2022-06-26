@@ -9,7 +9,7 @@ export const useStateContext = () => useContext(StateContext);
 const getStaff = (value) => (isEmpty(value) ? [getEmptyStaffObj()] : value);
 
 const initialConfig =
-  JSON.parse(localStorage.getItem(Formatters.HumanComedyFormatter)) || {};
+  JSON.parse(localStorage.getItem(Formatters.OissuFormatter)) || {};
 
 export const StateProvider = ({ children }) => {
   const [nav, setNav] = useState(initialConfig.nav || {});

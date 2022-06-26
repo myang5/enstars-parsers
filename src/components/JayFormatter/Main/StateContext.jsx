@@ -23,11 +23,7 @@ export const StateProvider = ({ children }) => {
   const [translators, setTranslators] = useState(
     getStaff(initialConfig.translators),
   );
-  const [nav, setNav] = useState(
-    // TODO: can clean up this logic after new config
-    // storing system is in place
-    initialConfig?.nav || JSON.parse(localStorage.getItem('nav')) || {},
-  );
+  const [nav, setNav] = useState(initialConfig.nav || {});
 
   // create refs for each CKEditor to pass into EditorContext
   const inputRef = useRef(null);

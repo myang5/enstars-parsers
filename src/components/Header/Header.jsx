@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import { Formatters, DEFAULT_FORMATTER } from '@constants';
+import { sortBy } from 'lodash';
+import { Formatters } from '@constants';
 import './Header.less';
 
-const formatterLinks = Object.values(Formatters);
+const formatterLinks = sortBy(Object.values(Formatters), (value) => value);
 
 export default function Header() {
   const location = useLocation();
   const history = useHistory();
 
   const formatterType = location.pathname.split('/')[1];
-  const linkValue = formatterType ? formatterType : DEFAULT_FORMATTER;
+  const linkValue = formatterType ? formatterType : formatterLinks[0];
 
   const handleLinkChange = (e) => {
     const newLink = e.target.value;

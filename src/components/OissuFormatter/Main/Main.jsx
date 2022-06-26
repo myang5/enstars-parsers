@@ -36,7 +36,7 @@ const MainContent = () => {
   };
 
   return (
-    <div className="main-page human-comedy-formatter">
+    <div className="main-page oissu-formatter">
       <Input />
       <MainActions {...{ outputRef, onConvert }} />
       <textarea className="output" ref={outputRef} spellCheck={false} />

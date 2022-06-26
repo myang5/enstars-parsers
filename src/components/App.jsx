@@ -6,7 +6,7 @@ import Header from './Header';
 import { MashiroFormatter } from './MashiroFormatter';
 import { MarkdownStylingToHtml } from './MarkdownStylingToHtml';
 import { JayFormatter } from './JayFormatter';
-import { HumanComedyFormatter } from './HumanComedyFormatter';
+import { OissuFormatter } from './OissuFormatter';
 import '@styles/styles.less';
 import '@styles/Main.less';
 
@@ -24,8 +24,8 @@ function App() {
         <Route path={`/${Formatters.JayFormatter}`}>
           <JayFormatter />
         </Route>
-        <Route path={`/${Formatters.HumanComedyFormatter}`}>
-          <HumanComedyFormatter />
+        <Route path={`/${Formatters.OissuFormatter}`}>
+          <OissuFormatter />
         </Route>
         <Route exact path="/">
           <MashiroFormatter />

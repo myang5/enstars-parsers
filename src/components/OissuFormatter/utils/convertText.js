@@ -19,28 +19,28 @@ export function convertText({
 }) {
   nav = normalizeValues(nav);
   updateLocalStorage({
-    formatter: Formatters.HumanComedyFormatter,
+    formatter: Formatters.OissuFormatter,
     key: 'nav',
     value: nav,
   });
 
   jpProofreaders = normalizeStaff(jpProofreaders);
   updateLocalStorage({
-    formatter: Formatters.HumanComedyFormatter,
+    formatter: Formatters.OissuFormatter,
     key: 'jpProofreaders',
     value: jpProofreaders,
   });
 
   engProofreaders = normalizeStaff(engProofreaders);
   updateLocalStorage({
-    formatter: Formatters.HumanComedyFormatter,
+    formatter: Formatters.OissuFormatter,
     key: 'engProofreaders',
     value: engProofreaders,
   });
 
   translators = normalizeStaff(translators);
   updateLocalStorage({
-    formatter: Formatters.HumanComedyFormatter,
+    formatter: Formatters.OissuFormatter,
     key: 'translators',
     value: translators,
   });
