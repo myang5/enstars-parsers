@@ -1,10 +1,11 @@
-import { extractBr, convertEditorDataToDom } from '@utils';
 import {
-  isInfoLine,
-  isJapaneseLine,
-  isNameLine,
-  splitLineIntoNameAndDialogue,
-} from './formatLine';
+  extractBr,
+  convertEditorDataToDom,
+  isOissuNarratedLine,
+  splitLineIntoLabelAndValue,
+  isOissuLabelLine,
+} from '@utils';
+import { isJapaneseLine } from './formatLine';
 
 export const getCharactersFromInput = (editor) => {
   const inputDom = extractBr(convertEditorDataToDom(editor.getData()));
@@ -14,11 +15,11 @@ export const getCharactersFromInput = (editor) => {
   for (let i = 0; i < input.length; i++) {
     const p = input[i];
     const line = p.textContent.replace(/&nbsp;/g, ' ').trim();
-    if (isJapaneseLine(line) || isInfoLine(line)) {
+    if (isJapaneseLine(line) || isOissuNarratedLine(line)) {
       continue;
     }
-    if (isNameLine(line)) {
-      const [name] = splitLineIntoNameAndDialogue(line);
+    if (isOissuLabelLine(line)) {
+      const [name] = splitLineIntoLabelAndValue(line);
       charactersSet.add(name);
     }
   }

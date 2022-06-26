@@ -1,15 +1,17 @@
-import { chain } from 'lodash';
 import {
   isNameLineException,
   boldMarkdownToHTML,
   italicMarkdownToHTML,
   isImageURLLine,
+  isOissuNarratedLine,
+  splitLineIntoLabelAndValue,
+  isOissuLabelLine,
 } from '@utils';
 
 /**
  * Helper function for convertText that formats each dialogue line.
  */
-export const formatLines = ({ templates, input }) => {
+export const formatLines = ({ TEMPLATES, input }) => {
   let headerImage = '';
   let headerQuote = '';
   let storyOutput = '';
@@ -30,7 +32,7 @@ export const formatLines = ({ templates, input }) => {
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
     if (isImageURLLine(line)) {
-      const result = templates.image(line);
+      const result = TEMPLATES.image(line);
       if (i === 0 && !headerImage) {
         headerImage = result;
       } else {
@@ -40,35 +42,36 @@ export const formatLines = ({ templates, input }) => {
       return;
     }
 
-    if (isLabelLine(line) && !isNameLineException(line)) {
-      const [name, dialogue] = splitLineIntoNameAndDialogue(line);
+    if (isOissuLabelLine(line) && !isNameLineException(line)) {
+      const [name, dialogue] = splitLineIntoLabelAndValue(line);
 
       const formattedDialogue = italicMarkdownToHTML(
         boldMarkdownToHTML(dialogue),
       );
 
+      if (isOissuNarratedLine(line)) {
+        storyOutput += TEMPLATES.blockquote(
+          TEMPLATES.dialogue(`${name}: ${formattedDialogue}`).trim(),
+        );
+        return;
+      }
+
       // Handle case where name is on every dialogue line
       if (currentName === name) {
-        storyOutput += templates.dialogue(formattedDialogue);
+        storyOutput += TEMPLATES.dialogue(formattedDialogue);
         return;
       }
 
       currentName = name;
 
       let result = '';
-      result += templates.boldName(currentName);
+      result += TEMPLATES.boldName(currentName);
       result += formattedDialogue;
 
-      // Informational lines such as Location: or Heading:
-      if (isLabelLineNeedingBlockquote(line)) {
-        storyOutput += templates.blockquote(templates.dialogue(result).trim());
-        return;
-      }
+      storyOutput += TEMPLATES.dialogue(result);
 
-      storyOutput += templates.dialogue(result);
-
-      if (isCharacterNameLabel(name) && !headerQuote) {
-        headerQuote = templates.blockquote(templates.dialogue(result).trim());
+      if (!headerQuote) {
+        headerQuote = TEMPLATES.blockquote(TEMPLATES.dialogue(result).trim());
       }
 
       return;
@@ -76,7 +79,7 @@ export const formatLines = ({ templates, input }) => {
 
     // Handle case where name is not on every dialogue line
     if (currentName) {
-      storyOutput += templates.dialogue(line);
+      storyOutput += TEMPLATES.dialogue(line);
       return;
     }
   };
@@ -87,48 +90,3 @@ export const formatLines = ({ templates, input }) => {
 
   return { headerImage, headerQuote, storyOutput };
 };
-
-const isLabelLine = (line) => {
-  if (!line.includes(':')) {
-    return false;
-  }
-
-  const hasNoLabel =
-    chain(line)
-      .split(':')
-      .map((part) => part.trim())
-      .compact()
-      .value().length < 2;
-  if (hasNoLabel) {
-    return false;
-  }
-
-  const hasRandomColon =
-    chain(line).split(':').first().trim()?.split(' ').value().length > 1;
-  if (hasRandomColon) {
-    return false;
-  }
-
-  return true;
-};
-
-const isLabelLineNeedingBlockquote = (line) =>
-  ['location', 'heading'].includes(line.split(':')[0].trim().toLowerCase());
-
-const splitLineIntoNameAndDialogue = (line) => {
-  // Use rest operator in case dialogue also contains colons
-  const [name, ...dialogue] = line.split(':');
-  return [name.trim(), dialogue.join(':').trim()];
-};
-
-const isCharacterNameLabel = (name) =>
-  [
-    'nazuna',
-    'mika',
-    'shu',
-    'hajime',
-    'tomoya',
-    'mitsuru',
-    'arashi',
-    'kuro',
-  ].includes(name.toLowerCase());

@@ -51,7 +51,7 @@ export function convertText({
   const input = inputDom.querySelectorAll('p');
 
   const { headerImage, headerQuote, storyOutput } = formatLines({
-    templates: TEMPLATES,
+    TEMPLATES,
     input,
   });
 
@@ -119,11 +119,10 @@ const formatHeader = ({
       ? `<p><b>Proofreading:</b> ${compact([
           fullJpProofreading,
           fullEngProofreading,
-        ]).join(' &amp; ')}</p>`
+        ]).join(' &amp; ')}</p>\n`
       : '';
 
-  return `${quote}${image}${proofreadingLine}
-<p><b>Translation:</b> ${translation}</p>
+  return `${image}${quote}${proofreadingLine}<p><b>Translation:</b> ${translation}</p>
 [[MORE]]
 `;
 };

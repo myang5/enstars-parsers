@@ -88,7 +88,7 @@ export const getTemplates = () => {
 
   templates.dialogue = (value) => `<p>${value}</p>\n`;
   templates.boldName = (value) => `<strong>${value}:</strong> `;
-  templates.info = (value) => `<blockquote>${value}</blockquote>\n`;
+  templates.blockquote = (value) => `<blockquote>${value}</blockquote>\n`;
 
   templates.image = (value) => `<img src="${value}">\n`;
 

@@ -1,5 +1,10 @@
-import { isNameLineException, isImageURLLine } from '@utils';
-import { chain } from 'lodash';
+import {
+  isNameLineException,
+  isImageURLLine,
+  isOissuNarratedLine,
+  splitLineIntoLabelAndValue,
+  isOissuLabelLine,
+} from '@utils';
 
 /**
  * Helper function for convertText that formats each dialogue line.
@@ -21,8 +26,8 @@ export const formatLine = (TEMPLATES) => {
     // use innerHTML to preserve styling
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
-    if (isInfoLine(line)) {
-      return TEMPLATES.info(line);
+    if (isOissuNarratedLine(line)) {
+      return TEMPLATES.blockquote(line);
     }
 
     if (isImageURLLine(line)) {
@@ -43,14 +48,14 @@ export const formatLine = (TEMPLATES) => {
      * After full line is processed, treat
      */
     if (isAraNameLine(line) && !isNameLineException(line)) {
-      const [name] = splitLineIntoNameAndDialogue(line);
+      const [name] = splitLineIntoLabelAndValue(line);
       shouldAddNameToAraDialogueLine = currentName !== name;
       currentName = name;
       return '';
     }
 
-    if (isNameLine(line) && !isNameLineException(line)) {
-      const [name, dialogue] = splitLineIntoNameAndDialogue(line);
+    if (isOissuLabelLine(line) && !isNameLineException(line)) {
+      const [name, dialogue] = splitLineIntoLabelAndValue(line);
 
       // Handle case where name is on every dialogue line
       if (currentName === name) {
@@ -83,42 +88,5 @@ export const formatLine = (TEMPLATES) => {
 export const isJapaneseLine = (line) =>
   /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line);
 
-export const isInfoLine = (line) => {
-  const infoLabels = ['TIME', 'LOCATION'];
-  return infoLabels.includes(
-    chain(line.toUpperCase()).split(':').first().value(),
-  );
-};
-
-export const isNameLine = (line) => {
-  if (!line.includes(':')) {
-    return false;
-  }
-
-  const hasNoLabel =
-    chain(line)
-      .split(':')
-      .map((part) => part.trim())
-      .compact()
-      .value().length < 2;
-  if (hasNoLabel) {
-    return false;
-  }
-
-  const hasRandomColon =
-    chain(line).split(':').first().trim()?.split(' ').value().length > 1;
-  if (hasRandomColon) {
-    return false;
-  }
-
-  return true;
-};
-
 // Line that only contains a name label like "Nazuna:"
 const isAraNameLine = (line) => /\w+:$/.test(line.trim());
-
-export const splitLineIntoNameAndDialogue = (line) => {
-  // Use rest operator in case dialogue also contains colons
-  const [name, ...dialogue] = line.split(':');
-  return [name.trim(), dialogue.join(':').trim()];
-};
