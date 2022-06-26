@@ -1,15 +1,43 @@
-import { mapValues } from 'lodash';
+import { compact, mapValues } from 'lodash';
 import { extractBr, convertEditorDataToDom, updateLocalStorage } from '@utils';
 import { Formatters } from '@constants';
 import { formatLines } from './formatLines';
 import { NAV_KEYS } from './nav_keys';
+import { DETAILS_KEYS } from './details_keys';
 
-export function convertText({ inputData, nav }) {
+export function convertText({
+  inputData,
+  nav,
+  jpProofreaders,
+  engProofreaders,
+  translators,
+}) {
   nav = normalizeValues(nav);
   updateLocalStorage({
     formatter: Formatters.HumanComedyFormatter,
     key: 'nav',
     value: nav,
+  });
+
+  jpProofreaders = normalizeStaff(jpProofreaders);
+  updateLocalStorage({
+    formatter: Formatters.HumanComedyFormatter,
+    key: 'jpProofreaders',
+    value: jpProofreaders,
+  });
+
+  engProofreaders = normalizeStaff(engProofreaders);
+  updateLocalStorage({
+    formatter: Formatters.HumanComedyFormatter,
+    key: 'engProofreaders',
+    value: engProofreaders,
+  });
+
+  translators = normalizeStaff(translators);
+  updateLocalStorage({
+    formatter: Formatters.HumanComedyFormatter,
+    key: 'translators',
+    value: translators,
   });
 
   const TEMPLATES = getTemplates();
@@ -25,6 +53,9 @@ export function convertText({ inputData, nav }) {
   let output = formatHeader({
     image: headerImage,
     quote: headerQuote,
+    jpProofreaders,
+    engProofreaders,
+    translators,
   });
   output += TEMPLATES.oissuOpen({
     prevUrl: nav[NAV_KEYS.PREV_URL],
@@ -57,9 +88,45 @@ data-oissu-directory="${allUrl}">\n`;
 };
 
 const normalizeValues = (object) => mapValues(object, (value) => value.trim());
+const normalizeStaff = (staff) =>
+  staff
+    .filter((person) => person[DETAILS_KEYS.NAME])
+    .map((person) => normalizeValues(person));
 
-const formatHeader = ({ image, quote }) => {
-  return `${quote}${image}[[MORE]]\n`;
+const getLink = (href, text) => `<a href="${href}">${text}</a>`;
+const joinStaff = (staff, separator) =>
+  staff
+    .map((person) =>
+      person[DETAILS_KEYS.LINK]
+        ? getLink(person[DETAILS_KEYS.LINK], person[DETAILS_KEYS.NAME])
+        : person[DETAILS_KEYS.NAME],
+    )
+    .join(separator);
+const formatHeader = ({
+  image,
+  quote,
+  jpProofreaders,
+  engProofreaders,
+  translators,
+}) => {
+  const jpProofreading = joinStaff(jpProofreaders, ' + ');
+  const fullJpProofreading = jpProofreading ? jpProofreading + ' (JP)' : '';
+  const engProofreading = joinStaff(engProofreaders, ' + ');
+  const fullEngProofreading = engProofreading ? engProofreading + ' (ENG)' : '';
+  const translation = joinStaff(translators, ' & ');
+
+  const proofreadingLine =
+    jpProofreading || engProofreading
+      ? `<p><b>Proofreading:</b> ${compact([
+          fullJpProofreading,
+          fullEngProofreading,
+        ]).join(' &amp; ')}</p>`
+      : '';
+
+  return `${quote}${image}${proofreadingLine}
+<p><b>Translation:</b> ${translation}</p>
+[[MORE]]
+`;
 };
 
 const formatNavBar = (nav) => {

@@ -8,6 +8,7 @@ import { convertText } from '../utils';
 
 const TABS = {
   TEXT: 'Text',
+  DETAILS: 'Details',
   NAV: 'Story Nav',
 };
 const tabTitles = Object.values(TABS);
@@ -19,13 +20,17 @@ export const Main = () => (
 );
 
 const MainContent = () => {
-  const { inputRef, nav } = useStateContext();
+  const { inputRef, nav, jpProofreaders, engProofreaders, translators } =
+    useStateContext();
   const outputRef = useRef(null);
 
   const onConvert = () => {
     const output = convertText({
       inputData: inputRef.current.editor.getData(),
       nav,
+      jpProofreaders,
+      engProofreaders,
+      translators,
     });
     outputRef.current.value = output;
   };
@@ -51,6 +56,9 @@ const Input = () => {
       />
       <TabContent {...{ value: TABS.TEXT, clickedValue }}>
         <InputEditor />
+      </TabContent>
+      <TabContent {...{ value: TABS.DETAILS, clickedValue }}>
+        <DetailContent />
       </TabContent>
       <TabContent {...{ value: TABS.NAV, clickedValue }}>
         <NavContent />

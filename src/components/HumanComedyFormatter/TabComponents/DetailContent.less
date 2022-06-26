@@ -1,0 +1,46 @@
+@import '@styles/colors.less';
+@import (reference) '@styles/buttons.less';
+
+.human-comedy-formatter {
+  .tab-content--details {
+    .align-self-start {
+      align-self: start;
+    }
+
+    .staff-column-labels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5px;
+      grid-column-gap: 5px;
+      align-items: flex-end;
+      text-align: left;
+      font-size: 0.8rem;
+      opacity: 0.7;
+
+      & > * {
+        margin-left: 2px;
+      }
+    }
+
+    .staff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5px;
+      grid-column-gap: 5px;
+      row-gap: 5px;
+      grid-row-gap: 5px;
+    }
+
+    .btn--add-person {
+      &:extend(.secondary-button);
+      background-color: transparent;
+      border: none;
+      font-size: 0.8rem;
+      align-self: start;
+      &:focus,
+      &:hover {
+        font-weight: bold;
+      }
+    }
+  }
+}
