@@ -1,4 +1,4 @@
-import { DETAILS_KEYS } from './details_keys';
+import { DETAILS_KEYS } from '@constants';
 
 export const getEmptyStaffObj = () => ({
   [DETAILS_KEYS.NAME]: '',

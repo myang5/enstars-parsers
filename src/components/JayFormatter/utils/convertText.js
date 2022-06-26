@@ -1,9 +1,13 @@
-import { mapValues } from 'lodash';
-import { extractBr, convertEditorDataToDom, updateLocalStorage } from '@utils';
+import {
+  extractBr,
+  convertEditorDataToDom,
+  updateLocalStorage,
+  normalizeValues,
+  normalizeStaff,
+} from '@utils';
 import { Formatters } from '@constants';
 import { formatLine } from './formatLine';
 import { NAV_KEYS } from './nav_keys';
-import { DETAILS_KEYS } from './details_keys';
 import { formatHeader } from './formatHeader';
 
 export function convertText({
@@ -95,12 +99,6 @@ export const getTemplates = () => {
 
   return templates;
 };
-
-const normalizeValues = (object) => mapValues(object, (value) => value.trim());
-const normalizeStaff = (staff) =>
-  staff
-    .filter((person) => person[DETAILS_KEYS.NAME])
-    .map((person) => normalizeValues(person));
 
 const formatNavBar = (nav) => {
   const TEMPLATES = getTemplates();

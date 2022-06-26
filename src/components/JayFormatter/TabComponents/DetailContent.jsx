@@ -1,9 +1,10 @@
 import React from 'react';
-import { DETAILS_KEYS, getEmptyStaffObj } from '../utils';
 import { useStateContext } from '../Main/StateContext';
 import { BlockquoteEditor } from './CKEditor';
 import './DetailContent.less';
 import classNames from 'classnames';
+import { getEmptyStaffObj } from '@utils';
+import { DETAILS_KEYS } from '@constants';
 
 const AUTHORS = [
   'Akira',

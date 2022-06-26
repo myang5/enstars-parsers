@@ -3,9 +3,8 @@
     "baseUrl": "src",
     "paths": {
       "@styles": ["./styles/*"],
-      "@utils": ["./utils/*"],
-      "@constants": ["./constants/*"],
-      "@shared": ["./components/shared/*"]
+      "@utils": ["./utils/index"],
+      "@constants": ["./constants/index"]
     }
   },
   "exclude": ["node_modules", "dist"]

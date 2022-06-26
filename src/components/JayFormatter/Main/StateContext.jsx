@@ -1,7 +1,7 @@
 import React, { createContext, useState, useRef, useContext } from 'react';
-import { Formatters } from '@constants';
-import { getEmptyStaffObj } from '../utils';
 import { isEmpty } from 'lodash';
+import { Formatters } from '@constants';
+import { getEmptyStaffObj } from '@utils';
 
 const StateContext = createContext();
 

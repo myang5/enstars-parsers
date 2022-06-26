@@ -1,6 +1,6 @@
 import { compact } from 'lodash';
+import { DETAILS_KEYS } from '@constants';
 import { formatLine } from './formatLine';
-import { DETAILS_KEYS } from './details_keys';
 import { getTemplates } from './convertText';
 
 const getLink = (href, text) => `<a href="${href}">${text}</a>`;

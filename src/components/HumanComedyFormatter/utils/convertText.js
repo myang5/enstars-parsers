@@ -1,9 +1,14 @@
-import { compact, mapValues } from 'lodash';
-import { extractBr, convertEditorDataToDom, updateLocalStorage } from '@utils';
-import { Formatters } from '@constants';
+import { compact } from 'lodash';
+import {
+  extractBr,
+  convertEditorDataToDom,
+  updateLocalStorage,
+  normalizeValues,
+  normalizeStaff,
+} from '@utils';
+import { Formatters, DETAILS_KEYS } from '@constants';
 import { formatLines } from './formatLines';
 import { NAV_KEYS } from './nav_keys';
-import { DETAILS_KEYS } from './details_keys';
 
 export function convertText({
   inputData,
@@ -86,12 +91,6 @@ data-oissu-directory="${allUrl}">\n`;
 
   return templates;
 };
-
-const normalizeValues = (object) => mapValues(object, (value) => value.trim());
-const normalizeStaff = (staff) =>
-  staff
-    .filter((person) => person[DETAILS_KEYS.NAME])
-    .map((person) => normalizeValues(person));
 
 const getLink = (href, text) => `<a href="${href}">${text}</a>`;
 const joinStaff = (staff, separator) =>
