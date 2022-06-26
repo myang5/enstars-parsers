@@ -1,6 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { sortBy } from 'lodash';
 import { Formatters } from '@constants';
 import Header from './Header';
 import { MashiroFormatter } from './MashiroFormatter';
@@ -9,6 +10,8 @@ import { JayFormatter } from './JayFormatter';
 import { OissuFormatter } from './OissuFormatter';
 import '@styles/styles.less';
 import '@styles/Main.less';
+
+const formatterLinks = sortBy(Object.values(Formatters), (value) => value);
 
 function App() {
   return (
@@ -28,7 +31,7 @@ function App() {
           <OissuFormatter />
         </Route>
         <Route exact path="/">
-          <MashiroFormatter />
+          <Redirect to={`/${formatterLinks[0]}`} />
         </Route>
       </Switch>
     </HashRouter>
