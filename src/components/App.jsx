@@ -8,6 +8,7 @@ import { MashiroFormatter } from './MashiroFormatter';
 import { MarkdownStylingToHtml } from './MarkdownStylingToHtml';
 import { JayFormatter } from './JayFormatter';
 import { OissuFormatter } from './OissuFormatter';
+import { EngirlsWikiFormatter } from './EngirlsWikiFormatter';
 import '@styles/styles.less';
 import '@styles/Main.less';
 
@@ -30,7 +31,9 @@ function App() {
         <Route path={`/${Formatters.OissuFormatter}`}>
           <OissuFormatter />
         </Route>
-        <Route path={`/${Formatters.EngirlsWikiFormatter}`}>test</Route>
+        <Route path={`/${Formatters.EngirlsWikiFormatter}`}>
+          <EngirlsWikiFormatter />
+        </Route>
         <Route exact path="/">
           <Redirect to={`/${formatterLinks[0]}`} />
         </Route>

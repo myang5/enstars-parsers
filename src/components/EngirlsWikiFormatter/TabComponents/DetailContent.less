@@ -1,0 +1,53 @@
+@import '@styles/colors.less';
+@import (reference) '@styles/buttons.less';
+
+.engirls-wiki-formatter {
+  .tab-content--details {
+    .align-self-start {
+      align-self: start;
+    }
+
+    .staff-column-labels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5px;
+      grid-column-gap: 5px;
+      align-items: flex-end;
+      text-align: left;
+      font-size: 0.8rem;
+      opacity: 0.7;
+
+      & > * {
+        margin-left: 2px;
+      }
+    }
+
+    .staff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5px;
+      grid-column-gap: 5px;
+      row-gap: 5px;
+      grid-row-gap: 5px;
+    }
+
+    .btn--add-person {
+      &:extend(.secondary-button);
+      background-color: transparent;
+      border: none;
+      font-size: 0.8rem;
+      align-self: start;
+      &:focus,
+      &:hover {
+        font-weight: bold;
+      }
+    }
+
+    .ck.ck-editor__editable_inline {
+      -moz-appearance: textfield-multiline;
+      -webkit-appearance: textarea;
+      border: 1px solid gray;
+      overflow: auto;
+    }
+  }
+}
