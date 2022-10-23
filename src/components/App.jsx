@@ -30,6 +30,7 @@ function App() {
         <Route path={`/${Formatters.OissuFormatter}`}>
           <OissuFormatter />
         </Route>
+        <Route path={`/${Formatters.EngirlsWikiFormatter}`}>test</Route>
         <Route exact path="/">
           <Redirect to={`/${formatterLinks[0]}`} />
         </Route>

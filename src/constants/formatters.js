@@ -3,4 +3,5 @@ export const Formatters = {
   MarkdownStylingToHtml: 'markdown-styling-to-html',
   JayFormatter: 'jay-formatter',
   OissuFormatter: 'oissu-formatter',
+  EngirlsWikiFormatter: 'engirls-wiki-formatter',
 };
