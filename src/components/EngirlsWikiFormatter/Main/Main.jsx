@@ -8,8 +8,10 @@ import { convertText } from '../utils';
 
 const TABS = {
   TEXT: 'Text',
-  DETAILS: 'Details',
   NAV: 'Story Nav',
+  DETAILS: 'Details',
+  RENDERS: 'Renders',
+  TL_NOTES: 'TL Notes',
 };
 const tabTitles = Object.values(TABS);
 
@@ -68,11 +70,17 @@ const Input = () => {
       <TabContent {...{ value: TABS.TEXT, clickedValue }}>
         <InputEditor />
       </TabContent>
+      <TabContent {...{ value: TABS.NAV, clickedValue }}>
+        <NavContent />
+      </TabContent>
       <TabContent {...{ value: TABS.DETAILS, clickedValue }}>
         <DetailContent />
       </TabContent>
-      <TabContent {...{ value: TABS.NAV, clickedValue }}>
-        <NavContent />
+      <TabContent {...{ value: TABS.RENDERS, clickedValue }}>
+        <RenderContent />
+      </TabContent>
+      <TabContent {...{ value: TABS.TL_NOTES, clickedValue }}>
+        <TLNotesContent />
       </TabContent>
     </div>
   );
