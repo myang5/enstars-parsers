@@ -1,5 +1,5 @@
 import { extractBr, convertEditorDataToDom, updateLocalStorage } from '@utils';
-import { Formatters } from '@constants';
+import { FORMATTERS } from '@constants';
 import formatLine from './formatLine';
 import { NAV_KEYS } from './nav_keys';
 
@@ -12,7 +12,7 @@ export function convertText({ inputData, nav }) {
   const TEMPLATES = getTemplates();
   const inputDom = extractBr(convertEditorDataToDom(inputData));
   updateLocalStorage({
-    formatter: Formatters.MashiroFormatter,
+    formatter: FORMATTERS.MASHIRO_FORMATTER,
     key: 'nav',
     value: nav,
   });

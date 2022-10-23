@@ -1,6 +1,6 @@
 import React, { createContext, useState, useRef, useContext } from 'react';
 import { isEmpty } from 'lodash';
-import { AUTHOR_NAMES, DETAILS_KEYS, Formatters } from '@constants';
+import { AUTHOR_NAMES, DETAILS_KEYS, FORMATTERS } from '@constants';
 import { getEmptyStaffObj } from '@utils';
 
 const StateContext = createContext();
@@ -8,7 +8,7 @@ const StateContext = createContext();
 export const useStateContext = () => useContext(StateContext);
 
 const initialConfig =
-  JSON.parse(localStorage.getItem(Formatters.EngirlsWikiFormatter)) || {};
+  JSON.parse(localStorage.getItem(FORMATTERS.ENGIRLS_WIKI_FORMATTER)) || {};
 
 const getStaff = (value) => (isEmpty(value) ? [getEmptyStaffObj()] : value);
 

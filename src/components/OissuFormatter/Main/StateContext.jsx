@@ -1,6 +1,6 @@
 import React, { createContext, useState, useRef, useContext } from 'react';
 import { isEmpty } from 'lodash';
-import { Formatters } from '@constants';
+import { FORMATTERS } from '@constants';
 import { getEmptyStaffObj } from '@utils';
 
 const StateContext = createContext();
@@ -9,7 +9,7 @@ export const useStateContext = () => useContext(StateContext);
 const getStaff = (value) => (isEmpty(value) ? [getEmptyStaffObj()] : value);
 
 const initialConfig =
-  JSON.parse(localStorage.getItem(Formatters.OissuFormatter)) || {};
+  JSON.parse(localStorage.getItem(FORMATTERS.OISSU_FORMATTER)) || {};
 
 export const StateProvider = ({ children }) => {
   const [nav, setNav] = useState(initialConfig.nav || {});

@@ -1,8 +1,8 @@
-import { Formatters } from '@constants';
+import { FORMATTERS } from '@constants';
 
 /**
  * Save value in localStorage at specified key
- * @param {Formatters} formatter key of the localStorage item
+ * @param {FORMATTERS} formatter key of the localStorage item
  * @param {string} key key in the object stored as the value for the formatter localStorage item
  * @param {string} value
  */
