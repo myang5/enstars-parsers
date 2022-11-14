@@ -2,9 +2,10 @@ import React, { useState, useRef } from 'react';
 import { MainActions } from '@shared/MainActions';
 import { TabContent } from '@shared/TabContent';
 import { TabMenu } from '@shared/TabMenu';
-import { StateProvider, useStateContext } from './StateContext';
-import { InputEditor, NavContent, DetailContent } from '../TabComponents';
+import { StateProvider, useStateContext } from '../StateContext';
 import { convertText } from '../utils';
+import { DetailContent } from '../DetailContent';
+import { InputEditor } from '../InputEditor';
 
 const TABS = {
   TEXT: 'Text',
@@ -22,27 +23,16 @@ export const Main = () => (
 );
 
 const MainContent = () => {
-  const {
-    inputRef,
-    blockquoteRef,
-    nav,
-    details,
-    characters,
-    jpProofreaders,
-    engProofreaders,
-    translators,
-  } = useStateContext();
+  const { inputRef, nav, details, proofreaders, translators } =
+    useStateContext();
   const outputRef = useRef(null);
 
   const onConvert = () => {
     const output = convertText({
-      inputData: inputRef.current.editor.getData(),
-      blockquoteData: blockquoteRef.current.editor.getData(),
-      nav,
       details,
-      characters,
-      jpProofreaders,
-      engProofreaders,
+      inputData: inputRef.current.editor.getData(),
+      nav,
+      proofreaders,
       translators,
     });
     outputRef.current.value = output;
@@ -70,17 +60,8 @@ const Input = () => {
       <TabContent {...{ value: TABS.TEXT, clickedValue }}>
         <InputEditor />
       </TabContent>
-      <TabContent {...{ value: TABS.NAV, clickedValue }}>
-        <NavContent />
-      </TabContent>
       <TabContent {...{ value: TABS.DETAILS, clickedValue }}>
         <DetailContent />
-      </TabContent>
-      <TabContent {...{ value: TABS.RENDERS, clickedValue }}>
-        <RenderContent />
-      </TabContent>
-      <TabContent {...{ value: TABS.TL_NOTES, clickedValue }}>
-        <TLNotesContent />
       </TabContent>
     </div>
   );

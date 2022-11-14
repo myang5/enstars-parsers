@@ -1,3 +1,4 @@
+import { pick } from 'lodash';
 import {
   extractBr,
   convertEditorDataToDom,
@@ -8,24 +9,21 @@ import {
 import { FORMATTERS } from '@constants';
 import { formatLine } from './formatLine';
 import { NAV_KEYS } from './nav_keys';
-import { formatHeader } from './formatHeader';
+import { DETAILS_KEYS } from './details_keys';
 
 export function convertText({
-  inputData,
-  blockquoteData,
-  nav,
   details,
-  characters,
-  jpProofreaders,
-  engProofreaders,
+  inputData,
+  nav,
+  proofreaders,
   translators,
 }) {
-  nav = normalizeValues(nav);
-  updateLocalStorage({
-    formatter: FORMATTERS.ENGIRLS_WIKI_FORMATTER,
-    key: 'nav',
-    value: nav,
-  });
+  // nav = normalizeValues(nav);
+  // updateLocalStorage({
+  //   formatter: FORMATTERS.ENGIRLS_WIKI_FORMATTER,
+  //   key: 'nav',
+  //   value: nav,
+  // });
 
   details = normalizeValues(details);
   updateLocalStorage({
@@ -34,18 +32,11 @@ export function convertText({
     value: details,
   });
 
-  jpProofreaders = normalizeStaff(jpProofreaders);
+  proofreaders = normalizeStaff(proofreaders);
   updateLocalStorage({
     formatter: FORMATTERS.ENGIRLS_WIKI_FORMATTER,
-    key: 'jpProofreaders',
-    value: jpProofreaders,
-  });
-
-  engProofreaders = normalizeStaff(engProofreaders);
-  updateLocalStorage({
-    formatter: FORMATTERS.ENGIRLS_WIKI_FORMATTER,
-    key: 'engProofreaders',
-    value: engProofreaders,
+    key: 'proofreaders',
+    value: proofreaders,
   });
 
   translators = normalizeStaff(translators);
@@ -55,49 +46,75 @@ export function convertText({
     value: translators,
   });
 
-  const blockquoteDom = extractBr(convertEditorDataToDom(blockquoteData));
-  const blockquote = blockquoteDom.querySelectorAll('p');
+  let output = templates.header(
+    pick(details, [
+      DETAILS_KEYS.WRITER,
+      DETAILS_KEYS.IMAGE,
+      DETAILS_KEYS.LOCATION,
+    ]),
+  );
 
-  const TEMPLATES = getTemplates();
+  // const inputDom = extractBr(convertEditorDataToDom(inputData));
+  // const input = inputDom.querySelectorAll('p');
+  // const formatLineHelper = formatLine(templates);
 
-  let output = formatHeader({
-    details,
-    characters,
-    jpProofreaders,
-    engProofreaders,
-    translators,
-    blockquote,
-  });
-  output += TEMPLATES.oissuOpen();
+  // for (let i = 0; i < input.length; i++) {
+  //   output += formatLineHelper(input[i]);
+  // }
 
-  const inputDom = extractBr(convertEditorDataToDom(inputData));
-  const input = inputDom.querySelectorAll('p');
-  const formatLineHelper = formatLine(TEMPLATES);
-
-  for (let i = 0; i < input.length; i++) {
-    output += formatLineHelper(input[i]);
-  }
-
-  output += TEMPLATES.oissuClose();
-  output += formatNavBar(nav);
+  output += formatStaff({ staff: translators, label: 'Translation' });
+  output += formatStaff({ staff: proofreaders, label: 'Proofreading' });
+  output += templates.tableEnd();
+  // output += formatNavBar(nav);
   return output;
 }
 
-export const getTemplates = () => {
-  const templates = {};
+export const templates = {
+  header: ({
+    writer,
+    image,
+    location,
+  }) => `{| class="article-table" cellspacing="1/6" cellpadding="2" border="1" align="center" width="100%"
+! colspan="2" style="text-align:center;background-color:#C21B5F; color:#FFFFFF;" |'''Writer:''' ${writer}
+|-
+| colspan="2" |[[File:${image}|660px|link=|center]]
+|-
+! colspan="2" style="text-align:center;background-color:#EE6796; color:#FFFFFF;" |'''Location: ${location}'''
+`,
+  dialogueRender: (value) => `|-
+|[[File:${value}|x200px|link=|center]]
+|
+`,
+  cgRender: (value) => `|-
+! colspan="2" style="text-align:center;" |[[File:${value}|center|link=|660px]]
+`,
+  heading: () => `|-
+! colspan="2" style="text-align:center;background-color:${locationCol}; color:${textCol};" |'''HEADING'''
+`,
+  // TODO: get link formatting for Engirls
+  link: (link, text) => `{{Link|${link}|${text}|#FFFFFF}}`,
+  tableEnd: () => '|}\n',
+};
 
-  templates.dialogue = (value) => `<p>${value}</p>\n`;
-  templates.boldName = (value) => `<strong>${value}:</strong> `;
-  templates.blockquote = (value) => `<blockquote>${value}</blockquote>\n`;
+const formatStaff = ({ staff, label }) => {
+  const resultText = staff.reduce((result, person) => {
+    const { [DETAILS_KEYS.NAME]: name, [DETAILS_KEYS.LINK]: link } = person;
+    if (!name && !link) {
+      return result;
+    }
+    if (result.length !== 0) {
+      result += ', ';
+    }
+    result += !link ? name : templates.link(link, name);
 
-  templates.image = (value) => `<img src="${value}">\n`;
-
-  templates.separator = () => `<p>✦✦✦✦✦</p>\n`;
-
-  templates.oissuOpen = () => `<div class="oissu">\n`;
-  templates.oissuClose = () => `</div>\n`;
-
-  return templates;
+    return result;
+  }, '');
+  if (resultText.length === 0) {
+    return resultText;
+  }
+  return `|-
+! colspan="2" style="text-align:center;background-color:#C21B5F;color:#FFFFFF;" |'''${label}: ${resultText} '''
+`;
 };
 
 const formatNavBar = (nav) => {

@@ -8,16 +8,10 @@ import { FORMATTERS } from '@constants';
  */
 export const updateLocalStorage = ({ formatter, key, value }) => {
   let configObject = localStorage.getItem(formatter);
-  // Handle legacy localStorage saving
-  // TODO: can remove after 1 month of deployment probably (after 11/10/2021)
   if (!configObject) {
-    configObject = {};
-    configObject[key] = JSON.parse(localStorage.getItem(key));
-    localStorage.removeItem(key);
-  } else {
-    configObject = JSON.parse(configObject);
+    configObject = '{}';
   }
-
+  configObject = JSON.parse(configObject);
   configObject[key] = value;
   localStorage.setItem(formatter, JSON.stringify(configObject));
 };

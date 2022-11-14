@@ -1,3 +1,4 @@
-export * from './nav_keys';
+export * from './author_names';
 export * from './convertText';
-export * from './getCharactersFromInput';
+export * from './details_keys';
+export * from './nav_keys';

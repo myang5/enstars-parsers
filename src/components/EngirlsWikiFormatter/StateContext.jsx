@@ -1,7 +1,8 @@
 import React, { createContext, useState, useRef, useContext } from 'react';
 import { isEmpty } from 'lodash';
-import { AUTHOR_NAMES, DETAILS_KEYS, FORMATTERS } from '@constants';
+import { FORMATTERS } from '@constants';
 import { getEmptyStaffObj } from '@utils';
+import { AUTHOR_NAMES, DETAILS_KEYS } from './utils';
 
 const StateContext = createContext();
 
@@ -18,18 +19,14 @@ export const StateProvider = ({ children }) => {
   // that was causing existing input values to be erased
   // https://css-tricks.com/dealing-with-stale-props-and-states-in-reacts-functional-components/
   const renderRef = useRef(renders);
-  const [details, setDetails] = useState(
-    initialConfig.details || {
-      [DETAILS_KEYS.LOCATION]: '',
-      [DETAILS_KEYS.WRITER]: AUTHOR_NAMES.AKIRA,
-    },
-  );
-  const [characters, setCharacters] = useState();
-  const [jpProofreaders, setJpProofreaders] = useState(
-    getStaff(initialConfig.jpProofreaders),
-  );
-  const [engProofreaders, setEngProofreaders] = useState(
-    getStaff(initialConfig.engProofreaders),
+  const [details, setDetails] = useState({
+    [DETAILS_KEYS.WRITER]: AUTHOR_NAMES[0],
+    [DETAILS_KEYS.LOCATION]: '',
+    [DETAILS_KEYS.IMAGE]: '',
+    ...initialConfig.details,
+  });
+  const [proofreaders, setProofreaders] = useState(
+    getStaff(initialConfig.proofreaders),
   );
   const [translators, setTranslators] = useState(
     getStaff(initialConfig.translators),
@@ -38,27 +35,19 @@ export const StateProvider = ({ children }) => {
 
   // create refs for each CKEditor to pass into EditorContext
   const inputRef = useRef(null);
-  const blockquoteRef = useRef(null);
   const tlNotesRef = useRef(null);
 
   const state = {
-    blockquoteRef,
-    characters,
-    colors,
     details,
     details,
-    engProofreaders,
     inputRef,
-    jpProofreaders,
     nav,
+    proofreaders,
     renderRef,
     renders,
-    setCharacters,
-    setColors,
     setDetails,
-    setEngProofreaders,
-    setJpProofreaders,
     setNav,
+    setProofreaders,
     setRenders,
     setTranslators,
     tlNotesRef,
