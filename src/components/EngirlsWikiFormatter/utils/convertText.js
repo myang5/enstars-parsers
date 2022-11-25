@@ -91,8 +91,9 @@ export const templates = {
   heading: () => `|-
 ! colspan="2" style="text-align:center;background-color:${locationCol}; color:${textCol};" |'''HEADING'''
 `,
-  // TODO: get link formatting for Engirls
-  link: (link, text) => `{{Link|${link}|${text}|#FFFFFF}}`,
+  // Fandom wiki link documentation:
+  // https://community.fandom.com/wiki/Help:Links/Wikitext
+  link: (link, text) => `[${link} ${text}]`,
   tableEnd: () => '|}\n',
 };
 
