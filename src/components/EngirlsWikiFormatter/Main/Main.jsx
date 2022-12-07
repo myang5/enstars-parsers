@@ -6,6 +6,7 @@ import { StateProvider, useStateContext } from '../StateContext';
 import { convertText } from '../utils';
 import { DetailContent } from '../DetailContent';
 import { InputEditor } from '../InputEditor';
+import { NavContent } from '../NavContent';
 
 const TABS = {
   TEXT: 'Text',
@@ -62,6 +63,9 @@ const Input = () => {
       </TabContent>
       <TabContent {...{ value: TABS.DETAILS, clickedValue }}>
         <DetailContent />
+      </TabContent>
+      <TabContent {...{ value: TABS.NAV, clickedValue }}>
+        <NavContent />
       </TabContent>
     </div>
   );

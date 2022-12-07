@@ -18,12 +18,12 @@ export function convertText({
   proofreaders,
   translators,
 }) {
-  // nav = normalizeValues(nav);
-  // updateLocalStorage({
-  //   formatter: FORMATTERS.ENGIRLS_WIKI_FORMATTER,
-  //   key: 'nav',
-  //   value: nav,
-  // });
+  nav = normalizeValues(nav);
+  updateLocalStorage({
+    formatter: FORMATTERS.ENGIRLS_WIKI_FORMATTER,
+    key: 'nav',
+    value: nav,
+  });
 
   details = normalizeValues(details);
   updateLocalStorage({
@@ -65,7 +65,7 @@ export function convertText({
   output += formatStaff({ staff: translators, label: 'Translation' });
   output += formatStaff({ staff: proofreaders, label: 'Proofreading' });
   output += templates.tableEnd();
-  // output += formatNavBar(nav);
+  output += formatNavBar(nav);
   return output;
 }
 
@@ -95,6 +95,45 @@ export const templates = {
   // https://community.fandom.com/wiki/Help:Links/Wikitext
   link: (link, text) => `[${link} ${text}]`,
   tableEnd: () => '|}\n',
+  chapterNav: ({
+    storyUrl,
+    prevUrl,
+    prevText,
+    currentText,
+    nextUrl,
+    nextText,
+  }) => `{{PrevNext
+|Story = ${storyUrl}
+|PrevChap = ${prevUrl}
+|Previous Chapter = ${prevText}
+|Current Chapter = ${currentText}
+|NextChap = ${nextUrl}
+|Next Chapter = ${nextText}
+}}`,
+  firstChapterNav: ({
+    storyUrl,
+    currentText,
+    nextUrl,
+    nextText,
+  }) => `{{BeginPrevNext
+|CurrentChapter = ${currentText}
+|Story = ${storyUrl}
+|NextChap = ${nextUrl}
+|Next Chapter = ${nextText}
+}}`,
+  lastChapterNav: ({
+    storyUrl,
+    prevUrl,
+    prevText,
+    currentText,
+  }) => `{{EndPrevNext
+|Story = ${storyUrl}
+|PrevChap = ${prevUrl}
+|Previous Chapter = ${prevText}
+|Current Chapter = ${currentText}
+}}`,
+  firstChapterMainStoryNav: () => {},
+  lastChapterMainStoryNav: () => {},
 };
 
 const formatStaff = ({ staff, label }) => {
@@ -119,15 +158,21 @@ const formatStaff = ({ staff, label }) => {
 };
 
 const formatNavBar = (nav) => {
-  const TEMPLATES = getTemplates();
-  let output = `${TEMPLATES.separator()}<p>`;
-  if (nav[NAV_KEYS.PREV_URL]) {
-    output += `<a href="${nav[NAV_KEYS.PREV_URL]}">← prev</a> `;
+  const inputNav = {
+    storyUrl: nav[NAV_KEYS.STORY_URL],
+    prevUrl: nav[NAV_KEYS.PREV_URL],
+    prevText: nav[NAV_KEYS.PREV_TEXT],
+    currentText: nav[NAV_KEYS.CURRENT_TEXT],
+    nextUrl: nav[NAV_KEYS.NEXT_URL],
+    nextText: nav[NAV_KEYS.NEXT_TEXT],
+  };
+  if (inputNav.prevUrl && inputNav.nextUrl) {
+    return templates.chapterNav(inputNav);
   }
-  output += `✦ <a href="${nav[NAV_KEYS.ALL_URL]}">all</a> ✦`;
-  if (nav[NAV_KEYS.NEXT_URL]) {
-    output += ` <a href="${nav[NAV_KEYS.NEXT_URL]}">next →</a>`;
+  if (!inputNav.nextUrl) {
+    return templates.lastChapterNav(inputNav);
   }
-  output += '</p>\n';
-  return output;
+  if (!inputNav.prevUrl) {
+    return templates.firstChapterNav(inputNav);
+  }
 };
