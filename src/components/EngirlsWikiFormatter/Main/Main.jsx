@@ -24,7 +24,7 @@ export const Main = () => (
 );
 
 const MainContent = () => {
-  const { inputRef, nav, details, proofreaders, translators } =
+  const { details, inputRef, isMainStoryNav, nav, proofreaders, translators } =
     useStateContext();
   const outputRef = useRef(null);
 
@@ -32,6 +32,7 @@ const MainContent = () => {
     const output = convertText({
       details,
       inputData: inputRef.current.editor.getData(),
+      isMainStoryNav,
       nav,
       proofreaders,
       translators,

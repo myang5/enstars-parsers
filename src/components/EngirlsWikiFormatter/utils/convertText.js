@@ -14,6 +14,7 @@ import { DETAILS_KEYS } from './details_keys';
 export function convertText({
   details,
   inputData,
+  isMainStoryNav,
   nav,
   proofreaders,
   translators,
@@ -23,6 +24,12 @@ export function convertText({
     formatter: FORMATTERS.ENGIRLS_WIKI_FORMATTER,
     key: 'nav',
     value: nav,
+  });
+
+  updateLocalStorage({
+    formatter: FORMATTERS.ENGIRLS_WIKI_FORMATTER,
+    key: 'isMainStoryNav',
+    value: isMainStoryNav,
   });
 
   details = normalizeValues(details);

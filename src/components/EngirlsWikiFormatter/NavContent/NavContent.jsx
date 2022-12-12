@@ -2,6 +2,7 @@ import React from 'react';
 import { useStateContext } from '../StateContext';
 import classNames from 'classnames';
 import { NAV_KEYS } from '../utils';
+import './NavContent.less';
 
 const LabelForNavKey = {
   [NAV_KEYS.STORY_URL]: 'Story URL',
@@ -13,17 +14,30 @@ const LabelForNavKey = {
 };
 
 export const NavContent = () => {
-  const { nav, setNav } = useStateContext();
+  const { nav, setNav, isMainStoryNav, setIsMainStoryNav } = useStateContext();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setNav({ ...nav, [id]: value });
   };
 
+  const handleMainStoryToggleChange = (e) => {
+    setIsMainStoryNav(e.target.checked);
+  };
+
   const keys = Object.values(NAV_KEYS);
 
   return (
     <div className="tab-content__grid">
+      <label htmlFor="main-story-toggle">Main story</label>
+      <div className="main-story-toggle-wrapper">
+        <input
+          type="checkbox"
+          id="main-story-toggle"
+          checked={isMainStoryNav}
+          onChange={handleMainStoryToggleChange}
+        />
+      </div>
       {keys.map((key) => (
         <Row
           key={key}

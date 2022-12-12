@@ -32,6 +32,9 @@ export const StateProvider = ({ children }) => {
     getStaff(initialConfig.translators),
   );
   const [nav, setNav] = useState(initialConfig.nav || {});
+  const [isMainStoryNav, setIsMainStoryNav] = useState(
+    initialConfig.isMainStoryNav || false,
+  );
 
   // create refs for each CKEditor to pass into EditorContext
   const inputRef = useRef(null);
@@ -41,11 +44,13 @@ export const StateProvider = ({ children }) => {
     details,
     details,
     inputRef,
+    isMainStoryNav,
     nav,
     proofreaders,
     renderRef,
     renders,
     setDetails,
+    setIsMainStoryNav,
     setNav,
     setProofreaders,
     setRenders,
