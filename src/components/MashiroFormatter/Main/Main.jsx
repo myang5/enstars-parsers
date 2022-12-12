@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { MainActions } from '@shared/MainActions';
 import { TabContent } from '@shared/TabContent';
 import { TabMenu } from '@shared/TabMenu';
+import { MainWrapper } from '@shared/MainWrapper';
 import { StateProvider, useStateContext } from './StateContext';
 import { InputEditor, NavContent } from '../TabComponents';
 import { convertText } from '../utils';
@@ -31,11 +32,11 @@ const MainContent = () => {
   };
 
   return (
-    <div className="main-page mashiro-formatter">
+    <MainWrapper className="mashiro-formatter">
       <Input />
       <MainActions {...{ outputRef, onConvert }} />
       <textarea className="output" ref={outputRef} spellCheck={false} />
-    </div>
+    </MainWrapper>
   );
 };
 

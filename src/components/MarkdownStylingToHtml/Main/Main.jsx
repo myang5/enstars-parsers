@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { MainActions } from '@shared/MainActions';
 import { TabContent } from '@shared/TabContent';
+import { MainWrapper } from '@shared/MainWrapper';
 import { InputEditor } from '../TabComponents';
 import { StateProvider, useStateContext } from './StateContext';
 import convertText from '../utils/convertText';
@@ -24,11 +25,11 @@ const MainContent = () => {
   };
 
   return (
-    <div className="main-page markdown-styling-to-html">
+    <MainWrapper className="markdown-styling-to-html">
       <Input />
       <MainActions {...{ outputRef, onConvert }} />
       <textarea className="output" ref={outputRef} spellCheck={false} />
-    </div>
+    </MainWrapper>
   );
 };
 
