@@ -10,6 +10,7 @@ import { JayFormatter } from './JayFormatter';
 import { OissuFormatter } from './OissuFormatter';
 import { EngirlsWikiFormatter } from './EngirlsWikiFormatter';
 import '@styles/styles.less';
+import '@styles/buttons.less';
 import '@styles/Main.less';
 
 const formatterLinks = sortBy(Object.values(FORMATTERS), (value) => value);

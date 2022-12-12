@@ -1,16 +1,6 @@
 @import '@styles/colors.less';
 @import '@styles/buttons.less';
-
-@tab-menu-width: 409px;
-@tab-menu-height: 26.5px;
-
-@text-area-min-width: @tab-menu-width;
-@text-area-height: 31.25rem;
-@text-area-margin: 16px;
-
-@actions-width: 140px;
-
-@breakpoint: @text-area-min-width * 2 + @text-area-margin * 4 + @actions-width;
+@import (reference) '@styles/vars.less';
 
 .main-page {
   max-width: 100rem;
@@ -39,34 +29,6 @@
   }
 }
 
-.actions {
-  display: flex;
-  flex-direction: column;
-  margin: @tab-menu-height 0 0 0;
-
-  button {
-    width: @actions-width;
-    margin: 0 0 1rem 0;
-  }
-
-  button {
-    font-size: 1rem;
-    padding: 0.7rem;
-
-    &:active {
-      transform: scale(0.9);
-    }
-  }
-
-  #convert-button {
-    &:extend(.primary-button);
-  }
-
-  #copy-button {
-    &:extend(.secondary-button);
-  }
-}
-
 @media (max-width: @breakpoint) {
   /*half-screen window*/
   .main-page {
@@ -79,17 +41,5 @@
     width: 90%;
     max-width: 49rem;
     margin-top: 0;
-  }
-
-  .actions {
-    width: 90%;
-    flex-wrap: wrap;
-    margin: 1rem 0;
-    flex-direction: row;
-    justify-content: center;
-
-    button {
-      margin: 0 0.5rem;
-    }
   }
 }
