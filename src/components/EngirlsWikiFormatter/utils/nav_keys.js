@@ -5,4 +5,6 @@ export const NAV_KEYS = {
   CURRENT_TEXT: 'current-text',
   NEXT_URL: 'next-url',
   NEXT_TEXT: 'next-text',
+  PREV_STORY_URL: 'prev-story-url',
+  NEXT_STORY_URL: 'next-story-url',
 };

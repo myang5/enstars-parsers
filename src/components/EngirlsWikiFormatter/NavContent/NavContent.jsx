@@ -11,6 +11,9 @@ const LabelForNavKey = {
   [NAV_KEYS.CURRENT_TEXT]: 'Current Text',
   [NAV_KEYS.NEXT_URL]: 'Next URL',
   [NAV_KEYS.NEXT_TEXT]: 'Next Text',
+  // Specific to main story
+  [NAV_KEYS.PREV_STORY_URL]: 'Prev Story URL',
+  [NAV_KEYS.NEXT_STORY_URL]: 'Next Story URL',
 };
 
 export const NavContent = () => {
