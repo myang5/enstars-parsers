@@ -18,7 +18,7 @@ export function DetailContent() {
   return (
     <>
       <div className="tab-content__grid">
-        <div className="row__spacer" style={{ marginBottom: '-12px' }} />
+        <div className="row__label" style={{ marginBottom: '-12px' }} />
         <div className="staff-column-labels" style={{ marginBottom: '-12px' }}>
           <label id="person-name-label">Name</label>
           <label id="person-credit-label">Link (optional)</label>
@@ -48,7 +48,7 @@ export function DetailContent() {
 const Row = ({ keyForValue, label, labelClassNames, children }) => (
   <>
     <label
-      className={classNames('row__spacer', labelClassNames)}
+      className={classNames('row__label', labelClassNames)}
       htmlFor={keyForValue}
     >
       {label}
@@ -75,7 +75,7 @@ const StaffInputs = ({ staff, label, labelForClassName, onChange }) => {
   return (
     <>
       <label
-        className="row__spacer align-self-start"
+        className="row__label align-self-start"
         id={`${labelForClassName}-label`}
       >
         {label}

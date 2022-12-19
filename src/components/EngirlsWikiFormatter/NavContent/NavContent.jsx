@@ -1,6 +1,6 @@
 import React from 'react';
+import { Toggle } from '@shared';
 import { useStateContext } from '../StateContext';
-import classNames from 'classnames';
 import { NAV_KEYS } from '../utils';
 import './NavContent.less';
 
@@ -24,39 +24,48 @@ export const NavContent = () => {
     setNav({ ...nav, [id]: value });
   };
 
-  const handleMainStoryToggleChange = (e) => {
+  const handleMainStoryNavToggleChange = (e) => {
+    console.log(e.target.checked);
     setIsMainStoryNav(e.target.checked);
   };
 
   const keys = Object.values(NAV_KEYS);
 
   return (
-    <div className="tab-content__grid">
-      <label htmlFor="main-story-toggle">Main story</label>
-      <div className="main-story-toggle-wrapper">
-        <input
-          type="checkbox"
-          id="main-story-toggle"
-          checked={isMainStoryNav}
-          onChange={handleMainStoryToggleChange}
-        />
+    <>
+      <MainStoryNavToggle
+        checked={isMainStoryNav}
+        onChange={handleMainStoryNavToggleChange}
+      />
+      <div className="tab-content__grid">
+        {keys.map((key) => (
+          <Row
+            key={key}
+            navKey={key}
+            nav={nav}
+            value={nav[key]}
+            onChange={handleChange}
+          />
+        ))}
       </div>
-      {keys.map((key) => (
-        <Row
-          key={key}
-          navKey={key}
-          nav={nav}
-          value={nav[key]}
-          onChange={handleChange}
-        />
-      ))}
+    </>
+  );
+};
+
+const MainStoryNavToggle = ({ checked, onChange }) => {
+  const id = 'main-story-nav-toggle';
+
+  return (
+    <div className="main-story-nav-toggle">
+      <label htmlFor={id}>Main Story</label>
+      <Toggle checked={checked} onChange={onChange} id={id} />
     </div>
   );
 };
 
 const Row = ({ navKey, value, onChange }) => (
   <>
-    <label className={classNames('row__spacer')} htmlFor={navKey}>
+    <label className="row__label" htmlFor={navKey}>
       {LabelForNavKey[navKey]}
     </label>
     <input type="text" id={navKey} value={value} onChange={onChange} />

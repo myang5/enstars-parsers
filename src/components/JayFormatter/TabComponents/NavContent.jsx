@@ -41,7 +41,7 @@ export function NavContent() {
 
 const Row = ({ nav, navKey, label, onChange }) => (
   <>
-    <label className="row__spacer" htmlFor={navKey}>
+    <label className="row__label" htmlFor={navKey}>
       {label}
     </label>
     <input type="text" id={navKey} value={nav[navKey]} onChange={onChange} />

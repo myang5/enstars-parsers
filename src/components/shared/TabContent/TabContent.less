@@ -4,7 +4,6 @@
 .tab-content {
   width: 100%;
   height: @text-area-height;
-  box-sizing: border-box;
   border: 1px solid @light-blue;
   background-color: #fff;
   display: none;
@@ -27,17 +26,14 @@
   .tab-content__grid {
     display: grid;
     grid-template-columns: min-content 1fr;
-    column-gap: 8px;
-    grid-column-gap: 8px;
+    column-gap: 14px;
     row-gap: 1rem;
-    grid-row-gap: 1rem;
     align-items: center;
   }
 
-  .row__spacer {
+  .row__label {
     display: inline-block;
     text-align: right;
-    padding-right: 0.7rem;
     min-width: 4.7rem;
   }
 }
