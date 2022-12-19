@@ -72,7 +72,7 @@ export function convertText({
   output += formatStaff({ staff: translators, label: 'Translation' });
   output += formatStaff({ staff: proofreaders, label: 'Proofreading' });
   output += templates.tableEnd();
-  output += formatNavBar(nav);
+  output += formatNavBar(nav, isMainStoryNav);
   return output;
 }
 
@@ -139,8 +139,32 @@ export const templates = {
 |Previous Chapter = ${prevText}
 |Current Chapter = ${currentText}
 }}`,
-  firstChapterMainStoryNav: () => {},
-  lastChapterMainStoryNav: () => {},
+  firstChapterMainStoryNav: ({
+    storyUrl,
+    currentText,
+    nextUrl,
+    nextText,
+    prevStoryUrl,
+  }) => `{{BeginPrevNext2
+|PrevStory = ${prevStoryUrl}
+|CurrentChapter = ${currentText}
+|Story = ${storyUrl}
+|NextChap = ${nextUrl}
+|Next Chapter = ${nextText}
+}}`,
+  lastChapterMainStoryNav: ({
+    storyUrl,
+    currentText,
+    prevUrl,
+    prevText,
+    nextStoryUrl,
+  }) => `{{EndPrevNextMS
+|Story = ${storyUrl} 
+|PrevChap = ${prevUrl} 
+|Previous Chapter = ${prevText} 
+|Current Chapter = ${currentText} 
+|NextPart = ${nextStoryUrl} 
+}}`,
 };
 
 const formatStaff = ({ staff, label }) => {
@@ -164,7 +188,7 @@ const formatStaff = ({ staff, label }) => {
 `;
 };
 
-const formatNavBar = (nav) => {
+const formatNavBar = (nav, isMainStoryNav) => {
   const inputNav = {
     storyUrl: nav[NAV_KEYS.STORY_URL],
     prevUrl: nav[NAV_KEYS.PREV_URL],
@@ -172,14 +196,20 @@ const formatNavBar = (nav) => {
     currentText: nav[NAV_KEYS.CURRENT_TEXT],
     nextUrl: nav[NAV_KEYS.NEXT_URL],
     nextText: nav[NAV_KEYS.NEXT_TEXT],
+    prevStoryUrl: nav[NAV_KEYS.PREV_STORY_URL],
+    nextStoryUrl: nav[NAV_KEYS.NEXT_STORY_URL],
   };
   if (inputNav.prevUrl && inputNav.nextUrl) {
     return templates.chapterNav(inputNav);
   }
   if (!inputNav.nextUrl) {
-    return templates.lastChapterNav(inputNav);
+    return isMainStoryNav
+      ? templates.lastChapterMainStoryNav(inputNav)
+      : templates.lastChapterNav(inputNav);
   }
   if (!inputNav.prevUrl) {
-    return templates.firstChapterNav(inputNav);
+    return isMainStoryNav
+      ? templates.firstChapterMainStoryNav(inputNav)
+      : templates.firstChapterNav(inputNav);
   }
 };
