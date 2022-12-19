@@ -1,1 +1,1 @@
-export * from './TabMenu';
+export { TabMenu } from './TabMenu';

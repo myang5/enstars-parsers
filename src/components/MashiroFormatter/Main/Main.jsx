@@ -1,8 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { MainActions } from '@shared/MainActions';
-import { TabContent } from '@shared/TabContent';
-import { TabMenu } from '@shared/TabMenu';
-import { MainWrapper } from '@shared/MainWrapper';
+import { MainActions, TabContent, TabMenu, MainWrapper } from '@shared';
 import { StateProvider, useStateContext } from './StateContext';
 import { InputEditor, NavContent } from '../TabComponents';
 import { convertText } from '../utils';

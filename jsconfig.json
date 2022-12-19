@@ -4,7 +4,8 @@
     "paths": {
       "@styles": ["./styles/*"],
       "@utils": ["./utils/index"],
-      "@constants": ["./constants/index"]
+      "@constants": ["./constants/index"],
+      "@shared": ["./components/shared/index"]
     }
   },
   "exclude": ["node_modules", "dist"]

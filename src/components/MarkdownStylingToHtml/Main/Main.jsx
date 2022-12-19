@@ -1,7 +1,5 @@
 import React, { useRef } from 'react';
-import { MainActions } from '@shared/MainActions';
-import { TabContent } from '@shared/TabContent';
-import { MainWrapper } from '@shared/MainWrapper';
+import { MainActions, TabContent, MainWrapper } from '@shared';
 import { InputEditor } from '../TabComponents';
 import { StateProvider, useStateContext } from './StateContext';
 import convertText from '../utils/convertText';
