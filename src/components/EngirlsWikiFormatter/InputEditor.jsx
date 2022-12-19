@@ -24,12 +24,12 @@ export const InputEditor = () => {
   };
 
   const inputEditorData = `
-  <p>Time: A few days later…</p>
-  <p>Location: Outside ES</p>
-  <p>Jun: Hmm... At this rate, I should be able to make it to the venue with time to spare.</p>
-  <p>えぇっと？　この時間なら現場に余裕で間に合いそうっすね</p>
-  <p>Jun: (Right, I'm working with Ibara today. It’s been a while since we had last had a job together as just the two of us, since I usually work either with everyone in Eden or just as Eve.)  </p>
-  <p>（たしか今日は茨との仕事だっけ。茨と二人の仕事っていうのも久しぶりっすねぇ。基本『Eden』か『Eve』で仕事をすることがおおいですし）</p>
+  <p>Location: Classroom</p>
+  <p>Natsumi: So, yeah. Things are getting a little crazy around here.</p>
+  <p>Saaya: Hmm... I wonder what happened for it to end up like this?</p>
+  <p>Oh, by the way, when I was doing stuff for my extracurricular, I saw you guys running around with the Student Council President.</p>
+  <p>It'd be annoying if I got caught up in whatever you were doing, so I didn't call out to you.</p>
+  <p>Natsumi: Saaya-chan's always working so hard during practice.</p>
 `;
 
   return (
