@@ -24,12 +24,14 @@ export const InputEditor = () => {
   };
 
   const inputEditorData = `
-  <p>Location: Classroom</p>
   <p>Natsumi: So, yeah. Things are getting a little crazy around here.</p>
   <p>Saaya: Hmm... I wonder what happened for it to end up like this?</p>
   <p>Oh, by the way, when I was doing stuff for my extracurricular, I saw you guys running around with the Student Council President.</p>
   <p>It'd be annoying if I got caught up in whatever you were doing, so I didn't call out to you.</p>
   <p>Natsumi: Saaya-chan's always working so hard during practice.</p>
+  <p>MS Cooperation Chapter 1.png</p>
+  <p>Location: Classroom</p>
+  <p>Natsumi: You're working hard until late every day! Thaaat's youth, huh?! I'm cheering you onnn!!</p>
 `;
 
   return (

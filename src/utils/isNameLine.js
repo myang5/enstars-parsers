@@ -1,6 +1,11 @@
 const { chain } = require('lodash');
 
-export const isOissuLabelLine = (line) => {
+/**
+ * Identify lines containing dialogue, labeled with the name of a character
+ * NOTE: isHeadingLine should be used beforehand to filter out headings
+ * @param {string} line
+ */
+export const isNameLine = (line) => {
   if (!line.includes(':')) {
     return false;
   }

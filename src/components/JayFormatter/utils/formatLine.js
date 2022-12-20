@@ -1,9 +1,9 @@
 import {
   isNameLineException,
   isImageURLLine,
-  isOissuNarratedLine,
+  isHeadingLine,
   splitLineIntoLabelAndValue,
-  isOissuLabelLine,
+  isNameLine,
 } from '@utils';
 
 /**
@@ -26,7 +26,7 @@ export const formatLine = (TEMPLATES) => {
     // use innerHTML to preserve styling
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
-    if (isOissuNarratedLine(line)) {
+    if (isHeadingLine(line)) {
       return TEMPLATES.blockquote(line);
     }
 
@@ -54,7 +54,7 @@ export const formatLine = (TEMPLATES) => {
       return '';
     }
 
-    if (isOissuLabelLine(line) && !isNameLineException(line)) {
+    if (isNameLine(line) && !isNameLineException(line)) {
       const [name, dialogue] = splitLineIntoLabelAndValue(line);
 
       // Handle case where name is on every dialogue line

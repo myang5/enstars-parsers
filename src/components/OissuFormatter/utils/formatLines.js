@@ -3,9 +3,9 @@ import {
   boldMarkdownToHTML,
   italicMarkdownToHTML,
   isImageURLLine,
-  isOissuNarratedLine,
+  isHeadingLine,
   splitLineIntoLabelAndValue,
-  isOissuLabelLine,
+  isNameLine,
 } from '@utils';
 
 /**
@@ -42,14 +42,14 @@ export const formatLines = ({ TEMPLATES, input }) => {
       return;
     }
 
-    if (isOissuLabelLine(line) && !isNameLineException(line)) {
+    if (isNameLine(line) && !isNameLineException(line)) {
       const [name, dialogue] = splitLineIntoLabelAndValue(line);
 
       const formattedDialogue = italicMarkdownToHTML(
         boldMarkdownToHTML(dialogue),
       );
 
-      if (isOissuNarratedLine(line)) {
+      if (isHeadingLine(line)) {
         storyOutput += TEMPLATES.blockquote(
           TEMPLATES.dialogue(`${name}: ${formattedDialogue}`).trim(),
         );

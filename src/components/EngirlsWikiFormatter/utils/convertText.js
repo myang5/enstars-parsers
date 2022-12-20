@@ -61,13 +61,13 @@ export function convertText({
     ]),
   );
 
-  // const inputDom = extractBr(convertEditorDataToDom(inputData));
-  // const input = inputDom.querySelectorAll('p');
-  // const formatLineHelper = formatLine(templates);
+  const inputDom = extractBr(convertEditorDataToDom(inputData));
+  const input = inputDom.querySelectorAll('p');
+  const formatLineHelper = formatLine(templates);
 
-  // for (let i = 0; i < input.length; i++) {
-  //   output += formatLineHelper(input[i]);
-  // }
+  for (let i = 0; i < input.length; i++) {
+    output += formatLineHelper(input[i]);
+  }
 
   output += formatStaff({ staff: translators, label: 'Translation' });
   output += formatStaff({ staff: proofreaders, label: 'Proofreading' });
@@ -92,11 +92,12 @@ export const templates = {
 |[[File:${value}|x200px|link=|center]]
 |
 `,
+  dialogue: (value) => `${value}\n\n`,
   cgRender: (value) => `|-
 ! colspan="2" style="text-align:center;" |[[File:${value}|center|link=|660px]]
 `,
-  heading: () => `|-
-! colspan="2" style="text-align:center;background-color:${locationCol}; color:${textCol};" |'''HEADING'''
+  heading: (value) => `|-
+! colspan="2" style="text-align:center;background-color:#EE6796; color:#FFFFFF;" |'''${value}'''
 `,
   // Fandom wiki link documentation:
   // https://community.fandom.com/wiki/Help:Links/Wikitext

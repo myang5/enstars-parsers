@@ -1,92 +1,55 @@
 import {
+  isFileNameLine,
   isNameLineException,
-  isImageURLLine,
-  isOissuNarratedLine,
+  isNameLine,
+  isHeadingLine,
   splitLineIntoLabelAndValue,
-  isOissuLabelLine,
 } from '@utils';
 
 /**
  * Helper function for convertText that formats each dialogue line.
  */
-export const formatLine = (TEMPLATES) => {
+export const formatLine = (templates) => {
   // Handle both dialogue formats where name is on every line
   // or only on first line
   let currentName = '';
-  let shouldAddNameToAraDialogueLine = false;
 
   return (p) => {
+    // textContent ignores HTML styling
     let line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
-    if (!line || isJapaneseLine(line)) {
+    if (!line) {
       return '';
+    }
+
+    if (isHeadingLine(line)) {
+      return templates.heading(line);
+    }
+
+    if (isFileNameLine(line)) {
+      currentName = '';
+      return templates.cgRender(line);
     }
 
     // Because end result should be in HTML as well,
     // use innerHTML to preserve styling
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
-    if (isOissuNarratedLine(line)) {
-      return TEMPLATES.blockquote(line);
-    }
-
-    if (isImageURLLine(line)) {
-      currentName = '';
-      return TEMPLATES.image(line);
-    }
-
-    /**
-     * Jay sometimes works with a translator that formats lines like this:
-     *
-     * Nazuna:
-     * 何だその曰くありげな物件。だ、大丈夫なのか？
-     * That sure sounds specific?! I-Is he okay?
-     *
-     * Once a dialogue line without a name label is found after a line
-     * that was just the name label, the full "line" has been processed.
-     *
-     * After full line is processed, treat
-     */
-    if (isAraNameLine(line) && !isNameLineException(line)) {
-      const [name] = splitLineIntoLabelAndValue(line);
-      shouldAddNameToAraDialogueLine = currentName !== name;
-      currentName = name;
-      return '';
-    }
-
-    if (isOissuLabelLine(line) && !isNameLineException(line)) {
+    if (isNameLine(line) && !isNameLineException(line)) {
       const [name, dialogue] = splitLineIntoLabelAndValue(line);
+      let result = '';
 
       // Handle case where name is on every dialogue line
-      if (currentName === name) {
-        return TEMPLATES.dialogue(dialogue);
+      if (currentName !== name) {
+        currentName = name;
+        result += templates.dialogueRender(name);
       }
 
-      currentName = name;
-
-      let result = '';
-      result += TEMPLATES.boldName(currentName);
-      result += dialogue;
-      return TEMPLATES.dialogue(result);
+      result += templates.dialogue(dialogue);
+      return result;
     }
 
     // Handle case where name is not on every dialogue line
-    if (currentName) {
-      if (shouldAddNameToAraDialogueLine) {
-        let result = '';
-        result += TEMPLATES.boldName(currentName);
-        result += line;
-        return TEMPLATES.dialogue(result);
-      }
-      return TEMPLATES.dialogue(line);
-    }
-
-    return '';
+    return templates.dialogue(line);
   };
 };
-
-export const isJapaneseLine = (line) =>
-  /[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤、-〻！-～]/.test(line);
-
-// Line that only contains a name label like "Nazuna:"
-const isAraNameLine = (line) => /\w+:$/.test(line.trim());
