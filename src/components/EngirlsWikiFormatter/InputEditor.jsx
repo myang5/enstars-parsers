@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
@@ -33,6 +33,27 @@ export const InputEditor = () => {
   <p>Location: Classroom</p>
   <p>Natsumi: You're working hard until late every day! Thaaat's youth, huh?! I'm cheering you onnn!!</p>
 `;
+
+  // TODO: This doesn't seem to be applied if you switch to another formatter
+  // then switch back
+  useEffect(() => {
+    // Grab the HTML element using ref.current.editor
+    // https://github.com/ckeditor/ckeditor5/issues/1185
+    try {
+      inputRef.current.editor?.editing.view.change((writer) => {
+        writer.setAttribute(
+          'spellcheck',
+          'false',
+          inputRef.current.editor.editing.view.document.getRoot(),
+        );
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
+    const cleanup = () => {};
+    return cleanup;
+  }, [!!inputRef.current?.editor?.editing]);
 
   return (
     <CKEditor

@@ -13,7 +13,7 @@ const getStaff = (value) => (isEmpty(value) ? [getEmptyStaffObj()] : value);
 
 export const StateProvider = ({ children }) => {
   const [details, setDetails] = useState(initialConfig.details || {});
-  const [characters, setCharacters] = useState();
+  const [characters, setCharacters] = useState('');
   const [jpProofreaders, setJpProofreaders] = useState(
     getStaff(initialConfig.jpProofreaders),
   );

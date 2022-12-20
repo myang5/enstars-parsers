@@ -22,5 +22,6 @@
   - [ ] Redesign Story nav tab so it's not a bunch of inputs lol
   - [ ] Renders tab
   - [ ] Automatically add categories
-  - [ ] Ensure basic text conversion still works
+  - [x] Ensure basic text conversion still works
+  - [ ] Convert HTML formatting Markdown formatting
   - [ ] TL notes tab
