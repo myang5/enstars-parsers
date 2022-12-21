@@ -102,6 +102,8 @@ export const templates = {
   // Fandom wiki link documentation:
   // https://community.fandom.com/wiki/Help:Links/Wikitext
   link: (link, text) => `[${link} ${text}]`,
+  boldText: (value) => `'''${value}'''`,
+  italicText: (value) => `''${value}''`,
   tableEnd: () => '|}\n',
   chapterNav: ({
     storyUrl,

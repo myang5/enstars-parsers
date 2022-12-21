@@ -15,7 +15,7 @@ export const formatLine = (templates) => {
   let currentName = '';
 
   return (p) => {
-    // textContent ignores HTML styling
+    // First evaluate line without dealing with styling
     let line = p.textContent.replace(/&nbsp;/g, ' ').trim();
 
     if (!line) {
@@ -31,8 +31,10 @@ export const formatLine = (templates) => {
       return templates.cgRender(line);
     }
 
-    // Because end result should be in HTML as well,
-    // use innerHTML to preserve styling
+    console.log(p);
+
+    // Retrieve original styling for dialogue
+    line = formatStyling(p, templates);
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();
 
     if (isNameLine(line) && !isNameLineException(line)) {
@@ -52,4 +54,23 @@ export const formatLine = (templates) => {
     // Handle case where name is not on every dialogue line
     return templates.dialogue(line);
   };
+};
+
+const formatStyling = (p, templates) => {
+  p.querySelectorAll('strong').forEach((elt) => {
+    elt.replaceWith(templates.boldText(elt.textContent));
+  });
+  p.querySelectorAll('b').forEach((elt) => {
+    elt.replaceWith(templates.boldText(elt.textContent));
+  });
+  p.querySelectorAll('emphasis').forEach((elt) => {
+    elt.replaceWith(templates.italicText(elt.textContent));
+  });
+  p.querySelectorAll('i').forEach((elt) => {
+    elt.replaceWith(templates.italicText(elt.textContent));
+  });
+  p.querySelectorAll('a').forEach((elt) => {
+    elt.replaceWith(templates.link(elt.href, elt.textContent));
+  });
+  return p;
 };
