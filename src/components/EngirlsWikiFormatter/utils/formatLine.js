@@ -31,8 +31,6 @@ export const formatLine = (templates) => {
       return templates.cgRender(line);
     }
 
-    console.log(p);
-
     // Retrieve original styling for dialogue
     line = formatStyling(p, templates);
     line = p.innerHTML.replace(/&nbsp;/g, ' ').trim();

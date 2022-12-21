@@ -23,5 +23,6 @@
   - [ ] Renders tab
   - [ ] Automatically add categories
   - [x] Ensure basic text conversion still works
-  - [ ] Convert HTML formatting Markdown formatting
+  - [x] Convert HTML formatting Markdown formatting
+  - [ ] Handle styling on name labels
   - [ ] TL notes tab
