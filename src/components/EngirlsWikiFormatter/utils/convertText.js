@@ -5,11 +5,16 @@ import {
   updateLocalStorage,
   normalizeValues,
   normalizeStaff,
+  isNameLine,
+  isNameLineException,
+  splitLineIntoLabelAndValue,
+  isHeadingLine,
 } from '@utils';
 import { FORMATTERS } from '@constants';
 import { formatLine } from './formatLine';
 import { NAV_KEYS } from './nav_keys';
 import { DETAILS_KEYS } from './details_keys';
+import { CHARACTER_NAMES } from './character_names';
 
 export function convertText({
   details,
@@ -73,6 +78,10 @@ export function convertText({
   output += formatStaff({ staff: proofreaders, label: 'Proofreading' });
   output += templates.tableEnd();
   output += formatNavBar(nav, isMainStoryNav);
+
+  const names = extractNamesInStory(input);
+  output += formatCategories({ writer: details[DETAILS_KEYS.WRITER], names });
+
   return output;
 }
 
@@ -119,7 +128,8 @@ export const templates = {
 |Current Chapter = ${currentText}
 |NextChap = ${nextUrl}
 |Next Chapter = ${nextText}
-}}`,
+}}
+`,
   firstChapterNav: ({
     storyUrl,
     currentText,
@@ -130,7 +140,8 @@ export const templates = {
 |Story = ${storyUrl}
 |NextChap = ${nextUrl}
 |Next Chapter = ${nextText}
-}}`,
+}}
+`,
   lastChapterNav: ({
     storyUrl,
     prevUrl,
@@ -141,7 +152,8 @@ export const templates = {
 |PrevChap = ${prevUrl}
 |Previous Chapter = ${prevText}
 |Current Chapter = ${currentText}
-}}`,
+}}
+`,
   firstChapterMainStoryNav: ({
     storyUrl,
     currentText,
@@ -154,7 +166,8 @@ export const templates = {
 |Story = ${storyUrl}
 |NextChap = ${nextUrl}
 |Next Chapter = ${nextText}
-}}`,
+}}
+`,
   lastChapterMainStoryNav: ({
     storyUrl,
     currentText,
@@ -167,7 +180,9 @@ export const templates = {
 |Previous Chapter = ${prevText} 
 |Current Chapter = ${currentText} 
 |NextPart = ${nextStoryUrl} 
-}}`,
+}}
+`,
+  category: (value) => `[[Category:${value}]]\n`,
 };
 
 const formatStaff = ({ staff, label }) => {
@@ -189,6 +204,39 @@ const formatStaff = ({ staff, label }) => {
   return `|-
 ! colspan="2" style="text-align:center;background-color:#C21B5F;color:#FFFFFF;" |'''${label}: ${resultText} '''
 `;
+};
+
+/**
+ * @param elts Iterable of all paragraph elements
+ */
+const extractNamesInStory = (elts) => {
+  // Get lines without any styling
+  const lines = Array.from(elts, (p) => p.textContent);
+  const names = new Set();
+
+  lines.forEach((line) => {
+    if (
+      isNameLine(line) &&
+      !isNameLineException(line) &&
+      !isHeadingLine(line)
+    ) {
+      const [name] = splitLineIntoLabelAndValue(line);
+      names.add(name.toUpperCase());
+    }
+  });
+
+  return Array.from(names);
+};
+
+const formatCategories = ({ writer, names }) => {
+  let categories = '';
+  categories += templates.category(writer);
+
+  names.forEach((name) => {
+    categories += templates.category(`${CHARACTER_NAMES[name]} - Story`);
+  });
+
+  return categories;
 };
 
 const formatNavBar = (nav, isMainStoryNav) => {

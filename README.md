@@ -21,7 +21,7 @@
   - [x] Add templates for main story nav
   - [ ] Redesign Story nav tab so it's not a bunch of inputs lol
   - [ ] Renders tab
-  - [ ] Automatically add categories
+  - [x] Automatically add categories
   - [x] Ensure basic text conversion still works
   - [x] Convert HTML formatting Markdown formatting
   - [ ] Handle styling on name labels
