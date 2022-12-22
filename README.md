@@ -20,7 +20,7 @@
       https://ensemble-girls.fandom.com/wiki/Template:PrevNext
   - [x] Add templates for main story nav
   - [ ] Redesign Story nav tab so it's not a bunch of inputs lol
-  - [ ] Renders tab
+  - [x] Renders tab
   - [x] Automatically add categories
   - [x] Ensure basic text conversion still works
   - [x] Convert HTML formatting Markdown formatting

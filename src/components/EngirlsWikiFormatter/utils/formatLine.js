@@ -9,7 +9,7 @@ import {
 /**
  * Helper function for convertText that formats each dialogue line.
  */
-export const formatLine = (templates) => {
+export const formatLine = ({ templates, renders }) => {
   // Handle both dialogue formats where name is on every line
   // or only on first line
   let currentName = '';
@@ -42,7 +42,8 @@ export const formatLine = (templates) => {
       // Handle case where name is on every dialogue line
       if (currentName !== name) {
         currentName = name;
-        result += templates.dialogueRender(name);
+        const render = renders[name] || `${name} RENDER IS MISSING`;
+        result += templates.dialogueRender(render);
       }
 
       result += templates.dialogue(dialogue);

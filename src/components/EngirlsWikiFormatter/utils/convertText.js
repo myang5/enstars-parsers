@@ -5,10 +5,6 @@ import {
   updateLocalStorage,
   normalizeValues,
   normalizeStaff,
-  isNameLine,
-  isNameLineException,
-  splitLineIntoLabelAndValue,
-  isHeadingLine,
 } from '@utils';
 import { FORMATTERS } from '@constants';
 import { formatLine } from './formatLine';
@@ -22,6 +18,7 @@ export function convertText({
   isMainStoryNav,
   nav,
   proofreaders,
+  renders,
   translators,
 }) {
   nav = normalizeValues(nav);
@@ -68,7 +65,7 @@ export function convertText({
 
   const inputDom = extractBr(convertEditorDataToDom(inputData));
   const input = inputDom.querySelectorAll('p');
-  const formatLineHelper = formatLine(templates);
+  const formatLineHelper = formatLine({ templates, renders });
 
   for (let i = 0; i < input.length; i++) {
     output += formatLineHelper(input[i]);
@@ -79,7 +76,7 @@ export function convertText({
   output += templates.tableEnd();
   output += formatNavBar(nav, isMainStoryNav);
 
-  const names = extractNamesInStory(input);
+  const names = Object.keys(renders).map((name) => name.toUpperCase());
   output += formatCategories({ writer: details[DETAILS_KEYS.WRITER], names });
 
   return output;
@@ -204,28 +201,6 @@ const formatStaff = ({ staff, label }) => {
   return `|-
 ! colspan="2" style="text-align:center;background-color:#C21B5F;color:#FFFFFF;" |'''${label}: ${resultText} '''
 `;
-};
-
-/**
- * @param elts Iterable of all paragraph elements
- */
-const extractNamesInStory = (elts) => {
-  // Get lines without any styling
-  const lines = Array.from(elts, (p) => p.textContent);
-  const names = new Set();
-
-  lines.forEach((line) => {
-    if (
-      isNameLine(line) &&
-      !isNameLineException(line) &&
-      !isHeadingLine(line)
-    ) {
-      const [name] = splitLineIntoLabelAndValue(line);
-      names.add(name.toUpperCase());
-    }
-  });
-
-  return Array.from(names);
 };
 
 const formatCategories = ({ writer, names }) => {

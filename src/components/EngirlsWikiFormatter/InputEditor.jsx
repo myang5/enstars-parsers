@@ -8,19 +8,40 @@ import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
+import Autosave from '@ckeditor/ckeditor5-autosave/src/autosave';
 
 import { useStateContext } from './StateContext';
+import { getNamesInDialogue } from './utils';
 
 export const InputEditor = () => {
-  // get refs from EditorContext to provide to CKEditor components
-  // refer to Main.js code
-  const { inputRef } = useStateContext();
+  const { inputRef, renderRef, setRenders } = useStateContext();
 
-  // Autosave documentation:
-  // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/saving-data.html#autosave-feature
+  // `renders` can't be referred to directly because of stale closure
+  // https://css-tricks.com/dealing-with-stale-props-and-states-in-reacts-functional-components/
+  const updateNamesForRenders = (editor) => {
+    const names = getNamesInDialogue(editor.getData());
+    Object.keys(names).forEach((name) => {
+      names[name] = renderRef.current[name] || '';
+    });
+    setRenders(names);
+  };
+
   const inputEditorConfig = {
-    plugins: [Essentials, Paragraph, Bold, Italic, Link, PasteFromOffice],
+    plugins: [
+      Autosave,
+      Bold,
+      Essentials,
+      Italic,
+      Link,
+      Paragraph,
+      PasteFromOffice,
+    ],
     toolbar: ['bold', 'italic', 'link', '|', 'undo', 'redo'],
+    // Autosave documentation:
+    // https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/saving-data.html#autosave-feature
+    autosave: {
+      save: updateNamesForRenders,
+    },
   };
 
   const inputEditorData = `

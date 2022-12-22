@@ -5,13 +5,15 @@ import { convertText } from '../utils';
 import { DetailContent } from '../DetailContent';
 import { InputEditor } from '../InputEditor';
 import { NavContent } from '../NavContent';
+import { RenderContent } from '../RenderContent';
 
 const TABS = {
   TEXT: 'Text',
   NAV: 'Story Nav',
   DETAILS: 'Details',
   RENDERS: 'Renders',
-  TL_NOTES: 'TL Notes',
+  // TODO
+  // TL_NOTES: 'TL Notes',
 };
 const tabTitles = Object.values(TABS);
 
@@ -22,8 +24,15 @@ export const Main = () => (
 );
 
 const MainContent = () => {
-  const { details, inputRef, isMainStoryNav, nav, proofreaders, translators } =
-    useStateContext();
+  const {
+    details,
+    inputRef,
+    isMainStoryNav,
+    nav,
+    proofreaders,
+    renders,
+    translators,
+  } = useStateContext();
   const outputRef = useRef(null);
 
   const onConvert = () => {
@@ -33,6 +42,7 @@ const MainContent = () => {
       isMainStoryNav,
       nav,
       proofreaders,
+      renders,
       translators,
     });
     outputRef.current.value = output;
@@ -65,6 +75,9 @@ const Input = () => {
       </TabContent>
       <TabContent {...{ value: TABS.NAV, clickedValue }}>
         <NavContent />
+      </TabContent>
+      <TabContent {...{ value: TABS.RENDERS, clickedValue }}>
+        <RenderContent />
       </TabContent>
     </div>
   );
