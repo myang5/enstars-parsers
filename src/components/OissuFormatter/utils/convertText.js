@@ -6,7 +6,7 @@ import {
   normalizeValues,
   normalizeStaff,
 } from '@utils';
-import { Formatters, DETAILS_KEYS } from '@constants';
+import { FORMATTERS, DETAILS_KEYS } from '@constants';
 import { formatLines } from './formatLines';
 import { NAV_KEYS } from './nav_keys';
 
@@ -19,28 +19,28 @@ export function convertText({
 }) {
   nav = normalizeValues(nav);
   updateLocalStorage({
-    formatter: Formatters.OissuFormatter,
+    formatter: FORMATTERS.OISSU_FORMATTER,
     key: 'nav',
     value: nav,
   });
 
   jpProofreaders = normalizeStaff(jpProofreaders);
   updateLocalStorage({
-    formatter: Formatters.OissuFormatter,
+    formatter: FORMATTERS.OISSU_FORMATTER,
     key: 'jpProofreaders',
     value: jpProofreaders,
   });
 
   engProofreaders = normalizeStaff(engProofreaders);
   updateLocalStorage({
-    formatter: Formatters.OissuFormatter,
+    formatter: FORMATTERS.OISSU_FORMATTER,
     key: 'engProofreaders',
     value: engProofreaders,
   });
 
   translators = normalizeStaff(translators);
   updateLocalStorage({
-    formatter: Formatters.OissuFormatter,
+    formatter: FORMATTERS.OISSU_FORMATTER,
     key: 'translators',
     value: translators,
   });

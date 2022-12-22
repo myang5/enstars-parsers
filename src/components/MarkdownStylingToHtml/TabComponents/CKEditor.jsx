@@ -27,7 +27,6 @@ export function InputEditor() {
 `;
 
   useEffect(() => {
-    console.log('JayFormatter editor useEffect');
     // Grab the HTML element using ref.current.editor
     // https://github.com/ckeditor/ckeditor5/issues/1185
     try {

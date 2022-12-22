@@ -1,5 +1,9 @@
 /*---------------------------------ALL PAGES----------------------------------*/
-@import './colors.less';
+@import (reference) './colors.less';
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -52,10 +56,9 @@ li {
   margin: 0.25em 0;
 }
 
-input,
+input[type='text'],
 select {
   padding: 4px;
-  box-sizing: border-box;
   min-width: 0;
   flex: 1 1 auto;
 }

@@ -1,12 +1,12 @@
 import React, { createContext, useState, useRef, useContext } from 'react';
-import { Formatters } from '@constants';
+import { FORMATTERS } from '@constants';
 
 const StateContext = createContext();
 
 export const useStateContext = () => useContext(StateContext);
 
 const initialConfig =
-  JSON.parse(localStorage.getItem(Formatters.MashiroFormatter)) || {};
+  JSON.parse(localStorage.getItem(FORMATTERS.MASHIRO_FORMATTER)) || {};
 
 export const StateProvider = ({ children }) => {
   const [nav, setNav] = useState(

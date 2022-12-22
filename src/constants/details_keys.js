@@ -5,6 +5,7 @@ export const DETAILS_KEYS = {
   PROOFREADING: 'proofreading',
   TRANSLATION: 'translation',
   IMAGE: 'image',
+  LOCATION: 'location',
   // Keys for staff object
   NAME: 'name',
   LINK: 'link',

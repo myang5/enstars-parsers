@@ -1,0 +1,17 @@
+@import (reference) '@styles/vars.less';
+
+.main-wrapper {
+  max-width: 100rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: @text-area-margin + @text-area-margin;
+}
+
+@media (max-width: @breakpoint) {
+  /*half-screen window*/
+  .main-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}

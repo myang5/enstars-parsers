@@ -1,0 +1,32 @@
+@import (reference) '@styles/vars.less';
+
+.main-actions {
+  display: flex;
+  flex-direction: column;
+  margin: @tab-menu-height 0 0 0;
+
+  button {
+    width: @actions-width;
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    padding: 0.7rem;
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}
+
+@media (max-width: @breakpoint) {
+  .main-actions {
+    width: 90%;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+    flex-direction: row;
+    justify-content: center;
+
+    button {
+      margin: 0 0.5rem;
+    }
+  }
+}

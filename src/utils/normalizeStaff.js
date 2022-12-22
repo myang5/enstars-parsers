@@ -1,5 +1,5 @@
 import { DETAILS_KEYS } from '@constants';
-import { normalizeValues } from '@utils/normalizeValues';
+import { normalizeValues } from '@utils';
 
 export const normalizeStaff = (staff) =>
   staff

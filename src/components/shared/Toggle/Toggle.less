@@ -1,0 +1,55 @@
+@import (reference) '@styles/colors.less';
+
+@transition-duration: 200ms ease-in-out;
+
+.toggle {
+  position: relative;
+}
+
+.toggle-peer,
+.toggle-background {
+  width: 48px;
+  height: 28px;
+  border-radius: 24px;
+}
+
+.toggle-peer {
+  position: absolute;
+  opacity: 0;
+  border: none;
+  top: 0;
+  left: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.toggle-background {
+  background-color: #b6b8bc;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  cursor: pointer;
+  transition: background-color @transition-duration;
+
+  .toggle-peer:focus ~ & {
+    background-color: #939597;
+  }
+
+  .toggle-peer:checked ~ & {
+    background-color: @light-blue;
+  }
+}
+
+.toggle-button {
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  box-shadow: 0px 3px 8px rgba(19, 20, 21, 0.1);
+  transition: transform @transition-duration;
+
+  &.toggle-button-checked {
+    transform: translate(100%);
+  }
+}

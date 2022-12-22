@@ -5,7 +5,7 @@ import {
   normalizeValues,
   normalizeStaff,
 } from '@utils';
-import { Formatters } from '@constants';
+import { FORMATTERS } from '@constants';
 import { formatLine } from './formatLine';
 import { NAV_KEYS } from './nav_keys';
 import { formatHeader } from './formatHeader';
@@ -22,35 +22,35 @@ export function convertText({
 }) {
   nav = normalizeValues(nav);
   updateLocalStorage({
-    formatter: Formatters.JayFormatter,
+    formatter: FORMATTERS.JAY_FORMATTER,
     key: 'nav',
     value: nav,
   });
 
   details = normalizeValues(details);
   updateLocalStorage({
-    formatter: Formatters.JayFormatter,
+    formatter: FORMATTERS.JAY_FORMATTER,
     key: 'details',
     value: details,
   });
 
   jpProofreaders = normalizeStaff(jpProofreaders);
   updateLocalStorage({
-    formatter: Formatters.JayFormatter,
+    formatter: FORMATTERS.JAY_FORMATTER,
     key: 'jpProofreaders',
     value: jpProofreaders,
   });
 
   engProofreaders = normalizeStaff(engProofreaders);
   updateLocalStorage({
-    formatter: Formatters.JayFormatter,
+    formatter: FORMATTERS.JAY_FORMATTER,
     key: 'engProofreaders',
     value: engProofreaders,
   });
 
   translators = normalizeStaff(translators);
   updateLocalStorage({
-    formatter: Formatters.JayFormatter,
+    formatter: FORMATTERS.JAY_FORMATTER,
     key: 'translators',
     value: translators,
   });

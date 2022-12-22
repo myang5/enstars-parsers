@@ -61,7 +61,7 @@ function NavContent() {
 
 const Row = ({ nav, navKey, label, onChange, placeholder }) => (
   <>
-    <label className="row__spacer" htmlFor={navKey}>
+    <label className="row__label" htmlFor={navKey}>
       {label}
     </label>
     <input

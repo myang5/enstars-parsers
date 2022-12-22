@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './MainActions.less';
 
 const COPY_BUTTON_TEXT = {
   COPY: 'Copy Output',
@@ -21,11 +22,11 @@ export const MainActions = ({ outputRef, onConvert }) => {
   };
 
   return (
-    <div className="actions">
-      <button type="button" onClick={handleConvert} id="convert-button">
+    <div className="main-actions">
+      <button type="button" onClick={handleConvert} className="primary-button">
         CONVERT
       </button>
-      <button type="button" onClick={copyToClip} id="copy-button">
+      <button type="button" onClick={copyToClip} className="secondary-button">
         {copyButton}
       </button>
     </div>

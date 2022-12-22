@@ -1,9 +1,9 @@
 import {
   extractBr,
   convertEditorDataToDom,
-  isOissuNarratedLine,
+  isHeadingLine,
   splitLineIntoLabelAndValue,
-  isOissuLabelLine,
+  isNameLine,
 } from '@utils';
 import { isJapaneseLine } from './formatLine';
 
@@ -15,10 +15,10 @@ export const getCharactersFromInput = (editor) => {
   for (let i = 0; i < input.length; i++) {
     const p = input[i];
     const line = p.textContent.replace(/&nbsp;/g, ' ').trim();
-    if (isJapaneseLine(line) || isOissuNarratedLine(line)) {
+    if (isJapaneseLine(line) || isHeadingLine(line)) {
       continue;
     }
-    if (isOissuLabelLine(line)) {
+    if (isNameLine(line)) {
       const [name] = splitLineIntoLabelAndValue(line);
       charactersSet.add(name);
     }

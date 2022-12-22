@@ -1,6 +1,6 @@
 import React, { createContext, useState, useRef, useContext } from 'react';
 import { isEmpty } from 'lodash';
-import { Formatters } from '@constants';
+import { FORMATTERS } from '@constants';
 import { getEmptyStaffObj } from '@utils';
 
 const StateContext = createContext();
@@ -8,12 +8,12 @@ const StateContext = createContext();
 export const useStateContext = () => useContext(StateContext);
 
 const initialConfig =
-  JSON.parse(localStorage.getItem(Formatters.JayFormatter)) || {};
+  JSON.parse(localStorage.getItem(FORMATTERS.JAY_FORMATTER)) || {};
 const getStaff = (value) => (isEmpty(value) ? [getEmptyStaffObj()] : value);
 
 export const StateProvider = ({ children }) => {
   const [details, setDetails] = useState(initialConfig.details || {});
-  const [characters, setCharacters] = useState();
+  const [characters, setCharacters] = useState('');
   const [jpProofreaders, setJpProofreaders] = useState(
     getStaff(initialConfig.jpProofreaders),
   );

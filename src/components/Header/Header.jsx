@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { sortBy } from 'lodash';
-import { Formatters } from '@constants';
+import { FORMATTERS } from '@constants';
 import './Header.less';
 
-const formatterLinks = sortBy(Object.values(Formatters), (value) => value);
+const formatterLinks = sortBy(Object.values(FORMATTERS), (value) => value);
 
 export default function Header() {
   const location = useLocation();

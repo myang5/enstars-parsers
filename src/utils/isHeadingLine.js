@@ -1,12 +1,10 @@
 import { chain } from 'lodash';
 
 /**
- * Lines that need to be surrounded by blockquotes in order
- * to properly format them in Oissu
- * https://yuukun.dev/oissu/docs/narration
+ * Identify lines with meta information about the story
  * @param {string} line
  */
-export const isOissuNarratedLine = (line) => {
+export const isHeadingLine = (line) => {
   const infoLabels = ['LOCATION', 'SEASON', 'TIME', 'HEADING'];
   return infoLabels.includes(
     chain(line.toUpperCase()).split(':').first().value(),
