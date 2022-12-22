@@ -199,7 +199,7 @@ const formatStaff = ({ staff, label }) => {
     return resultText;
   }
   return `|-
-! colspan="2" style="text-align:center;background-color:#C21B5F;color:#FFFFFF;" |'''${label}: ${resultText} '''
+! colspan="2" style="text-align:center;background-color:#C21B5F;color:#FFFFFF;" |'''${label}: ${resultText}'''
 `;
 };
 

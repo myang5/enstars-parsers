@@ -1,7 +1,6 @@
 import React from 'react';
 import { useStateContext } from '../StateContext';
 import './DetailContent.less';
-import classNames from 'classnames';
 import { getEmptyStaffObj } from '@utils';
 import { AUTHOR_NAMES, DETAILS_KEYS } from '../utils';
 
@@ -71,12 +70,9 @@ export const DetailContent = () => {
   );
 };
 
-const Row = ({ keyForValue, label, labelClassNames, children }) => (
+const Row = ({ keyForValue, label, children }) => (
   <>
-    <label
-      className={classNames('row__label', labelClassNames)}
-      htmlFor={keyForValue}
-    >
+    <label className="row__label" htmlFor={keyForValue}>
       {label}
     </label>
     {children}
@@ -129,7 +125,7 @@ const StaffInputs = ({ staff, label, labelForClassName, onChange }) => {
           <div>
             <button
               type="button"
-              className="btn--add-person"
+              className="add-person-button"
               onClick={handleAdd}
             >
               + Add

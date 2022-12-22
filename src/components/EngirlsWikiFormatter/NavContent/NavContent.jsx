@@ -85,17 +85,21 @@ const MainStoryNavToggle = ({ checked, onChange }) => {
   );
 };
 
-const Row = ({ navKey, value, onChange }) => (
-  <>
-    <label className="row__label" htmlFor={navKey}>
-      {PropsForNavKey[navKey].label}
-    </label>
-    <input
-      type="text"
-      id={navKey}
-      value={value || ''}
-      onChange={onChange}
-      placeholder={PropsForNavKey[navKey].placeholder}
-    />
-  </>
-);
+const Row = ({ navKey, value, onChange }) => {
+  const { label, placeholder } = PropsForNavKey[navKey];
+
+  return (
+    <>
+      <label className="row__label" htmlFor={navKey}>
+        {label}
+      </label>
+      <input
+        id={navKey}
+        onChange={onChange}
+        placeholder={placeholder}
+        type="text"
+        value={value || ''}
+      />
+    </>
+  );
+};
